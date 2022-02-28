@@ -6,3 +6,11 @@ Trello: https://trello.com/invite/b/t6Dpu0DF/e5cacdd7999d274d5cd1388fd209cd73/pl
 SRS(Not finish yet): https://docs.google.com/document/d/1Dak5tR24d-bKAaL2WK6W49BhV5p4mHnd/edit?usp=sharing&ouid=107428553557968197115&rtpof=true&sd=true
 
 Project Site: https://thelertproject.wordpress.com/
+
+Roles:
+[1.1] Aldo Degollado  :
+[1.2] Abraham Mendoza : 
+[1.3] Alonso Garcia   :
+[1.4] Diego Velazquez : Tester
+[1.5] Sebastian Rojas :
+[1.6] Manuel Cota     :
