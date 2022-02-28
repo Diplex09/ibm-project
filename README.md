@@ -9,14 +9,14 @@ Project Site: https://thelertproject.wordpress.com/
 
 Roles:
 
-[1.1] Aldo Degollado  :
+[1.1] Aldo Degollado  :Back-end developer
 
-[1.2] Abraham Mendoza : 
+[1.2] Abraham Mendoza : Project Manager
 
-[1.3] Alonso Garcia   :
+[1.3] Alonso Garcia   : Back-end developer
 
 [1.4] Diego Velazquez : Tester
 
-[1.5] Sebastian Rojas :
+[1.5] Sebastian Rojas : Fronte-end developer
 
-[1.6] Manuel Cota     :
+[1.6] Manuel Cota     : Team lead
