@@ -7,9 +7,9 @@ Repository for the TC2008B subject of the ITC study plan at the Tecnológico de 
 
 Roles:
 
-[1.1] Aldo Alejandro Degollado Padilla: Back-end developer
-[1.2] Abraham Mendoza Pérez: Project Manager
-[1.3] Luis Alonso Martínez García: Back-end developer
-[1.4] Diego Velazquez Moreno: Tester
-[1.5] Sebastian Andrés Rojas Salazar: Front-end developer
-[1.6] Manuel Ignacio Cota Casas: Team Lead
+- Aldo Alejandro Degollado Padilla: Back-end developer
+- Abraham Mendoza Pérez: Project Manager
+- Luis Alonso Martínez García: Back-end developer
+- Diego Velazquez Moreno: Tester
+- Sebastian Andrés Rojas Salazar: Front-end developer
+- Manuel Ignacio Cota Casas: Team Lead
