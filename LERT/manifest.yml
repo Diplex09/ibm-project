@@ -1,0 +1,5 @@
+---
+applications:
+- name: LERT
+  memory: 128MB
+  random-route: true
