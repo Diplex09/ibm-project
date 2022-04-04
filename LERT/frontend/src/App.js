@@ -23,7 +23,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>React + Flask Tutorial</p>
+        <p className='font-bold uppercase'>React + Flask Tutorial</p>
         <div>{getMessage.status === 200 ? 
           <h3>{getMessage.data.message}</h3>
           :
