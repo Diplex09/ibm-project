@@ -10,7 +10,7 @@ Roles:
 - Aldo Alejandro Degollado Padilla: `Frontend` / `Backend`
 - Abraham Mendoza Pérez: `Project Manager` / `Frontend` / `Backend`
 - Luis Alonso Martínez García: `Frontend` / `Backend`
-- Diego Velazquez Moreno: `Tester`
+- Diego Velazquez Moreno: `Tester` / `Backend`
 - Sebastian Andrés Rojas Salazar: `Frontend`
 - Manuel Ignacio Cota Casas: `Squad Leader`
 - Gerardo Novelo De Anda: `Scrum Master` / `Frontend`
