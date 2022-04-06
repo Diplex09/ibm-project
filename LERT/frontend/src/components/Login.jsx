@@ -1,59 +1,173 @@
-import logo from "../assets/ibmLogo.jpg";
-import { VscAccount } from "react-icons/vsc";
-import { FaRegEnvelope } from "react-icons/fa";
+import {
+    Box,
+    CssBaseline,
+    Container,
+    Avatar,
+    Typography,
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    Button,
+    Grid,
+    Link,
+    CardMedia,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-const login = () => {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <div className="bg-white rounded-2xl shadow-2xl flex flex-row w-2/3 max-w-4xl">
-          <div className="w-3/5 p-5">
-            <div className="text-left font-bold">IBM</div>
+const Login = () => {
+    return (
+        <Container component="main" maxWidth="false">
+            <CssBaseline />
+            <Box
+                sx={{
+                    width: "100%",
+                    height: "100vh",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: "#f2f4f8",
+                }}
+            >
+                <Box
+                    sx={{
+                        width: "80%",
+                        height: "70%",
+                        display: "flex",
+                        alignItems: "center",
+                        boxShadow: "0 10px 50px #9a9a9a",
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "50%",
+                            height: "100%",
+                            backgroundColor: "#ffffff",
+                        }}
+                    >
+                        <Avatar sx={{ m: 1, bgcolor: "#000D4B" }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Sign in
+                        </Typography>
 
-            <div className="py-10">
-              <h2 className="text-3xl font-bold mb-3">Sign In</h2>
-              <div className="border-2 border-slate-800 ml-auto mr-auto mb-3 "></div>
-              <div className="flex justify-center my-2">
-                <VscAccount />
-              </div>
-              <p className="text-gray-400 mb-3">Use your email account</p>
+                        <Box
+                            component="form"
+                            noValidate
+                            sx={{ mt: 1, width: "70%" }}
+                        >
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                autoFocus
+                            />
+                            <TextField
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        value="remember"
+                                        color="primary"
+                                    />
+                                }
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{
+                                    mt: 3,
+                                    mb: 2,
+                                    borderRadius: "0px",
+                                    bgcolor: "#0062ff",
+                                    ":hover": {
+                                        bgcolor: "#0255DA",
+                                    },
+                                }}
+                            >
+                                Sign In
+                            </Button>
+                            <Grid container>
+                                <Grid item xs>
+                                    <Link href="#" variant="body2">
+                                        Forgot password?
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "50%",
+                            height: "100%",
+                            backgroundColor: "#000D4B",
+                            color: "#ffffff",
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Box sx={{ width: "110px", marginRight: "20px" }}>
+                                <CardMedia
+                                    component="img"
+                                    sx={{
+                                        width: 160,
+                                    }}
+                                    image="/assets/ibm-logo-black-and-white.png"
+                                    alt="IBM"
+                                />
+                            </Box>
 
-              <div className=" flex flex-col items-center ">
-                <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                  <input
-                    className="bg-gray-100 outline-none text-sm"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                  />
-                </div>
-
-                <div className="bg-gray-100 w-64 p-2 flex items-center mb-3">
-                  <input
-                    className="bg-gray-100 outline-none text-sm"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                  />
-                </div>
-                <button className="bg-slate-800 text-white font-bold py-2 px-4 rounded-full">
-                  Sign In
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* Sign In */}
-
-          <div className="w-2/5 bg-slate-800 text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
-            <h2 className="text-3xl font-bold mb-2">LERT</h2>
-            <div className="border-2 ml-auto mr-auto mb-2 "></div>
-            <p>Labor Expenses Recovery Tool</p>
-          </div>
-          {/* Sign In */}
-        </div>
-      </main>
-    </div>
-  );
+                            <Typography
+                                variant="h3"
+                                sx={{ fontWeight: "bold" }}
+                            >
+                                LERT
+                            </Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                width: "80%",
+                                height: "2px",
+                                marginTop: "20px",
+                                marginBottom: "20px",
+                                backgroundColor: "#ffffff",
+                            }}
+                        ></Box>
+                        <Typography component="p">
+                            Labor Expenses Recovery Tool
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+        </Container>
+    );
 };
 
-export default login;
+export default Login;
