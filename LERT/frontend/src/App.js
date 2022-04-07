@@ -2,25 +2,11 @@ import "./App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 import Login from "./components/Login";
 import MainView from "./MainView";
 
-const theme = createTheme({
-    typography: {
-        fontFamily: "IBM Plex Sans, sans-serif",
-    },
-    components: {
-        MuiCssBaseline: {
-            styleOverrides: `
-          @font-face {
-            font-family: 'IBM Plex Sans';
-          }
-        `,
-        },
-    },
-});
+import "./App.css";
 
 function App() {
     const [getMessage, setGetMessage] = useState({});
@@ -37,19 +23,20 @@ function App() {
             });
     }, []);
     return (
-        <ThemeProvider theme={theme}>
+        <Box
+            sx={{
+                fontFamily: "IBM Plex Sans",
+                width: "100vw",
+                height: "100vh",
+                "& .MuiTypography-root": {
+                    fontFamily: "IBM Plex Sans, sans-serif",
+                },
+            }}
+        >
             <CssBaseline />
-            <Box
-                sx={{
-                    fontFamily: "IBM Plex Sans",
-                    width: "100vw",
-                    height: "100vh",
-                }}
-            >
-                {/* <Login /> */}
-                <MainView />
-            </Box>
-        </ThemeProvider>
+            {/* <Login /> */}
+            <MainView />
+        </Box>
     );
 }
 
