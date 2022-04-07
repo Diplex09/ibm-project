@@ -20,15 +20,15 @@ def serve(path):
     return send_from_directory(app.static_folder,'index.html')
 
 
-app.config['SECRET_KEY'] = 'cairocoders-ednalan'
+app.config['SECRET_KEY'] = 'lert-teamafk'
 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 CORS(app)
 
 DB_HOST = "localhost"
-DB_NAME = "sampledb"
+DB_NAME = "lert"
 DB_USER = "postgres"
-DB_PASS = "jodial" #en el video pone admin
+DB_PASS = "password" #en el video pone admin
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
@@ -36,8 +36,8 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 #/login 
 @app.route("/")
 def home():
-        passhash = generate_password_hash('cairocoders')
-        print(passhash)
+        # passhash = generate_password_hash('password')
+        # print(passhash)
         if 'username' in session:
             username = session['username']
             return jsonify({'message' : 'You are already logged in','username': username})
@@ -46,29 +46,32 @@ def home():
             resp.status_code = 401
             return resp
 
+        # return passhash
+
 
 
 @app.route('/login', methods=['POST'])
 def login():
     _json = request.json
-    _username = _json['username']
+    _email = _json['email']
     _password = _json['password']
-    print(_password)
+    # print(_password)
     #validate the received values
-    if _username and _password:
+    if _email and _password:
         #check user exists
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        sql = "SELECT * FROM useraccount WHERE username=%s"
-        sql_where = (_username,)
+        sql = "SELECT * FROM users WHERE email=%s"
+        sql_where = (_email,)
 
         cursor.execute(sql, sql_where)
         row = cursor.fetchone() 
-        username = row['username']
-        password = row['password']
+        email = row['email']
+        password = row['passwd']
         if row:
+            print(password)
             if check_password_hash(password, _password):
-                session['username'] = username
+                session['username'] = email
                 cursor.close()
                 return jsonify ({'message' : 'You are logged in successfully'})
             else:
@@ -90,4 +93,4 @@ def logout():
 
 api.add_resource(HelloApiHandler, '/flask/hello')
 
-#api.add_resource(login, '/flask/login')
+# api.add_resource(login, '/login')
