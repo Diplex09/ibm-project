@@ -23,10 +23,10 @@ export const NavBar = () => {
     return (
         <Drawer
             sx={{
-                width: 260,
+                width: 300,
                 flexShrink: 0,
                 "& .MuiDrawer-paper": {
-                    width: 260,
+                    width: 300,
                     boxSizing: "border-box",
                 },
             }}
