@@ -1,43 +1,50 @@
-import logo from "./logo.svg";
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import { Box, CssBaseline } from "@mui/material";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+
 import Login from "./components/Login";
 import MainView from "./MainView";
 
-function App() {
-  const [getMessage, setGetMessage] = useState({});
+const theme = createTheme({
+    typography: {
+        fontFamily: "IBM Plex Sans, sans-serif",
+    },
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: `
+          @font-face {
+            font-family: 'IBM Plex Sans';
+          }
+        `,
+        },
+    },
+});
 
-  useEffect(() => {
-    axios
-      .get("/flask/hello")
-      .then((response) => {
-        console.log("SUCCESS", response);
-        setGetMessage(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  return (
-    <div className="App">
-      {/*
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className='font-bold uppercase'>React + Flask Tutorial</p>
-        <div>{getMessage.status === 200 ? 
-          <h3>{getMessage.data.message}</h3>
-          :
-          <h3>LOADING</h3>}</div>
-        </header> */}
-      {/* <Login /> */}
-      <MainView />
-    </div>
-  );
+function App() {
+    const [getMessage, setGetMessage] = useState({});
+
+    useEffect(() => {
+        axios
+            .get("/flask/hello")
+            .then((response) => {
+                console.log("SUCCESS", response);
+                setGetMessage(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Box sx={{ fontFamily: "IBM Plex Sans" }}>
+                {/* <Login /> */}
+                <MainView />
+            </Box>
+        </ThemeProvider>
+    );
 }
 
 export default App;
