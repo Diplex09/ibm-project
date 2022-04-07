@@ -14,12 +14,11 @@ import { ListItemButton } from "@mui/material";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import GroupAddOutlinedIcon from "@mui/icons-material/GroupAddOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import LoopOutlinedIcon from "@mui/icons-material/LoopOutlined";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
+import a from "../src/assets/ibmLogo.jpg";
 
 const drawerWidth = 240;
 
@@ -28,12 +27,24 @@ export default function MainView() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${100}px` }}
+        position="left"
+        sx={{
+          backgroundColor: " white",
+          width: `calc(100% - ${drawerWidth}px)`,
+          height: "60px",
+        }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            LERT - Labor Expenses Recovery Tool
+          <img src={a} width="50" height="60" />
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            color="black"
+            fontWeight="Bold"
+            marginLeft={"11px"}
+          >
+            LERT
           </Typography>
         </Toolbar>
       </AppBar>
@@ -47,18 +58,25 @@ export default function MainView() {
           },
         }}
         variant="permanent"
-        anchor="left"
+        anchor="right"
       >
         <Toolbar sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Avatar
-            alt="Remy Sharp"
-            src="/static/images/avatar/1.jpg"
-            sx={{
-              width: 56,
-              height: 56,
-              margin: "auto",
-            }}
-          />
+          <List sx={{ margin: "auto" }}>
+            <Avatar
+              alt="Remy Sharp"
+              src="/static/images/avatar/1.jpg"
+              sx={{
+                width: 56,
+                height: 56,
+                margin: "auto",
+                marginBottom: 2,
+              }}
+            />
+            <h3>Sebastián Rojas</h3>
+            <Typography sx={{ fontSize: ".7rem", marginBottom: 1 }}>
+              Administrador
+            </Typography>
+          </List>
         </Toolbar>
         <Divider />
         <List>
