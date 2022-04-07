@@ -1,6 +1,14 @@
-import { Box, AppBar, Toolbar, Typography, CardMedia } from "@mui/material";
+import {
+    Box,
+    AppBar,
+    Toolbar,
+    Typography,
+    CardMedia,
+    Divider,
+} from "@mui/material";
 
 export const Header = () => {
+    const section = "HOME";
     return (
         <AppBar
             position="left"
@@ -29,6 +37,23 @@ export const Header = () => {
                     marginLeft={"11px"}
                 >
                     LERT
+                </Typography>
+                <Divider
+                    orientation="vertical"
+                    style={{
+                        marginLeft: "10px",
+                        height: "30px",
+                        width: "7px",
+                    }}
+                />
+                <Typography
+                    sx={{
+                        color: "black",
+                        marginLeft: "18px",
+                        fontWeight: "bold",
+                    }}
+                >
+                    {section}
                 </Typography>
             </Toolbar>
         </AppBar>
