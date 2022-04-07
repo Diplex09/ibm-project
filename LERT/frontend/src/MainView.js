@@ -1,4 +1,5 @@
 import * as React from "react";
+import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -28,7 +29,7 @@ export default function MainView() {
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${100}px` }}
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
@@ -48,7 +49,17 @@ export default function MainView() {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
+        <Toolbar sx={{ marginTop: 2, marginBottom: 2 }}>
+          <Avatar
+            alt="Remy Sharp"
+            src="/static/images/avatar/1.jpg"
+            sx={{
+              width: 56,
+              height: 56,
+              margin: "auto",
+            }}
+          />
+        </Toolbar>
         <Divider />
         <List>
           <ListItemButton>
