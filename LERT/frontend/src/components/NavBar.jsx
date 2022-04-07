@@ -23,10 +23,10 @@ export const NavBar = () => {
     return (
         <Drawer
             sx={{
-                width: 300,
+                width: 260,
                 flexShrink: 0,
                 "& .MuiDrawer-paper": {
-                    width: 300,
+                    width: 260,
                     boxSizing: "border-box",
                 },
             }}
@@ -46,7 +46,13 @@ export const NavBar = () => {
                         }}
                     />
                     <h3>Sebastián Rojas</h3>
-                    <Typography sx={{ fontSize: ".7rem", marginBottom: 1 }}>
+                    <Typography
+                        sx={{
+                            fontSize: ".7rem",
+                            marginBottom: 1,
+                            textAlign: "center",
+                        }}
+                    >
                         Administrador
                     </Typography>
                 </List>
