@@ -28,7 +28,7 @@ CORS(app)
 DB_HOST = "localhost"
 DB_NAME = "sampledb"
 DB_USER = "postgres"
-DB_PASS = "jodial"
+DB_PASS = "jodial" #en el video pone admin
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
