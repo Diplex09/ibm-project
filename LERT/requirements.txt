@@ -1,5 +1,4 @@
 flask
 flask-restful
 flask-cors
-spycopg2
- 
+psycopg2
