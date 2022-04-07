@@ -1,3 +1,6 @@
+/*NOTE: Run this command if you haven't created DB in pgadmin4 before*/
+CREATE DATABASE lert;
+
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
