@@ -1,4 +1,4 @@
-import { Box, CssBaseline, Toolbar } from "@mui/material";
+import { Box, CssBaseline } from "@mui/material";
 import { NavBar } from "./components/NavBar";
 import { Header } from "./components/Header";
 import { MainContent } from "./components/MainContent";
