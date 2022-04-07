@@ -2,11 +2,12 @@ import logo from "./logo.svg";
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Login from "./components/Login";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import Login from "./components/Login";
+import MainView from "./MainView";
 
 function App() {
   const [getMessage, setGetMessage] = useState({});
@@ -33,7 +34,8 @@ function App() {
           :
           <h3>LOADING</h3>}</div>
         </header> */}
-      <Login />
+      {/* <Login /> */}
+      <MainView />
     </div>
   );
 }
