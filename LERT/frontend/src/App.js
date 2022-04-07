@@ -39,7 +39,13 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Box sx={{ fontFamily: "IBM Plex Sans" }}>
+            <Box
+                sx={{
+                    fontFamily: "IBM Plex Sans",
+                    width: "100vw",
+                    height: "100vh",
+                }}
+            >
                 {/* <Login /> */}
                 <MainView />
             </Box>
