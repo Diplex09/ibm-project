@@ -1,24 +1,27 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { ListItemButton } from "@mui/material";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import GroupAddOutlinedIcon from "@mui/icons-material/GroupAddOutlined";
-import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
-import LoopOutlinedIcon from "@mui/icons-material/LoopOutlined";
-import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
-import a from "../src/assets/ibmLogo.jpg";
+import {
+    Avatar,
+    Box,
+    Drawer,
+    CssBaseline,
+    AppBar,
+    Toolbar,
+    List,
+    Typography,
+    Divider,
+    ListItemText,
+    CardMedia,
+    ListItemButton,
+    ListItemIcon,
+} from "@mui/material";
+
+import {
+    HomeOutlined,
+    GroupAddOutlined,
+    AccountBalanceOutlined,
+    LoopOutlined,
+    PostAddOutlined,
+    PersonOutlineOutlined,
+} from "@mui/icons-material";
 
 const drawerWidth = 240;
 
@@ -35,7 +38,16 @@ export default function MainView() {
                 }}
             >
                 <Toolbar>
-                    <img src={a} width="50" height="60" />
+                    <Box sx={{ width: "60px", marginRight: "5px" }}>
+                        <CardMedia
+                            component="img"
+                            sx={{
+                                width: 160,
+                            }}
+                            image="/assets/ibmLogo.jpg"
+                            alt="IBM"
+                        />
+                    </Box>
                     <Typography
                         variant="h6"
                         noWrap
@@ -82,14 +94,14 @@ export default function MainView() {
                 <List>
                     <ListItemButton>
                         <ListItemIcon>
-                            <HomeOutlinedIcon />
+                            <HomeOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Home" />
                     </ListItemButton>
 
                     <ListItemButton>
                         <ListItemIcon>
-                            <GroupAddOutlinedIcon />
+                            <GroupAddOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Delegate" />
                     </ListItemButton>
@@ -103,21 +115,21 @@ export default function MainView() {
 
                     <ListItemButton>
                         <ListItemIcon>
-                            <AccountBalanceOutlinedIcon />
+                            <AccountBalanceOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Expenses" />
                     </ListItemButton>
 
                     <ListItemButton>
                         <ListItemIcon>
-                            <LoopOutlinedIcon />
+                            <LoopOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Recovery" />
                     </ListItemButton>
 
                     <ListItemButton>
                         <ListItemIcon>
-                            <PostAddOutlinedIcon />
+                            <PostAddOutlined />
                         </ListItemIcon>
                         <ListItemText primary="Reports" />
                     </ListItemButton>
