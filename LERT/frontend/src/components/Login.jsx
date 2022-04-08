@@ -170,7 +170,7 @@ const Login = () => {
                                     sx={{
                                         width: 160,
                                     }}
-                                    image="/assets/ibm-logo-black-and-white.png"
+                                    image="/assets/ibmBW.png"
                                     alt="IBM"
                                 />
                             </Box>
