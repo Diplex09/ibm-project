@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { Delegate } from "./Admin/Delegate";
 import { Home } from "./Admin/Home";
 
 export const MainContent = () => {
@@ -12,7 +13,7 @@ export const MainContent = () => {
                 padding: "5rem",
             }}
         >
-            <Home />
+            <Delegate />
         </Box>
     );
 };

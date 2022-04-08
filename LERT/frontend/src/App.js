@@ -31,6 +31,9 @@ function App() {
                 "& .MuiTypography-root": {
                     fontFamily: "IBM Plex Sans, sans-serif",
                 },
+                "& .MuiTableCell-root": {
+                    fontFamily: "IBM Plex Sans, sans-serif",
+                },
             }}
         >
             <CssBaseline />
