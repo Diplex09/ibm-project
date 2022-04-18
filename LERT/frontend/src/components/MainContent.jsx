@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { Delegate } from "./Admin/Delegate";
 import { Home } from "./Admin/Home";
+import { ExpensesTypes } from "./OPManager/ExpensesTypes";
 
 export const MainContent = () => {
     return (
@@ -13,7 +14,7 @@ export const MainContent = () => {
                 padding: "5rem",
             }}
         >
-            <Delegate />
+            <ExpensesTypes/>
         </Box>
     );
 };
