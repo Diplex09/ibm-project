@@ -14,7 +14,7 @@ export const MainContent = () => {
                 padding: "5rem",
             }}
         >
-            <ExpensesTypes/>
+            <Delegate/>
         </Box>
     );
 };
