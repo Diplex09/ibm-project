@@ -8,13 +8,20 @@ export const MainContent = () => {
         <Box
             component="main"
             sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 flexGrow: 1,
                 bgcolor: "#f2f4f8",
                 color: "#000",
-                padding: "5rem",
+                mr: "3.5rem", // Navbar width}
+                mt: "65px",
+                p: "2rem 4rem",
             }}
         >
-            <Delegate/>
+            <Box sx={{ width: "100%", height: "100%" }}>
+                <Delegate />
+            </Box>
         </Box>
     );
 };
