@@ -34,6 +34,9 @@ function App() {
                 "& .MuiTableCell-root": {
                     fontFamily: "IBM Plex Sans, sans-serif",
                 },
+                "& .MuiInputBase-root": {
+                    fontFamily: "IBM Plex Sans, sans-serif",
+                },
             }}
         >
             <CssBaseline />
