@@ -9,17 +9,55 @@ export const ExpenseForm = () => {
     const handleReset = () => setTextValue("");
   
     return (
-      <Paper>
-  
+      
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
         <TextField
+          fullWidth
           onChange={onTextChange}
           value={textValue}
           label={"Enter expense type"} //optional
         />
-  
-        <Button onClick={handleSubmit}>Submit</Button>
-        <Button onClick={handleReset}>Reset</Button>
-      </Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Button onClick={handleSubmit}
+          variant="contained"
+          sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              textTransform: "none",
+              borderRadius: "0px",
+              width: "12rem",
+              height: "40px",
+              fontSize: "15px",
+              fontWeight: "400",
+              bgcolor: "#0062ff",
+              ":hover": {
+                  bgcolor: "#0255DA",
+              },
+          }}
+          
+          >Submit</Button>
+          <Button onClick={handleReset}
+          variant="contained"
+          sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              textTransform: "none",
+              borderRadius: "0px",
+              width: "12rem",
+              height: "40px",
+              fontSize: "15px",
+              fontWeight: "400",
+              bgcolor: "#0062ff",
+              ":hover": {
+                  bgcolor: "#0255DA",
+              },
+          }}
+          >Reset</Button>
+        </Grid>
+      </Grid>
+      
     );
   };
 
@@ -27,18 +65,18 @@ export const ExpensesTypes = () =>{
     return (
     <Box
     sx={{
-        alignItems: "center",
         width: "100%",
-        height: "100%",
+        height: "100%"
     }}
     >
         <Typography
+                align = 'center'
                 variant="h3"
                 sx={{ marginBottom: "4.5rem", fontWeight: "300" }}
             >
                 New expense type
         </Typography>
-
+      
         <ExpenseForm/>
     </Box>
     );
