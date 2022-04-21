@@ -11,9 +11,8 @@ export const Header = () => {
     const section = "HOME";
     return (
         <AppBar
-            position="left"
             sx={{
-                backgroundColor: " white",
+                backgroundColor: "white",
                 height: "60px",
             }}
         >
