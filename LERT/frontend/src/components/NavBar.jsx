@@ -22,6 +22,9 @@ import {
     Menu,
     ChevronRight,
 } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+
+import { authLogout } from "../reducers/authSlice";
 
 const drawerWidth = 300;
 
@@ -75,6 +78,8 @@ const Drawer = styled(MuiDrawer, {
 export const NavBar = () => {
     const theme = useTheme();
 
+    const dispatch = useDispatch();
+
     const [open, setOpen] = useState(false);
 
     const handleDrawerClose = () => {
@@ -83,6 +88,10 @@ export const NavBar = () => {
         } else {
             setOpen(true);
         }
+    };
+
+    const handleLogout = () => {
+        dispatch(authLogout());
     };
 
     return (
@@ -128,8 +137,9 @@ export const NavBar = () => {
                         {
                             text: "Logout",
                             icon: <LogoutOutlined />,
+                            handle: handleLogout,
                         },
-                    ].map(({ text, icon }, index) => (
+                    ].map(({ text, icon, handle }, index) => (
                         <ListItemButton
                             key={text}
                             sx={{
@@ -137,6 +147,7 @@ export const NavBar = () => {
                                 justifyContent: open ? "initial" : "center",
                                 px: 2.5,
                             }}
+                            onClick={handle}
                         >
                             <ListItemIcon
                                 sx={{
