@@ -14,27 +14,16 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useState } from "react";
-import axios from "axios";
+
+import { startLogin } from "../actions/auth";
 
 const Login = () => {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
 
-    console.log(user);
-
     const validLogin = (e) => {
         e.preventDefault();
-        axios
-            .post("/login", {
-                email: user,
-                password: password,
-            })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        startLogin(user, password);
     };
 
     return (
