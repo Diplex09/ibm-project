@@ -3,10 +3,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, CssBaseline } from "@mui/material";
 
-import Login from "./components/Login";
-import MainView from "./MainView";
-
 import "./App.css";
+import { AppRouter } from "./router/AppRouter";
 
 function App() {
     const [getMessage, setGetMessage] = useState({});
@@ -40,8 +38,7 @@ function App() {
             }}
         >
             <CssBaseline />
-            <Login />
-            {/* <MainView /> */}
+            <AppRouter />
         </Box>
     );
 }
