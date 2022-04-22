@@ -61,19 +61,26 @@ def login():
         #check user exists
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        sql = "SELECT * FROM users WHERE email=%s"
+        sql = "SELECT * FROM users WHERE Mail=%s"
         sql_where = (_email,)
 
         cursor.execute(sql, sql_where)
-        row = cursor.fetchone() 
-        email = row['email']
-        password = row['passwd']
+        row = cursor.fetchone()
+        email = row[2]
+        password = row[3]
         if row:
             print(password)
             if check_password_hash(password, _password):
                 session['username'] = email
                 cursor.close()
-                return jsonify ({'message' : 'You are logged in successfully'})
+                return jsonify ({'message' : 'You are logged in successfully',
+                    'user' : {
+                        "Id_user": row[0],
+                        "FullName": row[1],
+                        "Mail": row[2],
+                        "Rol": row[4]
+                    }
+                })
             else:
                 resp = jsonify({'message' : 'Bad Request - invalid password'})
                 resp.status_code = 400
