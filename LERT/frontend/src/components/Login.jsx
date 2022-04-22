@@ -14,16 +14,19 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { startLogin } from "../actions/auth";
 
 const Login = () => {
+    const dispatch = useDispatch();
+
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
 
     const validLogin = (e) => {
         e.preventDefault();
-        startLogin(user, password);
+        dispatch(startLogin(user, password));
     };
 
     return (
@@ -82,7 +85,6 @@ const Login = () => {
                                 autoFocus
                                 onChange={(e) => {
                                     setUser(e.target.value);
-                                    console.log(user);
                                 }}
                             />
                             <TextField
@@ -95,7 +97,6 @@ const Login = () => {
                                 id="password"
                                 onChange={(e) => {
                                     setPassword(e.target.value);
-                                    console.log(password);
                                 }}
                                 autoComplete="current-password"
                             />

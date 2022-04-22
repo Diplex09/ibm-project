@@ -8,10 +8,14 @@ export const startLogin = (email, password) => {
                 email,
                 password,
             })
-            .then(function (response) {
-                console.log(response);
-                // TODO: Get uid & name from response
-                dispatch(authLogin({ uid: "uid1", name: "UserName" }));
+            .then(function (resp) {
+                const body = resp.data;
+                dispatch(
+                    authLogin({
+                        uid: body.user.Id_user,
+                        name: body.user.FullName,
+                    })
+                );
             })
             .catch(function (error) {
                 console.log(error);
