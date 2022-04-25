@@ -28,7 +28,7 @@ CORS(app)
 DB_HOST = "localhost"
 DB_NAME = "lert"
 DB_USER = "postgres"
-DB_PASS = "password" #en el video pone admin
+DB_PASS = "Cruz4zulC4mp30n2021" #en el video pone admin
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
@@ -101,3 +101,16 @@ def logout():
 api.add_resource(HelloApiHandler, '/flask/hello')
 
 # api.add_resource(login, '/login')
+
+
+####################Test tabla DB expeses type
+@app.route('/expensesTypes', methods=['GET'])
+def getExpensesTypes():
+     print("ALO CAGADA")
+     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+     sql = "SELECT * FROM Type_Of_Espense"
+     cursor.execute(sql)
+     expenses = cursor.fetchall()
+     cursor.close()
+     resp = jsonify({expenses})
+     return resp
