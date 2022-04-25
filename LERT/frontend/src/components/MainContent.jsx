@@ -2,6 +2,11 @@ import { Box } from "@mui/material";
 import { Delegate } from "./Admin/Delegate";
 import { Home } from "./Admin/Home";
 import { ExpensesTypes } from "./OPManager/ExpensesTypes";
+import { HomeMg } from "./Manager/HomeMg"
+import { ExpensesMg } from "./Manager/ExpensesMg"
+import { Employees } from "./Manager/Employees"
+
+
 
 export const MainContent = () => {
     return (
@@ -20,8 +25,8 @@ export const MainContent = () => {
             }}
         >
             <Box sx={{ width: "100%", height: "100%" }}>
-                <Delegate />
-            </Box>
+                <ExpensesMg/>
+            </Box>s
         </Box>
     );
 };
