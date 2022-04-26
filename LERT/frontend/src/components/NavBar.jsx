@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import {
     Box,
@@ -25,6 +25,7 @@ import {
 import { useDispatch } from "react-redux";
 
 import { authLogout } from "../reducers/authSlice";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 300;
 
@@ -75,12 +76,20 @@ const Drawer = styled(MuiDrawer, {
     }),
 }));
 
-export const NavBar = () => {
+export const NavBar = ({ userRole }) => {
     const theme = useTheme();
 
     const dispatch = useDispatch();
 
     const [open, setOpen] = useState(false);
+
+    const [barBtns, setBarBtns] = useState([
+        {
+            text: "Home",
+            icon: <HomeOutlined />,
+            path: "/",
+        },
+    ]);
 
     const handleDrawerClose = () => {
         if (open === true) {
@@ -93,6 +102,19 @@ export const NavBar = () => {
     const handleLogout = () => {
         dispatch(authLogout());
     };
+
+    useEffect(() => {
+        if (userRole === 1) {
+            setBarBtns([
+                ...barBtns,
+                {
+                    text: "Delegate",
+                    icon: <GroupAddOutlined />,
+                    path: "/delegate",
+                },
+            ]);
+        }
+    }, []);
 
     return (
         <Box sx={{ display: "flex" }}>
@@ -109,61 +131,53 @@ export const NavBar = () => {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {[
-                        {
-                            text: "Home",
-                            icon: <HomeOutlined />,
-                        },
-                        {
-                            text: "Delegate",
-                            icon: <GroupAddOutlined />,
-                        },
-                        {
-                            text: "Employee",
-                            icon: <PersonOutlineOutlined />,
-                        },
-                        {
-                            text: "Expenses",
-                            icon: <AccountBalanceOutlined />,
-                        },
-                        {
-                            text: "Recovery",
-                            icon: <LoopOutlined />,
-                        },
-                        {
-                            text: "Reports",
-                            icon: <PostAddOutlined />,
-                        },
-                        {
-                            text: "Logout",
-                            icon: <LogoutOutlined />,
-                            handle: handleLogout,
-                        },
-                    ].map(({ text, icon, handle }, index) => (
-                        <ListItemButton
-                            key={text}
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? "initial" : "center",
-                                px: 2.5,
-                            }}
-                            onClick={handle}
-                        >
-                            <ListItemIcon
+                    {barBtns.map(({ text, icon, path }, index) => (
+                        <Link key={text} to={`${path}`}>
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : "auto",
-                                    justifyContent: "center",
+                                    minHeight: 48,
+                                    justifyContent: open ? "initial" : "center",
+                                    px: 2.5,
                                 }}
                             >
-                                {icon}
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={text}
-                                sx={{ opacity: open ? 1 : 0 }}
-                            />
-                        </ListItemButton>
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : "auto",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    {icon}
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={text}
+                                    sx={{ opacity: open ? 1 : 0 }}
+                                />
+                            </ListItemButton>
+                        </Link>
                     ))}
+                    <ListItemButton
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: open ? "initial" : "center",
+                            px: 2.5,
+                        }}
+                        onClick={handleLogout}
+                    >
+                        <ListItemIcon
+                            sx={{
+                                minWidth: 0,
+                                mr: open ? 3 : "auto",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <LogoutOutlined />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Logout"
+                            sx={{ opacity: open ? 1 : 0 }}
+                        />
+                    </ListItemButton>
                 </List>
             </Drawer>
         </Box>

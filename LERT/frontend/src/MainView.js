@@ -15,7 +15,7 @@ export default function MainView() {
         >
             <CssBaseline />
             <Header />
-            <NavBar />
+            <NavBar userRole={1} />
             <MainContent />
         </Box>
     );

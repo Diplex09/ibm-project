@@ -21,7 +21,7 @@ export const AppRouter = () => {
                     }
                 />
                 <Route
-                    path="/"
+                    path="/*"
                     element={
                         <PrivateRoute isAuthenticated={!!uid}>
                             <MainView />
