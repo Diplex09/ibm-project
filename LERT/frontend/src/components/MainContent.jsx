@@ -5,6 +5,7 @@ import { ExpensesTypes } from "./OPManager/ExpensesTypes";
 import { HomeMg } from "./Manager/HomeMg"
 import { ExpensesMg } from "./Manager/ExpensesMg"
 import { Employees } from "./Manager/Employees"
+import { QuarterMg } from "./Manager/QuarterMg";
 
 
 
@@ -25,8 +26,8 @@ export const MainContent = () => {
             }}
         >
             <Box sx={{ width: "100%", height: "100%" }}>
-                <ExpensesMg/>
-            </Box>s
+                <QuarterMg/>
+            </Box>
         </Box>
     );
 };
