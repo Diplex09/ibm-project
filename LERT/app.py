@@ -102,6 +102,76 @@ api.add_resource(HelloApiHandler, '/flask/hello')
 
 # api.add_resource(login, '/login')
 
+## ADMIN ACTIONS
+@app.route('/create_user', methods=['POST'])
+def create_user():
+    if 'username' in session:
+        _json = request.json
+        _fullname = _json['fullname']
+        _mail = _json['mail']
+        _passwd = _json['passwd']
+        _rol = _json['rol']
+
+        hashed_passwd = generate_password_hash(_passwd)
+
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Checar que no exista el usuario 
+        sql = "SELECT * FROM users WHERE Mail=%s"
+        sql_where = (_mail,)
+
+        cursor.execute(sql, sql_where)
+        row = cursor.fetchone()
+
+        if not row:
+
+            # Crear usuario
+            query = 'INSERT INTO users(fullname, mail, passwd, rol) VALUES (%s, %s, %s, %s)'
+
+            query_args = (_fullname, _mail, hashed_passwd, str(_rol),)
+
+            cursor.execute(query, query_args)
+
+            # commit the changes to the database
+            conn.commit()
+
+            sql = "SELECT * FROM users WHERE Mail=%s"
+            sql_where = (_mail,)
+
+            cursor.execute(sql, sql_where)
+            row = cursor.fetchone()
+
+            # close communication with the database
+            cursor.close()
+
+            if not row:
+                resp = jsonify({'message' : 'Bad Request - invalid credentials'})
+                resp.status_code = 400
+                return resp
+                
+            else:
+                return jsonify ({'message' : 'User successfully created',
+                            'user' : {
+                                "Id_user": row[0],
+                                "FullName": row[1],
+                                "Mail": row[2],
+                                "Rol": row[4]
+                            }
+                        })
+
+        else:
+            resp = jsonify({'message' : 'User already exists'})
+            resp.status_code = 400
+            return resp
+
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
+
+@app.route('/delete_user', methods=["DELETE"])
+def delete_user():
+    return None
 
 ####################Test tabla DB expeses type
 @app.route('/expensesTypes', methods=['GET'])
