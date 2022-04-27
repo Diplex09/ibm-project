@@ -180,7 +180,37 @@ def create_user():
 
 @app.route('/delete_user', methods=["DELETE"])
 def delete_user():
-    return None
+    if 'username' in session:
+        _json = request.json
+        _mail = _json['mail']
+
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Checar que exista el usuario 
+        sql = "SELECT * FROM users WHERE Mail=%s"
+        sql_where = (_mail,)
+
+        cursor.execute(sql, sql_where)
+        row = cursor.fetchone()
+
+        if row:
+            query = "DELETE FROM users WHERE Mail=%s"
+            args = (_mail,)
+
+            cursor.execute(query, args)
+            conn.commit()
+
+            return jsonify ({'message' : 'User successfully deleted'})
+
+        else:
+            resp = jsonify({'message' : 'Bad Request - could not find user'})
+            resp.status_code = 400
+            return resp
+
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
 
 ####################Test tabla DB expeses type
 @app.route('/expensesTypes', methods=['GET'])
