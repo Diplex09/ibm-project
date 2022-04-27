@@ -138,9 +138,9 @@ export const ExpensesMg = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {rows.map((row, index) => (
                             <TableRow
-                                key={row.email}
+                                key={index}
                                 sx={{
                                     '&:last-child td, &:last-child th': {
                                         border: 0,
