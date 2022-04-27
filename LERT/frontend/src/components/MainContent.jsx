@@ -1,9 +1,12 @@
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { AdminRouter } from '../router/Roles Routers/AdminRouter';
 import { ManagerRouter } from '../router/Roles Routers/ManagerRouter';
 import { OPManagerRouter } from '../router/Roles Routers/OPManagerRouter';
 
 export const MainContent = () => {
+    const { rol } = useSelector((state) => state.auth);
+
     return (
         <Box
             component="main"
@@ -20,7 +23,13 @@ export const MainContent = () => {
             }}
         >
             <Box sx={{ width: '100%', height: '100%' }}>
-                <OPManagerRouter />
+                {rol === 1 ? (
+                    <ManagerRouter />
+                ) : rol === 2 ? (
+                    <OPManagerRouter />
+                ) : (
+                    <AdminRouter />
+                )}
             </Box>
         </Box>
     );
