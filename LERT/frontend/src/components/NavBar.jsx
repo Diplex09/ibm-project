@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { useEffect, useState } from 'react';
+import { styled, useTheme } from '@mui/material/styles';
 import {
     Box,
     List,
@@ -9,8 +9,8 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-} from "@mui/material";
-import MuiDrawer from "@mui/material/Drawer";
+} from '@mui/material';
+import MuiDrawer from '@mui/material/Drawer';
 import {
     AccountBalanceOutlined,
     GroupAddOutlined,
@@ -21,58 +21,58 @@ import {
     PostAddOutlined,
     Menu,
     ChevronRight,
-} from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+} from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
 
-import { authLogout } from "../reducers/authSlice";
-import { Link } from "react-router-dom";
+import { authLogout } from '../reducers/authSlice';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 300;
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
     }),
-    overflowX: "hidden",
+    overflowX: 'hidden',
 });
 
 const closedMixin = (theme) => ({
-    transition: theme.transitions.create("width", {
+    transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
-    overflowX: "hidden",
+    overflowX: 'hidden',
     width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up('sm')]: {
         width: `calc(${theme.spacing(8)} + 1px)`,
     },
 });
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
 
 const Drawer = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== "open",
+    shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
     ...(open && {
         ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
+        '& .MuiDrawer-paper': openedMixin(theme),
     }),
     ...(!open && {
         ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
+        '& .MuiDrawer-paper': closedMixin(theme),
     }),
 }));
 
@@ -85,9 +85,9 @@ export const NavBar = ({ userRole }) => {
 
     const [barBtns, setBarBtns] = useState([
         {
-            text: "Home",
+            text: 'Home',
             icon: <HomeOutlined />,
-            path: "/",
+            path: '/',
         },
     ]);
 
@@ -108,45 +108,45 @@ export const NavBar = ({ userRole }) => {
             setBarBtns([
                 ...barBtns,
                 {
-                    text: "Delegate",
+                    text: 'Delegate',
                     icon: <GroupAddOutlined />,
-                    path: "/delegate",
+                    path: '/delegate',
                 },
             ]);
         } else if (userRole === 2) {
             setBarBtns([
                 ...barBtns,
                 {
-                    text: "Delegate",
+                    text: 'Delegate',
                     icon: <GroupAddOutlined />,
-                    path: "/delegate",
+                    path: '/delegate',
                 },
                 {
-                    text: "Employee",
+                    text: 'Employee',
                     icon: <PersonOutlineOutlined />,
-                    path: "/employee",
+                    path: '/employee',
                 },
                 {
-                    text: "Expenses",
+                    text: 'Expenses',
                     icon: <AccountBalanceOutlined />,
-                    path: "/expenses",
+                    path: '/expenses',
                 },
                 {
-                    text: "Recovery",
+                    text: 'Recovery',
                     icon: <LoopOutlined />,
-                    path: "/recovery",
+                    path: '/recovery',
                 },
                 {
-                    text: "Reports",
+                    text: 'Reports',
                     icon: <PostAddOutlined />,
-                    path: "/reports",
+                    path: '/reports',
                 },
             ]);
         }
     }, []);
 
     return (
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <Drawer variant="permanent" anchor="right" open={open}>
                 <DrawerHeader>
@@ -154,7 +154,7 @@ export const NavBar = ({ userRole }) => {
                         {open === true ? (
                             <ChevronRight />
                         ) : (
-                            <Menu sx={{ color: "#0062ff" }} />
+                            <Menu sx={{ color: '#0062ff' }} />
                         )}
                     </IconButton>
                 </DrawerHeader>
@@ -165,15 +165,15 @@ export const NavBar = ({ userRole }) => {
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
-                                    justifyContent: open ? "initial" : "center",
+                                    justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
                                 }}
                             >
                                 <ListItemIcon
                                     sx={{
                                         minWidth: 0,
-                                        mr: open ? 3 : "auto",
-                                        justifyContent: "center",
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
                                     }}
                                 >
                                     {icon}
@@ -188,7 +188,7 @@ export const NavBar = ({ userRole }) => {
                     <ListItemButton
                         sx={{
                             minHeight: 48,
-                            justifyContent: open ? "initial" : "center",
+                            justifyContent: open ? 'initial' : 'center',
                             px: 2.5,
                         }}
                         onClick={handleLogout}
@@ -196,8 +196,8 @@ export const NavBar = ({ userRole }) => {
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
-                                mr: open ? 3 : "auto",
-                                justifyContent: "center",
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
                             }}
                         >
                             <LogoutOutlined />

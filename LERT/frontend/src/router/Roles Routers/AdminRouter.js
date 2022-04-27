@@ -1,7 +1,7 @@
-import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import { Delegate } from "../../components/Admin/Delegate";
-import { Home } from "../../components/Admin/Home";
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { Delegate } from '../../components/Admin/Delegate';
+import { Home } from '../../components/Admin/Home';
 
 export const AdminRouter = () => {
     return (

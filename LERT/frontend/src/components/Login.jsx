@@ -11,18 +11,18 @@ import {
     Grid,
     Link,
     CardMedia,
-} from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { startLogin } from "../actions/auth";
+import { startLogin } from '../actions/auth';
 
 const Login = () => {
     const dispatch = useDispatch();
 
-    const [user, setUser] = useState("");
-    const [password, setPassword] = useState("");
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
 
     const validLogin = (e) => {
         e.preventDefault();
@@ -34,35 +34,35 @@ const Login = () => {
             <CssBaseline />
             <Box
                 sx={{
-                    width: "100%",
-                    height: "100vh",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#f2f4f8",
+                    width: '100%',
+                    height: '100vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#f2f4f8',
                 }}
             >
                 <Box
                     sx={{
-                        width: "80%",
-                        height: "70%",
-                        display: "flex",
-                        alignItems: "center",
-                        boxShadow: "0 10px 50px #9a9a9a",
+                        width: '80%',
+                        height: '70%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        boxShadow: '0 10px 50px #9a9a9a',
                     }}
                 >
                     <Box
                         sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "50%",
-                            height: "100%",
-                            backgroundColor: "#ffffff",
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '50%',
+                            height: '100%',
+                            backgroundColor: '#ffffff',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: "#000D4B" }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#000D4B' }}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
@@ -72,7 +72,7 @@ const Login = () => {
                         <Box
                             component="form"
                             noValidate
-                            sx={{ mt: 1, width: "70%" }}
+                            sx={{ mt: 1, width: '70%' }}
                         >
                             <TextField
                                 margin="normal"
@@ -117,10 +117,10 @@ const Login = () => {
                                 sx={{
                                     mt: 3,
                                     mb: 2,
-                                    borderRadius: "0px",
-                                    bgcolor: "#0062ff",
-                                    ":hover": {
-                                        bgcolor: "#0255DA",
+                                    borderRadius: '0px',
+                                    bgcolor: '#0062ff',
+                                    ':hover': {
+                                        bgcolor: '#0255DA',
                                     },
                                 }}
                             >
@@ -137,24 +137,24 @@ const Login = () => {
                     </Box>
                     <Box
                         sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "50%",
-                            height: "100%",
-                            backgroundColor: "#000D4B",
-                            color: "#ffffff",
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '50%',
+                            height: '100%',
+                            backgroundColor: '#000D4B',
+                            color: '#ffffff',
                         }}
                     >
                         <Box
                             sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
                             }}
                         >
-                            <Box sx={{ width: "110px", marginRight: "20px" }}>
+                            <Box sx={{ width: '110px', marginRight: '20px' }}>
                                 <CardMedia
                                     component="img"
                                     sx={{
@@ -167,18 +167,18 @@ const Login = () => {
 
                             <Typography
                                 variant="h3"
-                                sx={{ fontWeight: "bold" }}
+                                sx={{ fontWeight: 'bold' }}
                             >
                                 LERT
                             </Typography>
                         </Box>
                         <Box
                             sx={{
-                                width: "80%",
-                                height: "2px",
-                                marginTop: "20px",
-                                marginBottom: "20px",
-                                backgroundColor: "#ffffff",
+                                width: '80%',
+                                height: '2px',
+                                marginTop: '20px',
+                                marginBottom: '20px',
+                                backgroundColor: '#ffffff',
                             }}
                         ></Box>
                         <Typography component="p">

@@ -1,10 +1,10 @@
-import axios from "axios";
-import { authLogin } from "../reducers/authSlice";
+import axios from 'axios';
+import { authLogin } from '../reducers/authSlice';
 
 export const startLogin = (email, password) => {
     return async (dispatch) => {
         await axios
-            .post("/login", {
+            .post('/login', {
                 email,
                 password,
             })

@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
-import { PublicRoute } from "./PublicRoute";
-import { PrivateRoute } from "./PrivateRoute";
-import Login from "../components/Login";
-import MainView from "../MainView";
+import { PublicRoute } from './PublicRoute';
+import { PrivateRoute } from './PrivateRoute';
+import Login from '../components/Login';
+import MainView from '../MainView';
 
 export const AppRouter = () => {
     const { uid } = useSelector((state) => state.auth);

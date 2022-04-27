@@ -1,10 +1,10 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import {
     Box,
     Button,
@@ -15,13 +15,13 @@ import {
     Select,
     TextField,
     Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
     AccountCircle,
     ArrowForwardOutlined,
     SearchOutlined,
-} from "@mui/icons-material";
-import { useState } from "react";
+} from '@mui/icons-material';
+import { useState } from 'react';
 
 const createData = (id, adminMail, managerMail, country, status) => {
     return { id, adminMail, managerMail, country, status };
@@ -29,51 +29,51 @@ const createData = (id, adminMail, managerMail, country, status) => {
 
 const rows = [
     createData(
-        "IBA2962",
-        "luisalonsomg@ibm.com",
-        "carolina.soto@ibm.com",
-        "Mexico",
-        "Active"
+        'IBA2962',
+        'luisalonsomg@ibm.com',
+        'carolina.soto@ibm.com',
+        'Mexico',
+        'Active'
     ),
     createData(
-        "IBC4729",
-        "abrahammp@ibm.com",
-        "carolina.soto@ibm.com",
-        "Mexico",
-        "Active"
+        'IBC4729',
+        'abrahammp@ibm.com',
+        'carolina.soto@ibm.com',
+        'Mexico',
+        'Active'
     ),
     createData(
-        "IBD9451",
-        "aldoalejandrodp@ibm.com",
-        "ivan.wilebaldo@ibm.com",
-        "Mexico",
-        "Active"
+        'IBD9451',
+        'aldoalejandrodp@ibm.com',
+        'ivan.wilebaldo@ibm.com',
+        'Mexico',
+        'Active'
     ),
     createData(
-        "IBC2932",
-        "sebastianandresrs@ibm.com",
-        "carolina.soto@ibm.com",
-        "Mexico",
-        "Inactive"
+        'IBC2932',
+        'sebastianandresrs@ibm.com',
+        'carolina.soto@ibm.com',
+        'Mexico',
+        'Inactive'
     ),
     createData(
-        "IBZ2031",
-        "diegovm@ibm.com",
-        "ken.bauer@ibm.com",
-        "Mexico",
-        "Active"
+        'IBZ2031',
+        'diegovm@ibm.com',
+        'ken.bauer@ibm.com',
+        'Mexico',
+        'Active'
     ),
     createData(
-        "IBZ3431",
-        "manuelignaciocc@ibm.com",
-        "memo.gutierrez@ibm.com",
-        "Mexico",
-        "Inactive"
+        'IBZ3431',
+        'manuelignaciocc@ibm.com',
+        'memo.gutierrez@ibm.com',
+        'Mexico',
+        'Inactive'
     ),
 ];
 
 export const Delegate = () => {
-    const [profile, setProfile] = useState("");
+    const [profile, setProfile] = useState('');
 
     const handleChange = (e) => {
         setProfile(e.target.value);
@@ -81,7 +81,7 @@ export const Delegate = () => {
 
     return (
         <>
-            <Box sx={{ display: "flex", alignItems: "center", mb: "20px" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: '20px' }}>
                 <FormControl variant="standard" sx={{ m: 1, minWidth: 280 }}>
                     <InputLabel id="demo-simple-select-standard-label">
                         Select profile to log in
@@ -91,25 +91,25 @@ export const Delegate = () => {
                         onChange={handleChange}
                         label="Profile"
                     >
-                        <MenuItem value={"IBA123"}>someone1@ibm.com</MenuItem>
-                        <MenuItem value={"IBB123"}>someone2@ibm.com</MenuItem>
-                        <MenuItem value={"IBC123"}>someone3@ibm.com</MenuItem>
+                        <MenuItem value={'IBA123'}>someone1@ibm.com</MenuItem>
+                        <MenuItem value={'IBB123'}>someone2@ibm.com</MenuItem>
+                        <MenuItem value={'IBC123'}>someone3@ibm.com</MenuItem>
                     </Select>
                 </FormControl>
                 <Button
                     variant="contained"
                     sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        textTransform: "none",
-                        borderRadius: "0px",
-                        width: "12rem",
-                        height: "40px",
-                        fontSize: "15px",
-                        fontWeight: "400",
-                        bgcolor: "#0062ff",
-                        ":hover": {
-                            bgcolor: "#0255DA",
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        textTransform: 'none',
+                        borderRadius: '0px',
+                        width: '12rem',
+                        height: '40px',
+                        fontSize: '15px',
+                        fontWeight: '400',
+                        bgcolor: '#0062ff',
+                        ':hover': {
+                            bgcolor: '#0255DA',
                         },
                     }}
                 >
@@ -118,24 +118,24 @@ export const Delegate = () => {
             </Box>
             <Box
                 sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    mb: "15px",
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    mb: '15px',
                 }}
             >
                 <Typography
                     component="h1"
                     variant="h4"
                     sx={{
-                        fontWeight: "600",
+                        fontWeight: '600',
                     }}
                 >
                     Delegates:
                 </Typography>
-                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <SearchOutlined
-                        sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                        sx={{ color: 'action.active', mr: 1, my: 0.5 }}
                     />
                     <TextField label="Search" variant="standard" />
                 </Box>
@@ -143,12 +143,12 @@ export const Delegate = () => {
             <TableContainer
                 component={Paper}
                 sx={{
-                    "& .MuiTableCell-head": {
-                        color: "#0062ff",
-                        textTransform: "uppercase",
-                        fontWeight: "500",
+                    '& .MuiTableCell-head': {
+                        color: '#0062ff',
+                        textTransform: 'uppercase',
+                        fontWeight: '500',
                     },
-                    padding: "5px 20px",
+                    padding: '5px 20px',
                 }}
             >
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -166,7 +166,7 @@ export const Delegate = () => {
                             <TableRow
                                 key={row.id}
                                 sx={{
-                                    "&:last-child td, &:last-child th": {
+                                    '&:last-child td, &:last-child th': {
                                         border: 0,
                                     },
                                 }}
