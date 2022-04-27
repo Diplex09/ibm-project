@@ -28,6 +28,7 @@ function App() {
                 height: '100vh',
                 '& .MuiContainer-root': {
                     padding: '0px',
+                    fontFamily: 'IBM Plex Sans, sans-serif',
                 },
                 '& .MuiTypography-root': {
                     fontFamily: 'IBM Plex Sans, sans-serif',
