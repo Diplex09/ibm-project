@@ -111,15 +111,7 @@ export const NavBar = ({ userRole }) => {
 
     useEffect(() => {
         if (userRole === 1) {
-            setBarBtns([
-                ...barBtns,
-                {
-                    text: 'Delegate',
-                    icon: <GroupAddOutlined />,
-                    path: '/delegate',
-                },
-            ]);
-        } else if (userRole === 2) {
+            // Manager
             setBarBtns([
                 ...barBtns,
                 {
@@ -148,7 +140,8 @@ export const NavBar = ({ userRole }) => {
                     path: '/reports',
                 },
             ]);
-        } else if (userRole === 3) {
+        } else if (userRole === 2) {
+            // OP Manager
             setBarBtns([
                 ...barBtns,
                 {
@@ -180,6 +173,16 @@ export const NavBar = ({ userRole }) => {
                     text: 'Edit Manager Information',
                     icon: <EditOutlined />,
                     path: '/edit',
+                },
+            ]);
+        } else if (userRole === 3) {
+            // Admin
+            setBarBtns([
+                ...barBtns,
+                {
+                    text: 'Delegate',
+                    icon: <GroupAddOutlined />,
+                    path: '/delegate',
                 },
             ]);
         }
