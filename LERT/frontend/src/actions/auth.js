@@ -14,6 +14,7 @@ export const startLogin = (email, password) => {
                     authLogin({
                         uid: body.user.Id_user,
                         name: body.user.FullName,
+                        rol: body.user.Rol,
                     })
                 );
             })
