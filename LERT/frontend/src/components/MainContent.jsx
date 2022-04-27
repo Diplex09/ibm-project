@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
-import { ExpensesTypes } from './OPManager/ExpensesTypes';
 import { AdminRouter } from '../router/Roles Routers/AdminRouter';
 import { ManagerRouter } from '../router/Roles Routers/ManagerRouter';
+import { OPManagerRouter } from '../router/Roles Routers/OPManagerRouter';
 
 export const MainContent = () => {
     return (
@@ -20,7 +20,7 @@ export const MainContent = () => {
             }}
         >
             <Box sx={{ width: '100%', height: '100%' }}>
-                <ManagerRouter />
+                <OPManagerRouter />
             </Box>
         </Box>
     );

@@ -21,6 +21,12 @@ import {
     PostAddOutlined,
     Menu,
     ChevronRight,
+    TrackChangesOutlined,
+    ReceiptOutlined,
+    AttachMoneyOutlined,
+    AddAlarmOutlined,
+    PeopleAltOutlined,
+    EditOutlined,
 } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 
@@ -140,6 +146,40 @@ export const NavBar = ({ userRole }) => {
                     text: 'Reports',
                     icon: <PostAddOutlined />,
                     path: '/reports',
+                },
+            ]);
+        } else if (userRole === 3) {
+            setBarBtns([
+                ...barBtns,
+                {
+                    text: 'Types',
+                    icon: <TrackChangesOutlined />,
+                    path: '/types',
+                },
+                {
+                    text: 'ICAS',
+                    icon: <ReceiptOutlined />,
+                    path: '/icas',
+                },
+                {
+                    text: 'Expenses Types',
+                    icon: <AttachMoneyOutlined />,
+                    path: '/expenses',
+                },
+                {
+                    text: 'Extra Hours',
+                    icon: <AddAlarmOutlined />,
+                    path: '/hours',
+                },
+                {
+                    text: 'Manage Manager Functions',
+                    icon: <PeopleAltOutlined />,
+                    path: '/manage',
+                },
+                {
+                    text: 'Edit Manager Information',
+                    icon: <EditOutlined />,
+                    path: '/edit',
                 },
             ]);
         }
