@@ -124,6 +124,15 @@ def create_user():
         row = cursor.fetchone()
 
         if not row:
+            # Arreglar IDs
+            count_query = 'SELECT COUNT(*) FROM users;'
+            cursor.execute(count_query)
+            count = cursor.fetchone()[0]
+
+            updated_count = count + 1
+
+            id_query = 'ALTER SEQUENCE users_id_user_seq RESTART WITH %s'
+            cursor.execute(id_query, (updated_count,))
 
             # Crear usuario
             query = 'INSERT INTO users(fullname, mail, passwd, rol) VALUES (%s, %s, %s, %s)'
@@ -145,7 +154,7 @@ def create_user():
             cursor.close()
 
             if not row:
-                resp = jsonify({'message' : 'Bad Request - invalid credentials'})
+                resp = jsonify({'message' : 'Bad Request - could not create user'})
                 resp.status_code = 400
                 return resp
                 
