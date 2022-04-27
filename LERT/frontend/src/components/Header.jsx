@@ -6,9 +6,13 @@ import {
     CardMedia,
     Divider,
 } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import { getHeadTitle } from '../utils/getHeadTitle';
 
 export const Header = () => {
-    const section = 'HOME';
+    const location = useLocation();
+    const section = getHeadTitle(location.pathname);
+
     return (
         <AppBar
             sx={{
@@ -50,6 +54,7 @@ export const Header = () => {
                         color: 'black',
                         marginLeft: '18px',
                         fontWeight: 'bold',
+                        textTransform: 'uppercase',
                     }}
                 >
                     {section}
