@@ -113,6 +113,35 @@ export const NavBar = ({ userRole }) => {
                     path: "/delegate",
                 },
             ]);
+        } else if (userRole === 2) {
+            setBarBtns([
+                ...barBtns,
+                {
+                    text: "Delegate",
+                    icon: <GroupAddOutlined />,
+                    path: "/delegate",
+                },
+                {
+                    text: "Employee",
+                    icon: <PersonOutlineOutlined />,
+                    path: "/employee",
+                },
+                {
+                    text: "Expenses",
+                    icon: <AccountBalanceOutlined />,
+                    path: "/expenses",
+                },
+                {
+                    text: "Recovery",
+                    icon: <LoopOutlined />,
+                    path: "/recovery",
+                },
+                {
+                    text: "Reports",
+                    icon: <PostAddOutlined />,
+                    path: "/reports",
+                },
+            ]);
         }
     }, []);
 
