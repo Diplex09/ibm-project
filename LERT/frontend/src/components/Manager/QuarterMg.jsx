@@ -6,16 +6,6 @@ import {
     Title,
     ArgumentAxis,
     ValueAxis,
-<<<<<<< Updated upstream
-} from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
-
-const data = [
-    { year: 'Q1', population: 2500 },
-    { year: 'Q2', population: 3018 },
-    { year: 'Q3', population: 5682 },
-    { year: 'Q4', population: 7440 },
-=======
 } from "@devexpress/dx-react-chart-material-ui";
 import { Animation } from "@devexpress/dx-react-chart";
 import { Typography, Box } from "@mui/material";
@@ -25,7 +15,6 @@ const data = [
     { quarter: "Q2", cost: 3018 },
     { quarter: "Q3", cost: 5682 },
     { quarter: "Q4", cost: 7440 },
->>>>>>> Stashed changes
 ];
 
 export class QuarterMg extends React.PureComponent {
@@ -41,19 +30,6 @@ export class QuarterMg extends React.PureComponent {
         const { data: chartData } = this.state;
 
         return (
-<<<<<<< Updated upstream
-            <Paper>
-                <Chart data={chartData}>
-                    <ArgumentAxis />
-                    <ValueAxis max={9000} />
-
-                    <BarSeries valueField="population" argumentField="year" />
-
-                    <Title text="Table Per Quarter" />
-                    <Animation />
-                </Chart>
-            </Paper>
-=======
             <Box sx={{ background: "white" }}>
                 <Typography
                     component="h1"
@@ -67,6 +43,7 @@ export class QuarterMg extends React.PureComponent {
                 >
                     Table per Quarter
                 </Typography>
+
                 <Box
                     sx={{
                         width: 1050,
@@ -101,7 +78,6 @@ export class QuarterMg extends React.PureComponent {
                     </Typography>
                 </Box>
             </Box>
->>>>>>> Stashed changes
         );
     }
 }
