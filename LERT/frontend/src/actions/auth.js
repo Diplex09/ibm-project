@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { authLogin } from '../reducers/authSlice';
+import { authLogin, authLogout } from '../reducers/authSlice';
 
 export const startLogin = (email, password) => {
     return async (dispatch) => {
@@ -19,6 +19,21 @@ export const startLogin = (email, password) => {
                 );
             })
             .catch(function (error) {
+                console.log(error);
+            });
+    };
+};
+
+export const startLogout = () => {
+    return async (dispatch) => {
+        await axios
+            .get('/logout')
+            .then((resp) => {
+                const { message } = resp.data;
+                console.log(message);
+                dispatch(authLogout());
+            })
+            .catch((error) => {
                 console.log(error);
             });
     };

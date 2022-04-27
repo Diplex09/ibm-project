@@ -32,6 +32,7 @@ import { useDispatch } from 'react-redux';
 
 import { authLogout } from '../reducers/authSlice';
 import { Link } from 'react-router-dom';
+import { startLogout } from '../actions/auth';
 
 const drawerWidth = 300;
 
@@ -106,7 +107,7 @@ export const NavBar = ({ userRole }) => {
     };
 
     const handleLogout = () => {
-        dispatch(authLogout());
+        dispatch(startLogout());
     };
 
     useEffect(() => {
