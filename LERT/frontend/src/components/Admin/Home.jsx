@@ -1,15 +1,20 @@
 import { List, Typography, Button } from '@mui/material';
 import { ArrowForwardOutlined } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
+
+import { getFirstName } from '../../utils/getFirstName';
 
 export const Home = () => {
-    const nombre = 'Sebastián';
+    const { name } = useSelector((state) => state.auth);
+    const firstName = getFirstName(name);
+
     return (
         <List>
             <Typography
                 variant="h4"
                 sx={{ marginBottom: '2rem', fontWeight: '600' }}
             >
-                Hi, {nombre}!
+                Hi, {firstName}!
             </Typography>
             <Typography
                 variant="h3"
