@@ -5,17 +5,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-import {
-    List,
-    Typography,
-    Button,
-    Input,
-    Grid,
-    Box,
-    TextField,
-    Paper,
-    DataTable,
-} from '@mui/material';
+import { Typography, Button, Grid, Box, TextField, Paper } from '@mui/material';
 import React, { useState } from 'react';
 import data1 from './dataTest';
 
@@ -24,7 +14,7 @@ export const ExpenseForm = () => {
 
     const onTextChange = (e) => setTextValue(e.target.value);
     const handleSubmit = () => console.log(textValue);
-    const handleReset = () => setTextValue('');
+    // const handleReset = () => setTextValue('');
 
     return (
         <Grid container spacing={2}>

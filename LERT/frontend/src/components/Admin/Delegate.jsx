@@ -9,18 +9,13 @@ import {
     Box,
     Button,
     FormControl,
-    InputAdornment,
     InputLabel,
     MenuItem,
     Select,
     TextField,
     Typography,
 } from '@mui/material';
-import {
-    AccountCircle,
-    ArrowForwardOutlined,
-    SearchOutlined,
-} from '@mui/icons-material';
+import { ArrowForwardOutlined, SearchOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 
 const createData = (id, adminMail, managerMail, country, status) => {

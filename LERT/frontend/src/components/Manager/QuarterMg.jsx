@@ -1,20 +1,18 @@
-import * as React from "react";
-import Paper from "@mui/material/Paper";
+import * as React from 'react';
 import {
     Chart,
     BarSeries,
-    Title,
     ArgumentAxis,
     ValueAxis,
-} from "@devexpress/dx-react-chart-material-ui";
-import { Animation } from "@devexpress/dx-react-chart";
-import { Typography, Box } from "@mui/material";
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation } from '@devexpress/dx-react-chart';
+import { Typography, Box } from '@mui/material';
 
 const data = [
-    { quarter: "Q1", cost: 2500 },
-    { quarter: "Q2", cost: 3018 },
-    { quarter: "Q3", cost: 5682 },
-    { quarter: "Q4", cost: 7440 },
+    { quarter: 'Q1', cost: 2500 },
+    { quarter: 'Q2', cost: 3018 },
+    { quarter: 'Q3', cost: 5682 },
+    { quarter: 'Q4', cost: 7440 },
 ];
 
 export class QuarterMg extends React.PureComponent {
@@ -30,7 +28,7 @@ export class QuarterMg extends React.PureComponent {
         const { data: chartData } = this.state;
 
         return (
-            <Box sx={{ background: "white" }}>
+            <Box sx={{ background: 'white' }}>
                 <Typography
                     component="h1"
                     variant="h3"
@@ -38,7 +36,7 @@ export class QuarterMg extends React.PureComponent {
                         marginLeft: 10,
                         paddingTop: 3,
                         paddingBottom: 3,
-                        fontWeight: "Bold",
+                        fontWeight: 'Bold',
                     }}
                 >
                     Table per Quarter
@@ -47,9 +45,9 @@ export class QuarterMg extends React.PureComponent {
                 <Box
                     sx={{
                         width: 1050,
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        background: "white",
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        background: 'white',
                     }}
                 >
                     <Chart data={chartData}>
@@ -70,8 +68,8 @@ export class QuarterMg extends React.PureComponent {
                         sx={{
                             paddingTop: 3,
                             paddingBottom: 3,
-                            fontWeight: "Bold",
-                            textAlign: "center",
+                            fontWeight: 'Bold',
+                            textAlign: 'center',
                         }}
                     >
                         Quarters

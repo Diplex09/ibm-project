@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { Box, CssBaseline } from '@mui/material';
 
@@ -7,14 +7,14 @@ import './App.css';
 import { AppRouter } from './router/AppRouter';
 
 function App() {
-    const [getMessage, setGetMessage] = useState({});
+    // const [getMessage, setGetMessage] = useState({});
 
     useEffect(() => {
         axios
             .get('/flask/hello')
             .then((response) => {
                 console.log('SUCCESS', response);
-                setGetMessage(response);
+                // setGetMessage(response);
             })
             .catch((error) => {
                 console.log(error);

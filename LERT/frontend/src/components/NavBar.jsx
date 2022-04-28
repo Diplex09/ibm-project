@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import {
     Box,
     List,
@@ -29,9 +29,8 @@ import {
     EditOutlined,
 } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
-
-import { authLogout } from '../reducers/authSlice';
 import { Link } from 'react-router-dom';
+
 import { startLogout } from '../actions/auth';
 
 const drawerWidth = 300;
@@ -84,8 +83,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export const NavBar = ({ userRole }) => {
-    const theme = useTheme();
-
     const dispatch = useDispatch();
 
     const [open, setOpen] = useState(false);
