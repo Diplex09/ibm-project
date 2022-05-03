@@ -1,4 +1,5 @@
 import json
+from tokenize import Double
 from flask import Flask, jsonify, request, session, send_from_directory
 from flask_restful import Api, Resource, reqparse
 #library for encrypting
@@ -229,5 +230,5 @@ def getExpensesTypes():
          expensesInDb.append(row)
          
      cursor.close()
-     resp = json.dumps(tuple(expensesInDb))
+     resp = jsonify(tuple(expensesInDb))
      return resp

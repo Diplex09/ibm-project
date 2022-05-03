@@ -17,7 +17,7 @@ export const ExpenseForm = () => {
     // const handleReset = () => setTextValue('');
 
     return (
-        <Grid container spacing={2} sx={{ m: 6 }}>
+        <Grid container spacing={2} sx={{ marginBottom: 5 }}>
             <Grid item xs={10}>
                 <TextField
                     fullWidth
@@ -28,7 +28,7 @@ export const ExpenseForm = () => {
             </Grid>
             <Grid item xs={2}>
                 <Button
-                    onClick={callApi}
+                    onClick={getExpensesTypes((aber) => console.log({ aber }))}
                     variant="contained"
                     sx={{
                         display: "flex",
@@ -138,8 +138,14 @@ export const ExpensesTypes = () => {
     );
 };
 
-export function callApi() {
+export function getExpensesTypes(cb) {
     fetch("http://localhost:3000/expensesTypes", { method: "GET" })
-        .then((data) => data.json()) // Parsing the data into a JavaScript object
-        .then((json) => alert(JSON.stringify(json))); // Displaying the stringified data in an alert popup
+        .then((response) => response.json()) // Parsing the data into a JavaScript object
+        .then((result) => cb(result)); // Displaying the stringified data in an alert popup
 }
+
+// export function postNewExpenseType() {
+//     fetch("http://localhost:3000/expensesTypes", { method: "GET" })
+//         .then((response) => response.json()) // Parsing the data into a JavaScript object
+//         .then((result) => cb(result)); // Displaying the stringified data in an alert popup
+// }
