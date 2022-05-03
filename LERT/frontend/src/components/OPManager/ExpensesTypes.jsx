@@ -1,47 +1,47 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
-import { Typography, Button, Grid, Box, TextField, Paper } from '@mui/material';
-import React, { useState } from 'react';
-import data1 from './dataTest';
+import { Typography, Button, Grid, Box, TextField, Paper } from "@mui/material";
+import React, { useState } from "react";
+import data1 from "./dataTest";
 
 export const ExpenseForm = () => {
-    const [textValue, setTextValue] = useState('');
+    const [textValue, setTextValue] = useState("");
 
     const onTextChange = (e) => setTextValue(e.target.value);
     const handleSubmit = () => console.log(textValue);
     // const handleReset = () => setTextValue('');
 
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ m: 6 }}>
             <Grid item xs={10}>
                 <TextField
                     fullWidth
                     onChange={onTextChange}
                     value={textValue}
-                    label={'Enter expense type'} //optional
+                    label={"Enter expense type"} //optional
                 />
             </Grid>
             <Grid item xs={2}>
                 <Button
-                    onClick={handleSubmit}
+                    onClick={callApi}
                     variant="contained"
                     sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        textTransform: 'none',
-                        borderRadius: '0px',
-                        width: '12rem',
-                        height: '40px',
-                        fontSize: '15px',
-                        fontWeight: '400',
-                        bgcolor: '#0062ff',
-                        ':hover': {
-                            bgcolor: '#0255DA',
+                        display: "flex",
+                        justifyContent: "space-between",
+                        textTransform: "none",
+                        borderRadius: "0px",
+                        width: "12rem",
+                        height: "50px",
+                        fontSize: "15px",
+                        fontWeight: "400",
+                        bgcolor: "#0062ff",
+                        ":hover": {
+                            bgcolor: "#0255DA",
                         },
                     }}
                 >
@@ -77,12 +77,12 @@ export const ExpensesTable = () => {
         <TableContainer
             component={Paper}
             sx={{
-                '& .MuiTableCell-head': {
-                    color: '#0062ff',
-                    textTransform: 'uppercase',
-                    fontWeight: '500',
+                "& .MuiTableCell-head": {
+                    color: "#0062ff",
+                    textTransform: "uppercase",
+                    fontWeight: "500",
                 },
-                padding: '5px 20px',
+                padding: "5px 20px",
             }}
         >
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -97,7 +97,7 @@ export const ExpensesTable = () => {
                         <TableRow
                             key={row.id}
                             sx={{
-                                '&:last-child td, &:last-child th': {
+                                "&:last-child td, &:last-child th": {
                                     border: 0,
                                 },
                             }}
@@ -120,14 +120,14 @@ export const ExpensesTypes = () => {
     return (
         <Box
             sx={{
-                width: '100%',
-                height: '100%',
+                width: "100%",
+                height: "100%",
             }}
         >
             <Typography
                 align="center"
                 variant="h3"
-                sx={{ marginBottom: '4.5rem', fontWeight: '300' }}
+                sx={{ marginBottom: "4.5rem", fontWeight: "300" }}
             >
                 New Type of Expense
             </Typography>
@@ -137,3 +137,9 @@ export const ExpensesTypes = () => {
         </Box>
     );
 };
+
+export function callApi() {
+    fetch("http://localhost:3000/expensesTypes", { method: "GET" })
+        .then((data) => data.json()) // Parsing the data into a JavaScript object
+        .then((json) => alert(JSON.stringify(json))); // Displaying the stringified data in an alert popup
+}
