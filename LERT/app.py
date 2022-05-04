@@ -217,18 +217,16 @@ def delete_user():
 ####################Test tabla DB expeses type
 @app.route('/expensesTypes', methods=['GET'])
 def getExpensesTypes():
-     expensesInDb = []
-     print("ALO CAGADA")
+     expensesColumnNames = ["id","expensesNames","expensesAmount"]
+     expensesInDb =[]
      cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
      sql = "SELECT * FROM type_Of_expense"
      cursor.execute(sql)
      expenses = cursor.fetchall()
      for row in expenses:
-         print(row[0])
-         print(row[1])
-         print(row[2])
-         expensesInDb.append(row)
-         
+         expenseDic = dict(zip(expensesColumnNames, row))
+         expensesInDb.append(expenseDic)
      cursor.close()
-     resp = jsonify(tuple(expensesInDb))
+     #print(expensesInDb)
+     resp = jsonify(expensesInDb)
      return resp

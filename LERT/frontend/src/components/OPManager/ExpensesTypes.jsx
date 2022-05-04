@@ -28,7 +28,9 @@ export const ExpenseForm = () => {
             </Grid>
             <Grid item xs={2}>
                 <Button
-                    onClick={getExpensesTypes((aber) => console.log({ aber }))}
+                    onClick={getExpensesTypes((data2) =>
+                        console.log({ data2 })
+                    )}
                     variant="contained"
                     sx={{
                         display: "flex",
@@ -73,6 +75,7 @@ export const ExpenseForm = () => {
 };
 
 export const ExpensesTable = () => {
+    let dataChida = getExpensesTypes();
     return (
         <TableContainer
             component={Paper}
@@ -142,6 +145,14 @@ export function getExpensesTypes(cb) {
     fetch("http://localhost:3000/expensesTypes", { method: "GET" })
         .then((response) => response.json()) // Parsing the data into a JavaScript object
         .then((result) => cb(result)); // Displaying the stringified data in an alert popup
+}
+
+export async function getExpensesTypes2() {
+    const res = await fetch("http://localhost:3000/expensesTypes", {
+        method: "GET",
+    });
+    const response = await res.json();
+    return response;
 }
 
 // export function postNewExpenseType() {
