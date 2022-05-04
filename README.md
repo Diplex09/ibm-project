@@ -12,5 +12,5 @@ Roles:
 - Abraham Mendoza Pérez: `Project Manager` / `Frontend` / `Backend`
 - Luis Alonso Martínez García: `Frontend` / `Backend`
 - Diego Velazquez Moreno: `Tester` / `Backend`
-- Sebastian Andrés Rojas Salazar: `Frontend` / `Backend`
-- Gerardo Novelo De Anda: `Scrum Master` / `Frontend`
+- Sebastian Andrés Rojas Salazar: `Scrum Master`/ `Frontend`/`Backend`
+- Gerardo Novelo De Anda:  `Frontend`
