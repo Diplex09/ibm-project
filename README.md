@@ -12,4 +12,4 @@ Roles:
 - Abraham Mendoza Pérez: Project Manager
 - Luis Alonso Martínez García: Back-end developer
 - Diego Velazquez Moreno: Tester
-- Sebastian Andrés Rojas Salazar: Front-end developer
+- Sebastian Andrés Rojas Salazar: Full stack developer
