@@ -6,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
 import { Typography, Button, Grid, Box, TextField, Paper } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import data1 from "./dataTest";
 
 export const ExpenseForm = () => {
@@ -28,9 +28,7 @@ export const ExpenseForm = () => {
             </Grid>
             <Grid item xs={2}>
                 <Button
-                    onClick={getExpensesTypes((data2) =>
-                        console.log({ data2 })
-                    )}
+                    onClick={console.log("Aguanta")}
                     variant="contained"
                     sx={{
                         display: "flex",
@@ -75,7 +73,23 @@ export const ExpenseForm = () => {
 };
 
 export const ExpensesTable = () => {
-    let dataChida = getExpensesTypes();
+    const [expenseData, getExpenseData] = useState([]);
+    const URL = "http://localhost:3000/expensesTypes";
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        fetch(URL)
+            .then((res) => res.json())
+
+            .then((response) => {
+                console.log(response);
+                getExpenseData(response);
+            });
+    };
+
     return (
         <TableContainer
             component={Paper}
@@ -93,10 +107,11 @@ export const ExpensesTable = () => {
                     <TableRow>
                         <TableCell>ID</TableCell>
                         <TableCell align="left">Expense Type Name</TableCell>
+                        <TableCell>Expense Amount</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data1.map((row) => (
+                    {expenseData.map((row) => (
                         <TableRow
                             key={row.id}
                             sx={{
@@ -109,7 +124,10 @@ export const ExpensesTable = () => {
                                 {row.id}
                             </TableCell>
                             <TableCell align="left">
-                                {row.expenseTypeName}
+                                {row.expensesNames}
+                            </TableCell>
+                            <TableCell align="left">
+                                {row.expensesAmount}
                             </TableCell>
                         </TableRow>
                     ))}

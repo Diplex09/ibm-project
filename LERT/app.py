@@ -1,5 +1,6 @@
 import json
 from tokenize import Double
+from unicodedata import decimal
 from flask import Flask, jsonify, request, session, send_from_directory
 from flask_restful import Api, Resource, reqparse
 #library for encrypting
@@ -13,9 +14,23 @@ from flask_cors import CORS #comment this on deployment
 from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
 
+# from sqlalchemy import Column
+# from sqlalchemy import Integer
+# from sqlalchemy import String
+
+# from sqlalchemy.orm import declarative_base
+# from sqlalchemy.orm import Session
+
+# from sqlalchemy import create_engine
+# from sqlalchemy import select
+
+
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 CORS(app) #comment this on deployment
 api = Api(app)
+
+
+
 
 @app.route("/", defaults={'path':''})
 def serve(path):
@@ -217,6 +232,7 @@ def delete_user():
 ####################Test tabla DB expeses type
 @app.route('/expensesTypes', methods=['GET'])
 def getExpensesTypes():
+     print("a")
      expensesColumnNames = ["id","expensesNames","expensesAmount"]
      expensesInDb =[]
      cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -230,3 +246,76 @@ def getExpensesTypes():
      #print(expensesInDb)
      resp = jsonify(expensesInDb)
      return resp
+
+@app.route('/newExpenseType', methods=['GET','POST'])
+def postExpenseType():
+     type_name = request.json['expensesNames']
+     expense_amount = request.json['expensesAmount']
+     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+     # Checar que no exista el expense 
+     sql = "SELECT * FROM type_Of_expense WHERE type_name=%s"
+     sql_where = (type_name,)
+
+     cursor.execute(sql, sql_where)
+     row = cursor.fetchone()
+     if not row:
+        sql = "Insert into type_Of_expense(type_name,expense_amount) VALUES (%s, %s)"
+        query_args = (type_name, expense_amount)
+        cursor.execute(sql,query_args)
+        expenses = cursor.fetchall()
+
+        query = 'INSERT INTO type_Of_expense(type_name, expense_amount) VALUES (%s, %s)'
+
+        query_args = (type_name, expense_amount)
+
+        cursor.execute(query, query_args)
+
+        # commit the changes to the database
+        conn.commit()
+        sql = "SELECT * FROM type_Of_expense WHERE type_name=%s"
+        sql_where = (type_name,)
+
+        cursor.execute(sql, sql_where)
+        row = cursor.fetchone()
+
+        # close communication with the database
+        cursor.close()
+        if not row:
+                resp = jsonify({'message' : 'Bad Request - could not create user'})
+                resp.status_code = 400
+                return resp
+                
+        else:
+            return jsonify ({'message' : 'Expense successfully created',
+                        'expense' : {
+                            "id": row[0],
+                            "expenseName": row[1],
+                            "expenseAMount": row[2]
+                        }
+                    })
+
+     else:
+        resp = jsonify({'message' : 'User already exists'})
+        resp.status_code = 400
+        return resp
+
+#Implementacion con SQLAlchemy
+# Base = declarative_base()
+
+# # mappear renglones de una DB a objetos
+# class Usuario(Base):
+#     # agregamos los campos donde se mapearan las columnas de la db
+#     tablename = "type_Of_expense"
+#     id = Column(Integer, primary_key=True)
+#     expensesNames = Column(String(150))
+#     expensesAmount = Column(Double(100))
+
+#     # objeto engine para la conexión
+#     engine = create_engine('ibm_dbsa://db2inst1:hola@localhost:50000/testdb')
+#     session = Session(engine)
+
+#     #hacer query
+#     stmt = select(expensesNames).where(Usuario.email.in(["a@a.com"]))
+#     for user in session.scalars(stmt):
+#         print(user.email)
+#         print(user.token)
