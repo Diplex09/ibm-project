@@ -3,6 +3,7 @@ import { Employees } from '../../components/Manager/Employees';
 import { ExpensesMg } from '../../components/Manager/ExpensesMg';
 import { HomeMg } from '../../components/Manager/HomeMg';
 import { QuarterMg } from '../../components/Manager/QuarterMg';
+import { Reports } from '../../components/Manager/Reports';
 
 export const ManagerRouter = () => {
     return (
@@ -12,7 +13,7 @@ export const ManagerRouter = () => {
             <Route path="/employee" element={<Employees />} />
             <Route path="/expenses" element={<ExpensesMg />} />
             <Route path="/recovery" element={<QuarterMg />} />
-            <Route path="/reports" element={<div>Reports</div>} />
+            <Route path="/reports" element={<Reports />} />
             <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
     );
