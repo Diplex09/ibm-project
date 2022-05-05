@@ -8,17 +8,19 @@ export const startLogin = (email, password) => {
                 email,
                 password,
             })
-            .then(function (resp) {
-                const body = resp.data;
+            .then((resp) => {
+                const { token, user } = resp.data;
+                console.log(user);
+                localStorage.setItem('jwt-token', token);
                 dispatch(
                     authLogin({
-                        uid: body.user.Id_user,
-                        name: body.user.FullName,
-                        rol: body.user.Rol,
+                        uid: user.uid,
+                        name: user.fullName,
+                        rol: user.rol,
                     })
                 );
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     };
@@ -31,6 +33,7 @@ export const startLogout = () => {
             .then((resp) => {
                 const { message } = resp.data;
                 console.log(message);
+                localStorage.removeItem('jwt-token');
                 dispatch(authLogout());
             })
             .catch((error) => {

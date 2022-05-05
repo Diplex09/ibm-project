@@ -14,6 +14,8 @@ from flask_cors import CORS #comment this on deployment
 from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
 
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+
 # from sqlalchemy import Column
 # from sqlalchemy import Integer
 # from sqlalchemy import String
@@ -38,6 +40,9 @@ def serve(path):
 
 
 app.config['SECRET_KEY'] = 'lert-teamafk'
+app.config["JWTSECRETKEY"] = 'lert-secret'
+
+jwt = JWTManager(app)
 
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 CORS(app)
@@ -45,7 +50,7 @@ CORS(app)
 DB_HOST = "localhost"
 DB_NAME = "lert"
 DB_USER = "postgres"
-DB_PASS = "Cruz4zulC4mp30n2021" #en el video pone admin
+DB_PASS = "password" #en el video pone admin
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
@@ -64,8 +69,6 @@ def home():
             return resp
 
         # return passhash
-
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -90,14 +93,14 @@ def login():
             if check_password_hash(password, _password):
                 session['username'] = email
                 cursor.close()
-                return jsonify ({'message' : 'You are logged in successfully',
-                    'user' : {
-                        "Id_user": row[0],
-                        "FullName": row[1],
-                        "Mail": row[2],
-                        "Rol": row[4]
-                    }
-                })
+                # Create new token with user ID inside
+                # row[0]  = Id_user
+                access_token = create_access_token(identity=row[0])
+                return jsonify({ "token": access_token, 'user' : {
+                        "uid": row[0],
+                        "fullName": row[1],
+                        "rol": row[4]
+                    }})
             else:
                 resp = jsonify({'message' : 'Bad Request - invalid password'})
                 resp.status_code = 400
