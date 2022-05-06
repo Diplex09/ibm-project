@@ -6,7 +6,7 @@ from flask_restful import Api, Resource, reqparse
 #library for encrypting
 from werkzeug.security import generate_password_hash, check_password_hash
 #from flask_cors import CORS #pip install -U flask-cors
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 import psycopg2
 import psycopg2.extras
 
@@ -15,7 +15,7 @@ from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-
+from flask_jwt_extended import get_jwt, set_access_cookies, unset_jwt_cookies
 # from sqlalchemy import Column
 # from sqlalchemy import Integer
 # from sqlalchemy import String
@@ -40,11 +40,17 @@ def serve(path):
 
 
 app.config['SECRET_KEY'] = 'lert-teamafk'
-app.config["JWTSECRETKEY"] = 'lert-secret'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
+
+# If true this will only allow the cookies that contain your JWTs to be sent
+# over https.
+# - - - IMPORTANT: In production, this should always be set to True - - - 
+app.config["JWT_COOKIE_SECURE"] = False
+app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_SECRET_KEY"] = 'lert-secret'
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
 
 jwt = JWTManager(app)
-
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 CORS(app)
 
 DB_HOST = "localhost"
@@ -54,6 +60,21 @@ DB_PASS = "password" #en el video pone admin
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
+# Using an `after_request` callback, we refresh any token that is within 30
+# minutes of expiring. Change the timedeltas to match the needs of your application.
+@app.after_request
+def refresh_expiring_jwts(response):
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            set_access_cookies(response, access_token)
+        return response
+    except (RuntimeError, KeyError):
+        # Case where there is not a valid JWT. Just return the original response
+        return response
 
 #/login 
 @app.route("/")
@@ -93,22 +114,22 @@ def login():
             if check_password_hash(password, _password):
                 session['username'] = email
                 cursor.close()
-                # Create new token with user ID inside
-                # row[0]  = Id_user
-                access_token = create_access_token(identity=row[0])
-                return jsonify({ "token": access_token, 'user' : {
+                response = jsonify({ 'msg': 'Login Successful', 'user' : {
                         "uid": row[0],
                         "fullName": row[1],
                         "rol": row[4]
                     }})
+                access_token = create_access_token(identity=row[0])
+                set_access_cookies(response, access_token)
+                return response
             else:
-                resp = jsonify({'message' : 'Bad Request - invalid password'})
+                resp = jsonify({'msg' : 'Bad Request - invalid password'})
                 resp.status_code = 400
                 return resp
 
 
     else:
-        resp = jsonify({'message' : 'Bad Request - invalid credentials'})
+        resp = jsonify({'msg' : 'Bad Request - invalid credentials'})
         resp.status_code = 400
         return resp
 
@@ -116,7 +137,16 @@ def login():
 def logout():
     if 'username' in session:
         session.pop('username', None)
-    return jsonify({'message':'You successfully logged out'})
+
+    response = jsonify({'msg':'You successfully logged out'})
+    unset_jwt_cookies(response)
+    return response
+
+# Only for test
+@app.route("/protected")
+@jwt_required()
+def protected():
+    return jsonify({'msg' : 'Test Completed Correctly'})
 
 api.add_resource(HelloApiHandler, '/flask/hello')
 
