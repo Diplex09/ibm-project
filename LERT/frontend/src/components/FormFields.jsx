@@ -135,7 +135,14 @@ export const FormFields = () => {
                 }}
             >
                 <Button
-                    style={{ width: "500" }}
+                    sx={{
+                        width: "500",
+                        borderRadius: "0",
+                        bgcolor: "#0062ff",
+                        ":hover": {
+                            bgcolor: "#0255DA",
+                        },
+                    }}
                     variant="contained"
                     endIcon={<Send />}
                 >

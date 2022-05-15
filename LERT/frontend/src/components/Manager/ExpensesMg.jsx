@@ -127,6 +127,7 @@ export const ExpensesMg = () => {
                     </IconButton>
                 </Paper>
             </Box>
+
             <TableContainer
                 component={Paper}
                 sx={{
