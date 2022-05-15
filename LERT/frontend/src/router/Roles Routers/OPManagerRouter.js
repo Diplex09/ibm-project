@@ -1,10 +1,11 @@
 import { Navigate, Route, Routes } from 'react-router';
 import { ExpensesTypes } from '../../components/OPManager/ExpensesTypes';
+import { HomeOP} from '../../components/OPManager/HomeOP'
 
 export const OPManagerRouter = () => {
     return (
         <Routes>
-            <Route index element={<div>OP Manager Home</div>} />
+            <Route index element={<HomeOP/>} />
             <Route path="/types" element={<div>Types</div>} />
             <Route path="/icas" element={<div>ICAS</div>} />
             <Route path="/expenses" element={<ExpensesTypes />} />
