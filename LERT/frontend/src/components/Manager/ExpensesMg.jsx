@@ -136,6 +136,7 @@ export const ExpensesMg = () => {
                         fontWeight: "500",
                     },
                     padding: "5px 20px",
+                    marginTop: "17rem",
                 }}
             >
                 <Typography
