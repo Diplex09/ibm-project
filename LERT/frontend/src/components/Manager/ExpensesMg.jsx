@@ -15,7 +15,7 @@ import {
     TextField,
     Grid,
 } from "@mui/material";
-import { FormFields } from "../FormFields";
+import { FormFields } from "../Fields/FormFields";
 import { Search, FilterList } from "@mui/icons-material";
 import { makeStyles, styled } from "@material-ui/core/styles";
 
