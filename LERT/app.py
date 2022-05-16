@@ -332,6 +332,26 @@ def postExpenseType():
         resp.status_code = 400
         return resp
 
+####################Test tabla DB types
+@app.route('/Type', methods=['GET'])
+def getType():
+     print("a")
+     typeColumnNames = ["id_type","type_name","band","country","rate","date_to_start","date_to_finish"]
+     typeInDb =[]
+     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+     sql = "SELECT * FROM type"
+     cursor.execute(sql)
+     expenses = cursor.fetchall()
+     for row in expenses:
+         expenseDic = dict(zip(typeColumnNames, row))
+         typeInDb.append(expenseDic)
+     cursor.close()
+     #print(expensesInDb)
+     resp = jsonify(typeInDb)
+     return resp
+
+
+
 #Implementacion con SQLAlchemy
 # Base = declarative_base()
 

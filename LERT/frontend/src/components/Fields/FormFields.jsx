@@ -64,6 +64,7 @@ export const FormFields = () => {
                 dateAdapter={AdapterDateFns}
             >
                 <DatePicker
+                    inputFormat="yyyy-MM-dd"
                     label="Basic example"
                     value={value}
                     onChange={(newValue) => {
