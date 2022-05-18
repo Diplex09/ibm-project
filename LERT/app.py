@@ -13,7 +13,7 @@ import psycopg2.extras
 from flask_cors import CORS #comment this on deployment
 from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
-from backend.DB_Connections.dbInfo import getExpensesTypes
+from backend.DB_Connections.dbInfo import getExpensesTypes, postExpenseType
 
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -268,58 +268,9 @@ def delete_user():
 
 
 app.add_url_rule("/expensesTypes", view_func=getExpensesTypes, methods=['GET'])
+app.add_url_rule("/newExpenseType", view_func=postExpenseType, methods=['POST'])
 
-@app.route('/newExpenseType', methods=['GET','POST'])
-def postExpenseType():
-     type_name = request.json['expensesNames']
-     expense_amount = request.json['expensesAmount']
-     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-     # Checar que no exista el expense 
-     sql = "SELECT * FROM type_Of_expense WHERE type_name=%s"
-     sql_where = (type_name,)
 
-     cursor.execute(sql, sql_where)
-     row = cursor.fetchone()
-     if not row:
-        sql = "Insert into type_Of_expense(type_name,expense_amount) VALUES (%s, %s)"
-        query_args = (type_name, expense_amount)
-        cursor.execute(sql,query_args)
-        expenses = cursor.fetchall()
-
-        query = 'INSERT INTO type_Of_expense(type_name, expense_amount) VALUES (%s, %s)'
-
-        query_args = (type_name, expense_amount)
-
-        cursor.execute(query, query_args)
-
-        # commit the changes to the database
-        conn.commit()
-        sql = "SELECT * FROM type_Of_expense WHERE type_name=%s"
-        sql_where = (type_name,)
-
-        cursor.execute(sql, sql_where)
-        row = cursor.fetchone()
-
-        # close communication with the database
-        cursor.close()
-        if not row:
-                resp = jsonify({'message' : 'Bad Request - could not create user'})
-                resp.status_code = 400
-                return resp
-                
-        else:
-            return jsonify ({'message' : 'Expense successfully created',
-                        'expense' : {
-                            "id": row[0],
-                            "expenseName": row[1],
-                            "expenseAMount": row[2]
-                        }
-                    })
-
-     else:
-        resp = jsonify({'message' : 'User already exists'})
-        resp.status_code = 400
-        return resp
 
 ####################Test tabla DB types
 @app.route('/Type', methods=['GET'])
@@ -338,26 +289,3 @@ def getType():
      #print(expensesInDb)
      resp = jsonify(typeInDb)
      return resp
-
-
-
-#Implementacion con SQLAlchemy
-# Base = declarative_base()
-
-# # mappear renglones de una DB a objetos
-# class Usuario(Base):
-#     # agregamos los campos donde se mapearan las columnas de la db
-#     tablename = "type_Of_expense"
-#     id = Column(Integer, primary_key=True)
-#     expensesNames = Column(String(150))
-#     expensesAmount = Column(Double(100))
-
-#     # objeto engine para la conexión
-#     engine = create_engine('ibm_dbsa://db2inst1:hola@localhost:50000/testdb')
-#     session = Session(engine)
-
-#     #hacer query
-#     stmt = select(expensesNames).where(Usuario.email.in(["a@a.com"]))
-#     for user in session.scalars(stmt):
-#         print(user.email)
-#         print(user.token)

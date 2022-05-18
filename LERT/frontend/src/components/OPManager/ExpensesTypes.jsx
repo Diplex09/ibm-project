@@ -11,24 +11,25 @@ import data1 from "./dataTest";
 
 export const ExpenseForm = () => {
     const [textValue, setTextValue] = useState("");
-
-    const onTextChange = (e) => setTextValue(e.target.value);
-    const handleSubmit = () => console.log(textValue);
     // const handleReset = () => setTextValue('');
+
+    const validExpense = (e) => {
+        e.preventDefault();
+        postNewExpenseType(textValue);
+    };
 
     return (
         <Grid container spacing={2} sx={{ marginBottom: 5 }}>
             <Grid item xs={10}>
                 <TextField
                     fullWidth
-                    onChange={onTextChange}
-                    value={textValue}
+                    onChange={(e) => setTextValue(e.target.value)}
                     label={"Enter expense type"} //optional
                 />
             </Grid>
             <Grid item xs={2}>
                 <Button
-                    onClick={console.log("Aguanta")}
+                    onClick={validExpense}
                     variant="contained"
                     sx={{
                         display: "flex",
@@ -85,7 +86,6 @@ export const ExpensesTable = () => {
             .then((res) => res.json())
 
             .then((response) => {
-                console.log(response);
                 getExpenseData(response);
             });
     };
@@ -123,11 +123,9 @@ export const ExpensesTable = () => {
                             <TableCell component="th" scope="row">
                                 {row.id}
                             </TableCell>
+                            <TableCell align="left">{row.typeName}</TableCell>
                             <TableCell align="left">
-                                {row.expensesNames}
-                            </TableCell>
-                            <TableCell align="left">
-                                {row.expensesAmount}
+                                {"$" + row.expenseAmount}
                             </TableCell>
                         </TableRow>
                     ))}
@@ -171,6 +169,19 @@ export async function getExpensesTypes2() {
     });
     const response = await res.json();
     return response;
+}
+
+export function postNewExpenseType(nombrea) {
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: nombrea, amount: 666 }),
+    };
+    console.log(JSON.stringify({ name: nombrea, amount: 666 }));
+    fetch("http://localhost:3000/newExpenseType", requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log(data));
 }
 
 // export function postNewExpenseType() {
