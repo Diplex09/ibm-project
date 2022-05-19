@@ -33,7 +33,7 @@ export const TypesFields = () => {
     const [value, setValue] = React.useState(null);
 
     const [typeData, getTypeData] = useState([]);
-    const URL = "http://localhost:3000/Type";
+    const URL = "http://localhost:3000/getTypes";
 
     useEffect(() => {
         fetchData();
@@ -219,7 +219,7 @@ export const TypesFields = () => {
                                 }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.type_name}
+                                    {row.name}
                                 </TableCell>
                                 <TableCell align="left">
                                     {row.country}

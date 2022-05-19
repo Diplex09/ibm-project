@@ -14,6 +14,7 @@ from flask_cors import CORS #comment this on deployment
 from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
 from backend.DB_Connections.dbInfo import getExpensesTypes, postExpenseType
+from backend.DB_Connections.dbtypes import getTypes
 
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -58,7 +59,7 @@ CORS(app)
 DB_HOST = "localhost"
 DB_NAME = "lert"
 DB_USER = "postgres"
-DB_PASS = "Cruz4zulC4mp30n2021" #en el video pone admin
+DB_PASS = "password" #en el video pone admin
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 
@@ -266,26 +267,13 @@ def delete_user():
 
 ####################Test tabla DB expeses type
 
-
+#Metodos expensesTypes
 app.add_url_rule("/expensesTypes", view_func=getExpensesTypes, methods=['GET'])
 app.add_url_rule("/newExpenseType", view_func=postExpenseType, methods=['POST'])
 
+#Metodos types
+app.add_url_rule("/getTypes", view_func=getTypes, methods=['GET'])
 
 
-####################Test tabla DB types
-@app.route('/Type', methods=['GET'])
-def getType():
-     print("a")
-     typeColumnNames = ["id_type","type_name","band","country","rate","date_to_start","date_to_finish"]
-     typeInDb =[]
-     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-     sql = "SELECT * FROM type"
-     cursor.execute(sql)
-     expenses = cursor.fetchall()
-     for row in expenses:
-         expenseDic = dict(zip(typeColumnNames, row))
-         typeInDb.append(expenseDic)
-     cursor.close()
-     #print(expensesInDb)
-     resp = jsonify(typeInDb)
-     return resp
+
+
