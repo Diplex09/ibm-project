@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     Box,
     Divider,
@@ -32,13 +32,13 @@ import TableRow from "@mui/material/TableRow";
 import { set } from "date-fns";
 
 export const TypesFields = () => {
-    const [value, setValue] = React.useState(null);
+    const [value, setValue] = useState(null);
 
     //Variables para textfields
-    const [type, setType] = React.useState("");
-    const [band, setBand] = React.useState("");
-    const [rate, setRate] = React.useState("");
-    const [country, setCountry] = React.useState("");
+    const [type, setType] = useState("");
+    const [band, setBand] = useState("");
+    const [rate, setRate] = useState("");
+    const [country, setCountry] = useState("");
     const [dateStart, setDateStart] = useState(
         new Date().toLocaleDateString("fr-FR")
     );
@@ -46,7 +46,7 @@ export const TypesFields = () => {
         new Date().toLocaleDateString("fr-FR")
     );
 
-    const [typeData, getTypeData] = useState([]);
+    const [typeData, setTypeData] = useState([]);
     const URL = "http://localhost:3000/getTypes";
 
     useEffect(() => {
@@ -59,13 +59,14 @@ export const TypesFields = () => {
 
             .then((response) => {
                 console.log(response);
-                getTypeData(response);
+                setTypeData(response);
             });
     };
 
-    const typePost = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        postNewType(type, band, rate, country, dateStart, dateFinish);
+        await postNewType(type, band, rate, country, dateStart, dateFinish);
+        await fetchData();
     };
     return (
         <>
@@ -232,7 +233,7 @@ export const TypesFields = () => {
                         }}
                         variant="contained"
                         endIcon={<Send />}
-                        onClick={typePost}
+                        onClick={handleSubmit}
                     >
                         Submit
                     </Button>
