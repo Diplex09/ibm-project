@@ -54,7 +54,7 @@ class Types(Base):
 
 def getTypes():
     typesList = []
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:Cruz4zulC4mp30n2021@localhost/lert")
+    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
     session = Session(engine)
     #hacer query
     
@@ -78,7 +78,7 @@ def postType():
     _date_finish = _json['date_to_finish']
 
 
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:Cruz4zulC4mp30n2021@localhost/lert")
+    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
     session = Session(engine)
     if request.method == 'POST':
         if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:

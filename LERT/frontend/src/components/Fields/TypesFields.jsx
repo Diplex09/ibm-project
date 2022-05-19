@@ -21,6 +21,8 @@ import {
     CommentOutlined,
     Send,
     PublicOutlined,
+    ModeEditOutlineOutlined,
+    DeleteOutlined,
 } from "@mui/icons-material";
 
 import Table from "@mui/material/Table";
@@ -30,6 +32,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { set } from "date-fns";
+import { TypesModal } from "../EditFields/TypesModal";
 
 export const TypesFields = () => {
     const [value, setValue] = useState(null);
@@ -46,6 +49,7 @@ export const TypesFields = () => {
         new Date().toLocaleDateString("fr-FR")
     );
 
+    const axios = require("axios").default;
     const [typeData, setTypeData] = useState([]);
     const URL = "http://localhost:3000/getTypes";
 
@@ -54,13 +58,13 @@ export const TypesFields = () => {
     }, []);
 
     const fetchData = () => {
-        fetch(URL)
-            .then((res) => res.json())
-
-            .then((response) => {
-                console.log(response);
-                setTypeData(response);
-            });
+        axios({
+            method: "get",
+            url: "http://localhost:3000/getTypes",
+            responseType: "json",
+        }).then(function (response) {
+            setTypeData(response.data);
+        });
     };
 
     const handleSubmit = async (e) => {
@@ -253,6 +257,7 @@ export const TypesFields = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
+                            <TableCell>Actions</TableCell>
                             <TableCell>Type</TableCell>
                             <TableCell align="left">Country</TableCell>
                             <TableCell>Band</TableCell>
@@ -271,6 +276,22 @@ export const TypesFields = () => {
                                     },
                                 }}
                             >
+                                <TableCell>
+                                    <IconButton
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            {
+                                                <TypesModal />;
+                                            }
+                                        }}
+                                    >
+                                        <ModeEditOutlineOutlined />
+                                    </IconButton>
+
+                                    <IconButton>
+                                        <DeleteOutlined />
+                                    </IconButton>
+                                </TableCell>
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
@@ -304,21 +325,9 @@ export function postNewType(
     date_start,
     date_finish
 ) {
-    // Simple POST request with a JSON body using fetch
-    const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            name: type,
-            country: country,
-            band: band,
-            rate: rate,
-            date_to_start: date_start,
-            date_to_finish: date_finish,
-        }),
-    };
-    console.log(
-        JSON.stringify({
+    const axios = require("axios").default;
+    axios
+        .post("http://localhost:3000/newPostType", {
             name: type,
             country: country,
             band: band,
@@ -326,8 +335,10 @@ export function postNewType(
             date_to_start: date_start,
             date_to_finish: date_finish,
         })
-    );
-    fetch("http://localhost:3000/newPostType", requestOptions)
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
