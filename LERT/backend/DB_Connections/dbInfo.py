@@ -47,9 +47,9 @@ def getExpensesTypes():
     stmt = select(ExpenseType)
     for expense in session.scalars(stmt):
         expenseList.append(expense)
-        print(expense.id_type_of_expense)
-        print(expense.type_name)
-        print(expense.expense_amount)
+        # print(expense.id_type_of_expense)
+        # print(expense.type_name)
+        # print(expense.expense_amount)
     resp = jsonify([e.serialize() for e in expenseList]) #Con esto puedes mandar lista de objetos en json
     return resp
 
