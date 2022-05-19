@@ -67,19 +67,26 @@ def getTypes():
     resp = jsonify([e.serialize() for e in typesList]) #Con esto puedes mandar lista de objetos en json
     return resp
 
-#def postExpenseType():
+def postType():
+    print("si")
     _json = request.json
     _name = _json['name']
-    _amount = _json['amount']
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:Cruz4zulC4mp30n2021@localhost/lert")
+    _band = _json['band']
+    _country = _json['country']
+    _rate = _json['rate']
+    _date_start = _json['date_to_start']
+    _date_finish = _json['date_to_finish']
+
+
+    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
     session = Session(engine)
     if request.method == 'POST':
-        if not _name or not _amount:
-            return "All necessary values not received"
+        if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:
+            return "Values fields are incomplete"
         else:
-            expense = ExpenseType(_name, _amount)
+            type = Types(_name, _band,  _country,  _rate,  _date_start,  _date_finish)
             
-            session.add(expense)
+            session.add(type)
             session.commit()
             
             return "New Expense Type Uploaded Succesfully"

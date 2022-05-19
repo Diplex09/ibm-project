@@ -20,6 +20,7 @@ import {
     EmailOutlined,
     CommentOutlined,
     Send,
+    PublicOutlined,
 } from "@mui/icons-material";
 
 import Table from "@mui/material/Table";
@@ -28,9 +29,22 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { set } from "date-fns";
 
 export const TypesFields = () => {
     const [value, setValue] = React.useState(null);
+
+    //Variables para textfields
+    const [type, setType] = React.useState("");
+    const [band, setBand] = React.useState("");
+    const [rate, setRate] = React.useState("");
+    const [country, setCountry] = React.useState("");
+    const [dateStart, setDateStart] = useState(
+        new Date().toLocaleDateString("fr-FR")
+    );
+    const [dateFinish, setDateFinish] = useState(
+        new Date().toLocaleDateString("fr-FR")
+    );
 
     const [typeData, getTypeData] = useState([]);
     const URL = "http://localhost:3000/getTypes";
@@ -47,6 +61,11 @@ export const TypesFields = () => {
                 console.log(response);
                 getTypeData(response);
             });
+    };
+
+    const typePost = (e) => {
+        e.preventDefault();
+        postNewType(type, band, rate, country, dateStart, dateFinish);
     };
     return (
         <>
@@ -84,6 +103,9 @@ export const TypesFields = () => {
                     id="standard-basic"
                     label="TYPE"
                     variant="standard"
+                    onChange={(e) => {
+                        setType(e.target.value);
+                    }}
                 />
 
                 <TextField
@@ -98,6 +120,9 @@ export const TypesFields = () => {
                     id="standard-basic"
                     label="BAND NUMBER"
                     variant="standard"
+                    onChange={(e) => {
+                        setBand(e.target.value);
+                    }}
                 />
 
                 <TextField
@@ -112,6 +137,31 @@ export const TypesFields = () => {
                     id="standard-basic"
                     label="RATE"
                     variant="standard"
+                    onChange={(e) => {
+                        setRate(e.target.value);
+                    }}
+                />
+
+                <TextField
+                    sx={{
+                        marginTop: "2rem",
+                        marginRight: "10rem",
+                        marginLeft: "3rem",
+                        width: "18rem",
+                    }}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <PublicOutlined size="10rem" />
+                            </InputAdornment>
+                        ),
+                    }}
+                    id="standard-basic"
+                    label="COUNTRY"
+                    variant="standard"
+                    onChange={(e) => {
+                        setCountry(e.target.value);
+                    }}
                 />
 
                 <LocalizationProvider
@@ -120,15 +170,10 @@ export const TypesFields = () => {
                 >
                     <DatePicker
                         label="Begin"
-                        value={value}
-                        onChange={(newValue) => {
-                            setValue(newValue);
-                        }}
                         renderInput={(params) => (
                             <TextField
                                 sx={{
                                     marginTop: "2rem",
-                                    marginLeft: "15rem",
                                     marginRight: "9.8rem",
                                     width: "18rem",
                                     border: "0",
@@ -136,6 +181,11 @@ export const TypesFields = () => {
                                 {...params}
                             />
                         )}
+                        value={dateStart}
+                        onChange={(date) => {
+                            let d = new Date(date).toLocaleDateString("fr-FR");
+                            setDateStart(d);
+                        }}
                     />
                 </LocalizationProvider>
 
@@ -145,21 +195,22 @@ export const TypesFields = () => {
                 >
                     <DatePicker
                         label="End"
-                        value={value}
-                        onChange={(newValue) => {
-                            setValue(newValue);
-                        }}
                         renderInput={(params) => (
                             <TextField
                                 sx={{
                                     marginTop: "2rem",
-                                    marginRight: "9.8rem",
+
                                     width: "18rem",
                                     border: "0",
                                 }}
                                 {...params}
                             />
                         )}
+                        value={dateFinish}
+                        onChange={(date) => {
+                            let dF = new Date(date).toLocaleDateString("fr-FR");
+                            setDateFinish(dF);
+                        }}
                     />
                 </LocalizationProvider>
 
@@ -181,6 +232,7 @@ export const TypesFields = () => {
                         }}
                         variant="contained"
                         endIcon={<Send />}
+                        onClick={typePost}
                     >
                         Submit
                     </Button>
@@ -242,3 +294,39 @@ export const TypesFields = () => {
 };
 
 export default TypesFields;
+
+export function postNewType(
+    type,
+    band,
+    rate,
+    country,
+    date_start,
+    date_finish
+) {
+    // Simple POST request with a JSON body using fetch
+    const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name: type,
+            country: country,
+            band: band,
+            rate: rate,
+            date_to_start: date_start,
+            date_to_finish: date_finish,
+        }),
+    };
+    console.log(
+        JSON.stringify({
+            name: type,
+            country: country,
+            band: band,
+            rate: rate,
+            date_to_start: date_start,
+            date_to_finish: date_finish,
+        })
+    );
+    fetch("http://localhost:3000/newPostType", requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+}
