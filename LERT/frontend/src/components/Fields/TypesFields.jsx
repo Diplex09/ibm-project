@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import {
     Box,
     Divider,
@@ -32,12 +32,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { set } from "date-fns";
-import { TypesModal } from "../EditFields/TypesModal";
+import { ReadRowTypes } from "../EditFields/ReadRowTypes";
+import { EditRowTypes } from "../EditFields/EditRowTypes";
 
 export const TypesFields = () => {
     const [value, setValue] = useState(null);
 
     //Variables para textfields
+    const [rowId, setRowId] = useState(2);
     const [type, setType] = useState("");
     const [band, setBand] = useState("");
     const [rate, setRate] = useState("");
@@ -243,74 +245,61 @@ export const TypesFields = () => {
                     </Button>
                 </Box>
             </Box>
-
-            <TableContainer
-                sx={{
-                    "& .MuiTableCell-head": {
-                        color: "#0062ff",
-                        textTransform: "uppercase",
-                        fontWeight: "500",
-                    },
-                    padding: "5px 20px",
-                }}
-            >
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Actions</TableCell>
-                            <TableCell>Type</TableCell>
-                            <TableCell align="left">Country</TableCell>
-                            <TableCell>Band</TableCell>
-                            <TableCell>Rate</TableCell>
-                            <TableCell>Date Start</TableCell>
-                            <TableCell>Date Finish</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {typeData.map((row) => (
-                            <TableRow
-                                key={row.id}
-                                sx={{
-                                    "&:last-child td, &:last-child th": {
-                                        border: 0,
-                                    },
-                                }}
-                            >
-                                <TableCell>
-                                    <IconButton
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            {
-                                                <TypesModal />;
-                                            }
-                                        }}
-                                    >
-                                        <ModeEditOutlineOutlined />
-                                    </IconButton>
-
-                                    <IconButton>
-                                        <DeleteOutlined />
-                                    </IconButton>
-                                </TableCell>
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="left">
-                                    {row.country}
-                                </TableCell>
-                                <TableCell align="left">{row.band}</TableCell>
-                                <TableCell align="left">{row.rate}</TableCell>
-                                <TableCell align="left">
-                                    {row.date_to_start}
-                                </TableCell>
-                                <TableCell align="left">
-                                    {row.date_to_finish}
-                                </TableCell>
+            <form>
+                <TableContainer
+                    sx={{
+                        "& .MuiTableCell-head": {
+                            color: "#0062ff",
+                            textTransform: "uppercase",
+                            fontWeight: "500",
+                        },
+                        padding: "5px 20px",
+                    }}
+                >
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Actions</TableCell>
+                                <TableCell>Type</TableCell>
+                                <TableCell align="left">Country</TableCell>
+                                <TableCell>Band</TableCell>
+                                <TableCell>Rate</TableCell>
+                                <TableCell>Date Start</TableCell>
+                                <TableCell>Date Finish</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {typeData.map((row) => (
+                                <TableRow
+                                    key={row.id}
+                                    sx={{
+                                        "&:last-child td, &:last-child th": {
+                                            border: 0,
+                                        },
+                                    }}
+                                >
+                                    <TableCell>
+                                        <IconButton>
+                                            <ModeEditOutlineOutlined />
+                                        </IconButton>
+
+                                        <IconButton>
+                                            <DeleteOutlined />
+                                        </IconButton>
+                                    </TableCell>
+                                    <Fragment>
+                                        {rowId === row.id ? (
+                                            <EditRowTypes />
+                                        ) : (
+                                            <ReadRowTypes row={row} />
+                                        )}
+                                    </Fragment>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </form>
         </>
     );
 };
