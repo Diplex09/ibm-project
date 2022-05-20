@@ -90,3 +90,18 @@ def postType():
             session.commit()
             
             return "New Expense Type Uploaded Succesfully"
+
+def deleteType():
+    
+    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
+    session = Session(engine)
+    if request.method == 'DELETE':
+        autoIncrement = "alter sequence type_id_type_seq restart 4"
+        session.execute(autoIncrement)
+        session.commit()
+
+        delete = "delete from type where id_type=4"
+        session.execute(delete)
+        session.commit()
+
+        return "Type delete done"
