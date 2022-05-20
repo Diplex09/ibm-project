@@ -1,10 +1,14 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
-import { TextField } from "@mui/material";
+import { TextField, IconButton } from "@mui/material";
+import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
 
-export const EditRowTypes = () => {
+export const EditRowTypes = ({ setRowData, handleRowEditChange }) => {
     return (
         <>
+            <IconButton>
+                <DeleteOutlined />
+            </IconButton>
             <TableCell>
                 <TextField
                     id="standard-basic"

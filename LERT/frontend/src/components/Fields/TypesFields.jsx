@@ -39,7 +39,7 @@ export const TypesFields = () => {
     const [value, setValue] = useState(null);
 
     //Variables para textfields
-    const [rowId, setRowId] = useState(2);
+    const [rowId, setRowId] = useState(null);
     const [type, setType] = useState("");
     const [band, setBand] = useState("");
     const [rate, setRate] = useState("");
@@ -73,6 +73,16 @@ export const TypesFields = () => {
         e.preventDefault();
         await postNewType(type, band, rate, country, dateStart, dateFinish);
         await fetchData();
+    };
+
+    const handleEditClick = (e, row) => {
+        e.preventDefault();
+        setRowId(row.id);
+    };
+
+    const deleteRecord = (e, row) => {
+        e.preventDefault();
+        setRowId(row.id);
     };
     return (
         <>
@@ -278,20 +288,16 @@ export const TypesFields = () => {
                                         },
                                     }}
                                 >
-                                    <TableCell>
-                                        <IconButton>
-                                            <ModeEditOutlineOutlined />
-                                        </IconButton>
-
-                                        <IconButton>
-                                            <DeleteOutlined />
-                                        </IconButton>
-                                    </TableCell>
                                     <Fragment>
                                         {rowId === row.id ? (
                                             <EditRowTypes />
                                         ) : (
-                                            <ReadRowTypes row={row} />
+                                            <ReadRowTypes
+                                                row={row}
+                                                handleEditClick={
+                                                    handleEditClick
+                                                }
+                                            />
                                         )}
                                     </Fragment>
                                 </TableRow>

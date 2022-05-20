@@ -1,9 +1,19 @@
 import React from "react";
-import TableCell from "@mui/material/TableCell";
+import { TableCell, IconButton } from "@mui/material";
+import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
 
-export const ReadRowTypes = ({ row }) => {
+export const ReadRowTypes = ({ row, handleEditClick }) => {
     return (
         <>
+            <TableCell>
+                <IconButton onClick={(e) => handleEditClick(e, row)}>
+                    <ModeEditOutlineOutlined />
+                </IconButton>
+
+                <IconButton>
+                    <DeleteOutlined />
+                </IconButton>
+            </TableCell>
             <TableCell component="th" scope="row">
                 {row.name}
             </TableCell>
