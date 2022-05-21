@@ -34,6 +34,7 @@ import TableRow from "@mui/material/TableRow";
 import { set } from "date-fns";
 import { ReadRowTypes } from "../EditFields/ReadRowTypes";
 import { EditRowTypes } from "../EditFields/EditRowTypes";
+import id from "date-fns/esm/locale/id/index.js";
 
 export const TypesFields = () => {
     const [value, setValue] = useState(null);
@@ -71,8 +72,8 @@ export const TypesFields = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await postNewType(type, band, rate, country, dateStart, dateFinish);
-        await fetchData();
+        postNewType(type, band, rate, country, dateStart, dateFinish);
+        fetchData();
     };
 
     const handleEditClick = (e, row) => {
@@ -80,9 +81,9 @@ export const TypesFields = () => {
         setRowId(row.id);
     };
 
-    const deleteRecord = (e, row) => {
-        e.preventDefault();
-        setRowId(row.id);
+    const deleteRecord = async (e, row) => {
+        deleteType(row.id);
+        fetchData();
     };
     return (
         <>
@@ -297,6 +298,7 @@ export const TypesFields = () => {
                                                 handleEditClick={
                                                     handleEditClick
                                                 }
+                                                deleteRecord={deleteRecord}
                                             />
                                         )}
                                     </Fragment>
@@ -330,6 +332,18 @@ export function postNewType(
             date_to_start: date_start,
             date_to_finish: date_finish,
         })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export function deleteType(id) {
+    const axios = require("axios").default;
+    axios
+        .delete(`http://localhost:3000/deleteTypes/${id}`)
         .then(function (response) {
             console.log(response);
         })

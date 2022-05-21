@@ -274,7 +274,7 @@ app.add_url_rule("/newExpenseType", view_func=postExpenseType, methods=['POST'])
 #Metodos types
 app.add_url_rule("/getTypes", view_func=getTypes, methods=['GET'])
 app.add_url_rule("/newPostType", view_func=postType, methods=['POST'])
-app.add_url_rule("/deleteTypes", view_func=deleteType, methods=['DELETE'])
+app.add_url_rule("/deleteTypes/<int:id>", view_func=deleteType, methods=['DELETE'])
 
 
 

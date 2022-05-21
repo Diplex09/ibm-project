@@ -2,7 +2,7 @@ import React from "react";
 import { TableCell, IconButton } from "@mui/material";
 import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
 
-export const ReadRowTypes = ({ row, handleEditClick }) => {
+export const ReadRowTypes = ({ row, handleEditClick, deleteRecord }) => {
     return (
         <>
             <TableCell>
@@ -10,7 +10,7 @@ export const ReadRowTypes = ({ row, handleEditClick }) => {
                     <ModeEditOutlineOutlined />
                 </IconButton>
 
-                <IconButton>
+                <IconButton onClick={(e) => deleteRecord(e, row)}>
                     <DeleteOutlined />
                 </IconButton>
             </TableCell>
