@@ -38,19 +38,23 @@ import id from "date-fns/esm/locale/id/index.js";
 
 export const TypesFields = () => {
     const [value, setValue] = useState(null);
-
-    //Variables para textfields
     const [rowId, setRowId] = useState(null);
-    const [type, setType] = useState("");
-    const [band, setBand] = useState("");
-    const [rate, setRate] = useState("");
-    const [country, setCountry] = useState("");
     const [dateStart, setDateStart] = useState(
         new Date().toLocaleDateString("fr-FR")
     );
     const [dateFinish, setDateFinish] = useState(
         new Date().toLocaleDateString("fr-FR")
     );
+
+    //Variables para textfields
+    const [record, setRecord] = useState({
+        type: "",
+        band: "",
+        rate: "",
+        country: "",
+        dateStart: "",
+        dateFinish: "",
+    });
 
     const axios = require("axios").default;
     const [typeData, setTypeData] = useState([]);
@@ -72,7 +76,7 @@ export const TypesFields = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        postNewType(type, band, rate, country, dateStart, dateFinish);
+        postNewType(record);
         fetchData();
     };
 
@@ -122,7 +126,7 @@ export const TypesFields = () => {
                     label="TYPE"
                     variant="standard"
                     onChange={(e) => {
-                        setType(e.target.value);
+                        setRecord({ ...record, type: e.target.value });
                     }}
                 />
 
@@ -139,7 +143,7 @@ export const TypesFields = () => {
                     label="BAND NUMBER"
                     variant="standard"
                     onChange={(e) => {
-                        setBand(e.target.value);
+                        setRecord({ ...record, band: e.target.value });
                     }}
                 />
 
@@ -156,7 +160,7 @@ export const TypesFields = () => {
                     label="RATE"
                     variant="standard"
                     onChange={(e) => {
-                        setRate(e.target.value);
+                        setRecord({ ...record, rate: e.target.value });
                     }}
                 />
 
@@ -178,7 +182,7 @@ export const TypesFields = () => {
                     label="COUNTRY"
                     variant="standard"
                     onChange={(e) => {
-                        setCountry(e.target.value);
+                        setRecord({ ...record, country: e.target.value });
                     }}
                 />
 
@@ -203,6 +207,7 @@ export const TypesFields = () => {
                         onChange={(date) => {
                             let d = new Date(date).toLocaleDateString("fr-FR");
                             setDateStart(d);
+                            setRecord({ ...record, dateStart: d });
                         }}
                     />
                 </LocalizationProvider>
@@ -228,6 +233,7 @@ export const TypesFields = () => {
                         onChange={(date) => {
                             let dF = new Date(date).toLocaleDateString("fr-FR");
                             setDateFinish(dF);
+                            setRecord({ ...record, dateFinish: dF });
                         }}
                     />
                 </LocalizationProvider>
@@ -289,6 +295,7 @@ export const TypesFields = () => {
                                         },
                                     }}
                                 >
+                                    {console.log(typeData[0].band)}
                                     <Fragment>
                                         {rowId === row.id ? (
                                             <EditRowTypes />
@@ -314,23 +321,17 @@ export const TypesFields = () => {
 
 export default TypesFields;
 
-export function postNewType(
-    type,
-    band,
-    rate,
-    country,
-    date_start,
-    date_finish
-) {
+export function postNewType(record) {
     const axios = require("axios").default;
+    console.log(record);
     axios
         .post("http://localhost:3000/newPostType", {
-            name: type,
-            country: country,
-            band: band,
-            rate: rate,
-            date_to_start: date_start,
-            date_to_finish: date_finish,
+            name: record.type,
+            country: record.country,
+            band: record.band,
+            rate: record.rate,
+            date_to_start: record.dateStart,
+            date_to_finish: record.dateFinish,
         })
         .then(function (response) {
             console.log(response);
