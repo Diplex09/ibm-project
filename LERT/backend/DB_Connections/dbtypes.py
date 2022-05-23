@@ -105,16 +105,32 @@ def deleteType(id):
         return "Type delete done"
 
 def updateType(id):
+    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
+    session = Session(engine)
     print("entre")
     _json = request.json
-    _name = _json["name"]
-    _band = _json['band']
-    _country = _json['country']
-    _rate = _json['rate']
-    _date_start = _json['date_to_start']
-    _date_finish = _json['date_to_finish']
-    print(_name)
+    typeNew = Types(_json["name"],_json['band'], _json['country'],_json['rate'], _json['date_to_start'], _json['date_to_finish'] )
     
+    editType = session.query(Types).filter(Types.id_type == id).one()
+    print(editType.type_name)
+    editType.type_name = typeNew.type_name
+    editType.band = typeNew.band
+    editType.country = typeNew.country
+    editType.rate = typeNew.rate
+    editType.date_to_start = typeNew.date_to_start
+    editType.date_to_finish = typeNew.date_to_finish
 
 
-    return "si"
+
+    session.commit()
+    # if request.method == 'PUT':
+    #     stmt = (
+    #         update(type).
+    #         where(type.c.id_type==id).
+    #         values(type_name = typeNew.type_name)
+    #     )
+        
+    #     session.execute(stmt)
+    #     session.commit()
+
+    return "DONE"
