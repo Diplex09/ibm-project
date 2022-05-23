@@ -56,6 +56,15 @@ export const TypesFields = () => {
         dateFinish: "",
     });
 
+    const [editRecord, setEditRecord] = useState({
+        type: "",
+        band: "",
+        rate: "",
+        country: "",
+        dateStart: "",
+        dateFinish: "",
+    });
+
     const axios = require("axios").default;
     const [typeData, setTypeData] = useState([]);
     const URL = "http://localhost:3000/getTypes";
@@ -80,9 +89,32 @@ export const TypesFields = () => {
         fetchData();
     };
 
+    const handleEditRecord = (e) => {
+        e.preventDefault();
+
+        const fieldName = e.target.getAttribute("name");
+        const fieldValue = e.target.value;
+
+        const newRecord = { ...editRecord };
+        newRecord[fieldName] = fieldValue;
+
+        setEditRecord(newRecord);
+    };
+
     const handleEditClick = (e, row) => {
         e.preventDefault();
         setRowId(row.id);
+
+        const formValues = {
+            type: row.name,
+            band: row.band,
+            rate: row.rate,
+            country: row.country,
+            dateStart: row.date_to_start,
+            dateFinish: row.date_to_finish,
+        };
+
+        setEditRecord(formValues);
     };
 
     const deleteRecord = async (e, row) => {
@@ -298,7 +330,12 @@ export const TypesFields = () => {
                                     {console.log(typeData[0].band)}
                                     <Fragment>
                                         {rowId === row.id ? (
-                                            <EditRowTypes />
+                                            <EditRowTypes
+                                                editRecord={editRecord}
+                                                handleEditRecord={
+                                                    handleEditClick
+                                                }
+                                            />
                                         ) : (
                                             <ReadRowTypes
                                                 row={row}

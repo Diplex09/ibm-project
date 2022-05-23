@@ -1,19 +1,23 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
 import { TextField, IconButton } from "@mui/material";
-import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
+import { DoneOutlineOutlined } from "@mui/icons-material";
 
-export const EditRowTypes = ({ setRowData, handleRowEditChange }) => {
+export const EditRowTypes = ({ editRecord, handleEditClick }) => {
     return (
         <>
-            <IconButton>
-                <DeleteOutlined />
-            </IconButton>
+            <TableCell>
+                <IconButton>
+                    <DoneOutlineOutlined />
+                </IconButton>
+            </TableCell>
+
             <TableCell>
                 <TextField
                     id="standard-basic"
                     label="TYPE"
                     variant="standard"
+                    value={editRecord.type}
                 />
             </TableCell>
             <TableCell>
@@ -21,6 +25,7 @@ export const EditRowTypes = ({ setRowData, handleRowEditChange }) => {
                     id="standard-basic"
                     label="COUNTRY"
                     variant="standard"
+                    value={editRecord.country}
                 />
             </TableCell>
             <TableCell>
@@ -28,6 +33,7 @@ export const EditRowTypes = ({ setRowData, handleRowEditChange }) => {
                     id="standard-basic"
                     label="BAND"
                     variant="standard"
+                    value={editRecord.band}
                 />
             </TableCell>
             <TableCell>
@@ -35,6 +41,7 @@ export const EditRowTypes = ({ setRowData, handleRowEditChange }) => {
                     id="standard-basic"
                     label="RATE"
                     variant="standard"
+                    value={editRecord.rate}
                 />
             </TableCell>
             <TableCell>
@@ -42,6 +49,7 @@ export const EditRowTypes = ({ setRowData, handleRowEditChange }) => {
                     id="standard-basic"
                     label="DATE START"
                     variant="standard"
+                    value={editRecord.dateStart}
                 />
             </TableCell>
             <TableCell>
@@ -49,6 +57,7 @@ export const EditRowTypes = ({ setRowData, handleRowEditChange }) => {
                     id="standard-basic"
                     label="DATE FINISH"
                     variant="standard"
+                    value={editRecord.dateFinish}
                 />
             </TableCell>
         </>
