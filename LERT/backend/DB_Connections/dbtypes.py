@@ -103,3 +103,18 @@ def deleteType(id):
         session.commit()
 
         return "Type delete done"
+
+def updateType(id):
+    print("entre")
+    _json = request.json
+    _name = _json["name"]
+    _band = _json['band']
+    _country = _json['country']
+    _rate = _json['rate']
+    _date_start = _json['date_to_start']
+    _date_finish = _json['date_to_finish']
+    print(_name)
+    
+
+
+    return "si"

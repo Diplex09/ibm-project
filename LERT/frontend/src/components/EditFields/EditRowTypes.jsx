@@ -3,61 +3,78 @@ import TableCell from "@mui/material/TableCell";
 import { TextField, IconButton } from "@mui/material";
 import { DoneOutlineOutlined } from "@mui/icons-material";
 
-export const EditRowTypes = ({ editRecord, handleEditClick }) => {
+export const EditRowTypes = ({
+    row,
+    editRecord,
+    handleEditRecord,
+    handleEditSave,
+}) => {
     return (
         <>
             <TableCell>
-                <IconButton>
+                <IconButton onClick={(e) => handleEditSave(e, editRecord, row)}>
                     <DoneOutlineOutlined />
                 </IconButton>
             </TableCell>
 
             <TableCell>
                 <TextField
+                    name="type"
                     id="standard-basic"
                     label="TYPE"
                     variant="standard"
-                    value={editRecord.type}
+                    defaultValue={editRecord.type}
+                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
                 <TextField
+                    name="country"
                     id="standard-basic"
                     label="COUNTRY"
                     variant="standard"
-                    value={editRecord.country}
+                    defaultValue={editRecord.country}
+                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
                 <TextField
+                    name="band"
                     id="standard-basic"
                     label="BAND"
                     variant="standard"
-                    value={editRecord.band}
+                    defaultValue={editRecord.band}
+                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
                 <TextField
+                    name="rate"
                     id="standard-basic"
                     label="RATE"
                     variant="standard"
-                    value={editRecord.rate}
+                    defaultValue={editRecord.rate}
+                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
                 <TextField
+                    name="dateStart"
                     id="standard-basic"
                     label="DATE START"
                     variant="standard"
-                    value={editRecord.dateStart}
+                    defaultValue={editRecord.dateStart}
+                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
                 <TextField
+                    name="dateFinish"
                     id="standard-basic"
                     label="DATE FINISH"
                     variant="standard"
-                    value={editRecord.dateFinish}
+                    defaultValue={editRecord.dateFinish}
+                    onChange={handleEditRecord}
                 />
             </TableCell>
         </>

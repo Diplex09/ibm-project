@@ -93,6 +93,7 @@ export const TypesFields = () => {
         e.preventDefault();
 
         const fieldName = e.target.getAttribute("name");
+        console.log(fieldName);
         const fieldValue = e.target.value;
 
         const newRecord = { ...editRecord };
@@ -121,6 +122,15 @@ export const TypesFields = () => {
         deleteType(row.id);
         fetchData();
     };
+
+    const handleEditSave = (e, editRecord, row) => {
+        e.preventDefault();
+        {
+            console.log(editRecord);
+        }
+        updateType(row.id, editRecord);
+    };
+
     return (
         <>
             <Box
@@ -331,10 +341,12 @@ export const TypesFields = () => {
                                     <Fragment>
                                         {rowId === row.id ? (
                                             <EditRowTypes
+                                                row={row}
                                                 editRecord={editRecord}
                                                 handleEditRecord={
-                                                    handleEditClick
+                                                    handleEditRecord
                                                 }
+                                                handleEditSave={handleEditSave}
                                             />
                                         ) : (
                                             <ReadRowTypes
@@ -382,6 +394,25 @@ export function deleteType(id) {
     const axios = require("axios").default;
     axios
         .delete(`http://localhost:3000/deleteTypes/${id}`)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export function updateType(id, editRecord) {
+    const axios = require("axios").default;
+    axios
+        .put(`http://localhost:3000/updateTypes/${id}`, {
+            name: editRecord.type,
+            country: editRecord.country,
+            band: editRecord.band,
+            rate: editRecord.rate,
+            date_to_start: editRecord.dateStart,
+            date_to_finish: editRecord.dateFinish,
+        })
         .then(function (response) {
             console.log(response);
         })
