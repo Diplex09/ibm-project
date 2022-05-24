@@ -64,3 +64,25 @@ def getHours():
         #print(expense.expense_amount)
     resp = jsonify([e.serialize() for e in hoursList]) #Con esto puedes mandar lista de objetos en json
     return resp
+
+def postHours():
+    print("si")
+    _json = request.json
+    _name = _json['name']
+    _band = _json['band']
+    _country = _json['country']
+    _rate = _json['rate']
+    _date_start = _json['date_to_start']
+    _date_finish = _json['date_to_finish']
+
+
+    if request.method == 'POST':
+        if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:
+            return "Values fields are incomplete"
+        else:
+            type = ExtraHourType(_name, _band,  _country,  _rate,  _date_start,  _date_finish)
+            
+            db.session.add(type)
+            db.session.commit()
+            
+            return "New Hour Type Uploaded Succesfully"

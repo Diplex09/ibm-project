@@ -20,11 +20,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
 import { ReadRowHours } from "../EditFields/ReadRowHours";
-import { TypesFields } from "../Fields/TypesFields";
+import { HourFields } from "../Fields/HourFields";
 
 export const ExtraHoursOP = () => {
     const [typeData, setTypeData] = useState([]);
-
     const axios = require("axios").default;
 
     useEffect(() => {
@@ -43,6 +42,7 @@ export const ExtraHoursOP = () => {
 
     return (
         <>
+            <HourFields />
             <form>
                 <Paper>
                     <TableContainer
