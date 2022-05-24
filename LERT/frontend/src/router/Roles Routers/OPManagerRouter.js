@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { ExpensesTypes } from '../../components/OPManager/ExpensesTypes';
 import { HomeOP } from '../../components/OPManager/HomeOP'
 import { TypesOP } from "../../components/OPManager/TypesOP"
+import { ExtraHoursOP } from "../../components/OPManager/ExtraHoursOP"
 
 export const OPManagerRouter = () => {
     return (
@@ -10,7 +11,7 @@ export const OPManagerRouter = () => {
             <Route path="/types" element={<TypesOP />} />
             <Route path="/icas" element={<div>ICAS</div>} />
             <Route path="/expenses" element={<ExpensesTypes />} />
-            <Route path="/hours" element={<div>Edit Hours</div>} />
+            <Route path="/hours" element={<ExtraHoursOP />} />
             <Route
                 path="/manage"
                 element={<div>Manage Manager Functions</div>}

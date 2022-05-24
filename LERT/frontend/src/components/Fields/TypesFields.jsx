@@ -337,7 +337,6 @@ export const TypesFields = () => {
                                         },
                                     }}
                                 >
-                                    {console.log(typeData[0].band)}
                                     <Fragment>
                                         {rowId === row.id ? (
                                             <EditRowTypes

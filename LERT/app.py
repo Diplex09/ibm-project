@@ -15,6 +15,8 @@ from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
 from backend.DB_Connections.dbInfo import getExpensesTypes, postExpenseType
 from backend.DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
+from backend.DB_Connections.dbHours import getHours 
+
 
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -276,6 +278,10 @@ app.add_url_rule("/getTypes", view_func=getTypes, methods=['GET'])
 app.add_url_rule("/newPostType", view_func=postType, methods=['POST'])
 app.add_url_rule("/deleteTypes/<int:id>", view_func=deleteType, methods=['DELETE'])
 app.add_url_rule("/updateTypes/<int:id>", view_func=updateType, methods=['PUT'])
+
+#Metodos extraHours
+app.add_url_rule("/getHours", view_func=getHours, methods=['GET'])
+
 
 
 

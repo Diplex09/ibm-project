@@ -103,7 +103,7 @@ def updateType(id):
     _json = request.json
     typeNew = Types(_json["name"],_json['band'], _json['country'],_json['rate'], _json['date_to_start'], _json['date_to_finish'] )
     
-    editType = session.query(Types).filter(Types.id_type == id).one()
+    editType = db.session.query(Types).filter(Types.id_type == id).one()
     print(editType.type_name)
     editType.type_name = typeNew.type_name
     editType.band = typeNew.band
