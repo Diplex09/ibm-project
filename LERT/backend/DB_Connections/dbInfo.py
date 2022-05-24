@@ -24,18 +24,15 @@ class ExpenseType(Base):
     __tablename__ = "type_of_expense"
     id_type_of_expense = Column(Integer, primary_key=True)
     type_name = Column(String(150))
-    expense_amount = Column(Numeric())
 
-    def __init__(self, name, amount):
+    def __init__(self, name):
         self.type_name = name
-        self.expense_amount = amount
 
 
     def serialize(self):
         return {
             'id': self.id_type_of_expense, 
             'typeName': self.type_name,
-            'expenseAmount': self.expense_amount,
         }
 
 
@@ -54,15 +51,18 @@ def getExpensesTypes():
 def postExpenseType():
     _json = request.json
     _name = _json['name']
-    _amount = _json['amount']
     
     if request.method == 'POST':
-        if not _name or not _amount:
-            return "All necessary values not received"
+        if not _name:
+            return "Necessary value name not received"
         else:
-            expense = ExpenseType(_name, _amount)
+            expense = ExpenseType(_name)
             
             db.session.add(expense)
             db.session.commit()
             
             return "New Expense Type Uploaded Succesfully"
+
+# def deleteExpenseType():
+#     _json = request.json
+#     _name = _json['name']
