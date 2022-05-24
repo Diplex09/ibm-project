@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { authLogin, authLogout } from '../reducers/authSlice';
+import {
+    authLogin,
+    authLogout,
+    authCheckingFinish,
+} from '../reducers/authSlice';
 
 export const startLogin = (email, password) => {
     return async (dispatch) => {
@@ -9,9 +13,7 @@ export const startLogin = (email, password) => {
                 password,
             })
             .then((resp) => {
-                const { token, user } = resp.data;
-                console.log(user);
-                localStorage.setItem('jwt-token', token);
+                const { user } = resp.data;
                 dispatch(
                     authLogin({
                         uid: user.uid,
@@ -31,13 +33,40 @@ export const startLogout = () => {
         await axios
             .get('/logout')
             .then((resp) => {
-                const { message } = resp.data;
-                console.log(message);
-                localStorage.removeItem('jwt-token');
                 dispatch(authLogout());
             })
             .catch((error) => {
                 console.log(error);
             });
+    };
+};
+
+export const startChecking = () => {
+    return async (dispatch) => {
+        await axios
+            .get('/check')
+            .then((resp) => {
+                console.log(resp);
+                const { user } = resp.data;
+                dispatch(
+                    authLogin({
+                        uid: user.uid,
+                        name: user.fullName,
+                        rol: user.rol,
+                    })
+                );
+            })
+            .catch((error) => {
+                if (window.location.pathname !== '/login') {
+                    dispatch(startLogout());
+                }
+                dispatch(checkingFinish());
+            });
+    };
+};
+
+const checkingFinish = () => {
+    return async (dispatch) => {
+        dispatch(authCheckingFinish());
     };
 };

@@ -148,10 +148,22 @@ def logout():
     return response
 
 # Only for test
-@app.route("/protected")
+@app.route("/check")
 @jwt_required()
 def protected():
-    return jsonify({'msg' : 'Test Completed Correctly'})
+    uid = get_jwt_identity()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    sql = "SELECT * FROM users WHERE id_user=%s"
+    sql_where = (uid,)
+
+    cursor.execute(sql, sql_where)
+    row = cursor.fetchone()
+    return jsonify({'msg' : 'Valid token', 'user' : {
+                        "uid": row[0],
+                        "fullName": row[1],
+                        "rol": row[4]
+                    }})
 
 api.add_resource(HelloApiHandler, '/flask/hello')
 
