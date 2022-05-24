@@ -37,6 +37,7 @@ class ExpenseType(Base):
 
 
 def getExpensesTypes():
+    global db
     expenseList = []
 
     stmt = select(ExpenseType)
@@ -49,6 +50,7 @@ def getExpensesTypes():
     return resp
 
 def postExpenseType():
+    global db
     _json = request.json
     _name = _json['name']
     
@@ -56,13 +58,32 @@ def postExpenseType():
         if not _name:
             return "Necessary value name not received"
         else:
-            expense = ExpenseType(_name)
-            
-            db.session.add(expense)
-            db.session.commit()
-            
-            return "New Expense Type Uploaded Succesfully"
+            queryCheck = select(ExpenseType).where(ExpenseType.type_name == _name)
+            expType=db.session.scalar(queryCheck)
+            if(expType != None): #check if record already exists
+                return "Expense type record already exists"
+            else:
+                expense = ExpenseType(_name)
+                
+                db.session.add(expense)
+                db.session.commit()
+                
+                return "New Expense Type Uploaded Succesfully"
 
-# def deleteExpenseType():
-#     _json = request.json
-#     _name = _json['name']
+def deleteExpenseType(name):
+    global db
+    if request.method == 'DELETE':
+        # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
+        # db.session.execute(autoIncrement)
+        queryCheck = select(ExpenseType).where(ExpenseType.type_name == name)
+        expType=db.session.scalar(queryCheck)
+        if(expType == None): #check if record does exist
+            return "Expense type record not found"
+        else:
+            stmt = delete(ExpenseType).where(ExpenseType.type_name == name)
+            print(stmt)
+            db.session.execute(stmt)
+            db.session.commit()
+
+            return "Expense type delete done"
+

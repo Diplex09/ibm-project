@@ -5,9 +5,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-import { Typography, Button, Grid, Box, TextField, Paper } from "@mui/material";
+import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
+import {
+    Typography,
+    Button,
+    Grid,
+    Box,
+    TextField,
+    Paper,
+    IconButton,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
-import data1 from "./dataTest";
 
 export const ExpenseForm = () => {
     const [textValue, setTextValue] = useState("");
@@ -48,26 +56,6 @@ export const ExpenseForm = () => {
                 >
                     Submit
                 </Button>
-                {/* <Button
-                    onClick={handleReset}
-                    variant="contained"
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        textTransform: "none",
-                        borderRadius: "0px",
-                        width: "12rem",
-                        height: "40px",
-                        fontSize: "15px",
-                        fontWeight: "400",
-                        bgcolor: "#0062ff",
-                        ":hover": {
-                            bgcolor: "#0255DA",
-                        },
-                    }}
-                >
-                    Reset
-                </Button> */}
             </Grid>
         </Grid>
     );
@@ -101,15 +89,16 @@ export const ExpensesTable = () => {
                     textTransform: "uppercase",
                     fontWeight: "500",
                 },
+                display: "flex",
+                justifyContent: "center",
                 padding: "5px 20px",
             }}
         >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 350 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
+                        <TableCell>Actions</TableCell>
                         <TableCell align="left">Expense Type Name</TableCell>
-                        <TableCell>Expense Amount</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -123,12 +112,11 @@ export const ExpensesTable = () => {
                             }}
                         >
                             <TableCell component="th" scope="row">
-                                {row.id}
+                                <IconButton>
+                                    <DeleteOutlined />
+                                </IconButton>
                             </TableCell>
                             <TableCell align="left">{row.typeName}</TableCell>
-                            <TableCell align="left">
-                                {"$" + row.expenseAmount}
-                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -164,8 +152,24 @@ export function postNewExpenseType(eName) {
     axios
         .post("http://localhost:3000/newExpenseType", {
             name: eName,
-            amount: 666,
         })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export const deleteExpenseTypeRecord = async (e, row) => {
+    // deleteType(row.id);
+    // fetchData();
+};
+
+export function deleteExpenseType(id) {
+    const axios = require("axios").default;
+    axios
+        .delete(`http://localhost:3000/deleteExpenseType/${id}`)
         .then(function (response) {
             console.log(response);
         })

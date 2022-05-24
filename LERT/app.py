@@ -13,7 +13,7 @@ import psycopg2.extras
 from flask_cors import CORS #comment this on deployment
 from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
-from backend.DB_Connections.dbInfo import getExpensesTypes, postExpenseType
+from backend.DB_Connections.dbExpenseType import deleteExpenseType, getExpensesTypes, postExpenseType
 from backend.DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
 from backend.DB_Connections.dbHours import getHours, postHours
 
@@ -284,6 +284,7 @@ def delete_user():
 #Metodos expensesTypes
 app.add_url_rule("/expensesTypes", view_func=getExpensesTypes, methods=['GET'])
 app.add_url_rule("/newExpenseType", view_func=postExpenseType, methods=['POST'])
+app.add_url_rule("/delExpenseType/<string:name>", view_func=deleteExpenseType, methods=['DELETE'])
 
 #Metodos types
 app.add_url_rule("/getTypes", view_func=getTypes, methods=['GET'])
