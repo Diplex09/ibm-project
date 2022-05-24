@@ -7,7 +7,6 @@ import TableRow from "@mui/material/TableRow";
 
 import { Typography, Button, Grid, Box, TextField, Paper } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import data1 from "./dataTest";
 
 export const ExpenseForm = () => {
     const [textValue, setTextValue] = useState("");
