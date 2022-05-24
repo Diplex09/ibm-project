@@ -12,14 +12,15 @@ from sqlalchemy.orm import Session
 
 from flask import Flask, jsonify, request, session, send_from_directory
 
-from flask_cors import CORS #comment this on deployment
+from flask_cors import CORS
+
+from backend.DB_Connections.DBManager import DBManager
 
 Base = declarative_base()
+db = DBManager.getInstance() 
 
-# intención de ORM 
-# mappear renglones de una DB a objetos
+
 class ExpenseType(Base):
-    # agregamos los campos donde se mapearan las columnas de la db
     __tablename__ = "type_of_expense"
     id_type_of_expense = Column(Integer, primary_key=True)
     type_name = Column(String(150))
@@ -40,12 +41,9 @@ class ExpenseType(Base):
 
 def getExpensesTypes():
     expenseList = []
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:Cruz4zulC4mp30n2021@localhost/lert")
-    session = Session(engine)
-    #hacer query
-    
+
     stmt = select(ExpenseType)
-    for expense in session.scalars(stmt):
+    for expense in db.session.scalars(stmt):
         expenseList.append(expense)
         # print(expense.id_type_of_expense)
         # print(expense.type_name)
@@ -57,15 +55,14 @@ def postExpenseType():
     _json = request.json
     _name = _json['name']
     _amount = _json['amount']
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:Cruz4zulC4mp30n2021@localhost/lert")
-    session = Session(engine)
+    
     if request.method == 'POST':
         if not _name or not _amount:
             return "All necessary values not received"
         else:
             expense = ExpenseType(_name, _amount)
             
-            session.add(expense)
-            session.commit()
+            db.session.add(expense)
+            db.session.commit()
             
             return "New Expense Type Uploaded Succesfully"

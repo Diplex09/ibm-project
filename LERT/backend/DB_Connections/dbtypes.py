@@ -13,14 +13,15 @@ from sqlalchemy.orm import Session
 
 from flask import Flask, jsonify, request, session, send_from_directory
 
-from flask_cors import CORS #comment this on deployment
+from flask_cors import CORS
+
+from backend.DB_Connections.DBManager import DBManager 
 
 Base = declarative_base()
+db = DBManager.getInstance() 
 
-# intención de ORM 
-# mappear renglones de una DB a objetos
 class Types(Base):
-    # agregamos los campos donde se mapearan las columnas de la db
+   
     __tablename__ = "type"
     id_type = Column(Integer, primary_key=True)
     type_name = Column(String(150))
@@ -54,12 +55,9 @@ class Types(Base):
 
 def getTypes():
     typesList = []
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
-    session = Session(engine)
-    #hacer query
     
     stmt = select(Types)
-    for type in session.scalars(stmt):
+    for type in db.session.scalars(stmt):
         typesList.append(type)
         #print(expense.id_type_of_expense)
         #print(expense.type_name)
@@ -78,36 +76,30 @@ def postType():
     _date_finish = _json['date_to_finish']
 
 
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
-    session = Session(engine)
     if request.method == 'POST':
         if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:
             return "Values fields are incomplete"
         else:
             type = Types(_name, _band,  _country,  _rate,  _date_start,  _date_finish)
             
-            session.add(type)
-            session.commit()
+            db.session.add(type)
+            db.session.commit()
             
             return "New Expense Type Uploaded Succesfully"
 
 def deleteType(id):
     
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
-    session = Session(engine)
     if request.method == 'DELETE':
         autoIncrement = "alter sequence type_id_type_seq restart "+ str(id)
-        session.execute(autoIncrement)
+        db.session.execute(autoIncrement)
         delete = "delete from type where id_type="+ str(id)
-        session.execute(delete)
-        session.commit()
+        db.session.execute(delete)
+        db.session.commit()
 
         return "Type delete done"
 
 def updateType(id):
-    engine = sqlalchemy.create_engine("postgresql+psycopg2://postgres:password@localhost/lert")
-    session = Session(engine)
-    print("entre")
+
     _json = request.json
     typeNew = Types(_json["name"],_json['band'], _json['country'],_json['rate'], _json['date_to_start'], _json['date_to_finish'] )
     
@@ -120,17 +112,6 @@ def updateType(id):
     editType.date_to_start = typeNew.date_to_start
     editType.date_to_finish = typeNew.date_to_finish
 
-
-
-    session.commit()
-    # if request.method == 'PUT':
-    #     stmt = (
-    #         update(type).
-    #         where(type.c.id_type==id).
-    #         values(type_name = typeNew.type_name)
-    #     )
-        
-    #     session.execute(stmt)
-    #     session.commit()
+    db.session.commit()
 
     return "DONE"
