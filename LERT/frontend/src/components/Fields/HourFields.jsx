@@ -25,8 +25,7 @@ import {
     PublicOutlined,
 } from "@mui/icons-material";
 
-export const HourFields = () => {
-    const [value, setValue] = React.useState(null);
+export const HourFields = (fetchData) => {
     const [dateStart, setDateStart] = useState(
         new Date().toLocaleDateString("fr-FR")
     );
@@ -42,9 +41,10 @@ export const HourFields = () => {
         dateFinish: "",
     });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         postNewHour(record);
+        fetchData.fetchData();
     };
 
     return (
