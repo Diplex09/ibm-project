@@ -65,7 +65,7 @@ export const HourFields = (fetchData) => {
                             fontSize: "1.5rem",
                         }}
                     >
-                        ADD NEW TYPE
+                        INSERT EXTRA HOUR
                     </Typography>
 
                     <TextField
