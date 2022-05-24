@@ -129,6 +129,7 @@ export const TypesFields = () => {
             console.log(editRecord);
         }
         updateType(row.id, editRecord);
+        fetchData();
     };
 
     return (

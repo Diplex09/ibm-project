@@ -40,6 +40,11 @@ export const ExtraHoursOP = () => {
         });
     };
 
+    const deleteRecord = async (e, row) => {
+        deleteHour(row.id);
+        fetchData();
+    };
+
     return (
         <>
             <HourFields fetchData={fetchData} />
@@ -79,7 +84,10 @@ export const ExtraHoursOP = () => {
                                         }}
                                     >
                                         <Fragment>
-                                            <ReadRowHours row={row} />
+                                            <ReadRowHours
+                                                row={row}
+                                                deleteRecord={deleteRecord}
+                                            />
                                         </Fragment>
                                     </TableRow>
                                 ))}
@@ -93,3 +101,15 @@ export const ExtraHoursOP = () => {
 };
 
 export default ExtraHoursOP;
+
+export function deleteHour(id) {
+    const axios = require("axios").default;
+    axios
+        .delete(`http://localhost:3000/deleteHours/${id}`)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}

@@ -3,6 +3,7 @@ from tokenize import Double
 from unicodedata import decimal
 from flask import Flask, jsonify, request, session, send_from_directory
 from flask_restful import Api, Resource, reqparse
+from itsdangerous import NoneAlgorithm
 #library for encrypting
 from werkzeug.security import generate_password_hash, check_password_hash
 #from flask_cors import CORS #pip install -U flask-cors
@@ -11,12 +12,10 @@ import psycopg2
 import psycopg2.extras
 
 from flask_cors import CORS #comment this on deployment
-from backend.HelloApiHandler import HelloApiHandler
-from backend.login import login
-from backend.DB_Connections.dbExpenseType import deleteExpenseType, getExpensesTypes, postExpenseType
-from backend.DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
-from backend.DB_Connections.dbHours import getHours, postHours, deleteHour
-
+from HelloApiHandler import HelloApiHandler
+from login import login
+from DB_Connections.dbInfo import getExpensesTypes, postExpenseType
+from DB_Connections.dbtypes import getTypes, postType
 
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -148,28 +147,47 @@ def logout():
     return response
 
 # Only for test
-@app.route("/check")
+@app.route("/protected")
 @jwt_required()
 def protected():
-    uid = get_jwt_identity()
-    cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
-    sql = "SELECT * FROM users WHERE id_user=%s"
-    sql_where = (uid,)
-
-    cursor.execute(sql, sql_where)
-    row = cursor.fetchone()
-    return jsonify({'msg' : 'Valid token', 'user' : {
-                        "uid": row[0],
-                        "fullName": row[1],
-                        "rol": row[4]
-                    }})
+    return jsonify({'msg' : 'Test Completed Correctly'})
 
 api.add_resource(HelloApiHandler, '/flask/hello')
 
 # api.add_resource(login, '/login')
 
 ## ADMIN ACTIONS
+@app.route('/all_users', methods=['GET'])
+def all_users():
+    if 'username' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        query = 'SELECT * FROM users'
+
+        cursor.execute(query)
+        people = cursor.fetchall()
+        cursor.close()
+
+        all_people = []
+
+        for person in people:
+            all_people.append(
+                {
+                    "Id_user": person[0],
+                    "FullName": person[1],
+                    "Mail": person[2],
+                    "Rol": person[4]
+                }
+            )
+
+        return jsonify({'people': all_people})
+
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
+
+
 @app.route('/create_user', methods=['POST'])
 def create_user():
     if 'username' in session:
@@ -245,6 +263,75 @@ def create_user():
         resp.status_code = 401
         return resp
 
+@app.route('/edit_user', methods=["PUT"])
+def edit_user():
+    if 'username' in session:
+        _json = request.json
+        _id = _json['id_user']
+
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        # Checar que exista el usuario 
+        sql = "SELECT * FROM users WHERE id_user=%s"
+        sql_where = (str(_id,))
+
+        cursor.execute(sql, sql_where)
+        row = cursor.fetchone()
+
+        if row:
+            for col, val in _json.items():
+                print(col, val)
+                if col == "id_user":
+                    continue
+                elif col == "fullname":
+                    query = 'UPDATE users SET fullname = %s WHERE id_user = %s'
+
+                elif col == "mail":
+                    query = 'UPDATE users SET mail = %s WHERE id_user = %s'
+
+                elif col == "rol":
+                    query = 'UPDATE users SET rol = %s WHERE id_user = %s'
+
+                else:
+                    resp = jsonify({'message' : 'Bad Request - field does not match columns in DB'})
+                    resp.status_code = 400
+                    return resp
+                
+
+                query_args = (str(val), str(_id))
+                cursor.execute(query, query_args)
+
+                # commit the changes to the database
+                conn.commit()
+            
+            sql = "SELECT * FROM users WHERE id_user=%s"
+            sql_where = (str(_id,))
+
+            cursor.execute(sql, sql_where)
+            row = cursor.fetchone()
+
+            # close communication with the database
+            cursor.close()
+
+            return jsonify ({'message' : 'User info updated successfully',
+                            'user' : {
+                                "Id_user": row[0],
+                                "FullName": row[1],
+                                "Mail": row[2],
+                                "Rol": row[4]
+                            }
+                        })
+
+        else:
+            resp = jsonify({'message' : 'User does not exist'})
+            resp.status_code = 404
+            return resp
+
+    else:
+        resp = jsonify({'message' : 'Unauthorized'})
+        resp.status_code = 401
+        return resp
+
 @app.route('/delete_user', methods=["DELETE"])
 def delete_user():
     if 'username' in session:
@@ -284,22 +371,10 @@ def delete_user():
 #Metodos expensesTypes
 app.add_url_rule("/expensesTypes", view_func=getExpensesTypes, methods=['GET'])
 app.add_url_rule("/newExpenseType", view_func=postExpenseType, methods=['POST'])
-app.add_url_rule("/delExpenseType/<string:name>", view_func=deleteExpenseType, methods=['DELETE'])
 
 #Metodos types
 app.add_url_rule("/getTypes", view_func=getTypes, methods=['GET'])
 app.add_url_rule("/newPostType", view_func=postType, methods=['POST'])
-app.add_url_rule("/deleteTypes/<int:id>", view_func=deleteType, methods=['DELETE'])
-app.add_url_rule("/updateTypes/<int:id>", view_func=updateType, methods=['PUT'])
-
-#Metodos extraHours
-app.add_url_rule("/getHours", view_func=getHours, methods=['GET'])
-app.add_url_rule("/newPostHour", view_func=postHours, methods=['POST'])
-app.add_url_rule("/deleteHours/<int:id>", view_func=deleteHour, methods=['DELETE'])
-
-
-
-
 
 
 

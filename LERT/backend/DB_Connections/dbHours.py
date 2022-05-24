@@ -86,3 +86,14 @@ def postHours():
             db.session.commit()
             
             return "New Hour Type Uploaded Succesfully"
+
+def deleteHour(id):
+    db = DBManager.getInstance() 
+
+    
+    if request.method == 'DELETE':
+        delete = "delete from type_extra_hours where id_type="+ str(id)
+        db.session.execute(delete)
+        db.session.commit()
+
+        return "Hour delete done"
