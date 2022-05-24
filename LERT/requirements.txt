@@ -3,3 +3,4 @@ flask-restful
 flask-cors
 psycopg2
 flask_jwt_extended
+sqlalchemy
