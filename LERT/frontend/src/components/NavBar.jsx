@@ -9,6 +9,7 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
+    Typography,
 } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
 import {
@@ -28,7 +29,7 @@ import {
     PeopleAltOutlined,
     EditOutlined,
 } from '@mui/icons-material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { startLogout } from '../actions/auth';
@@ -84,6 +85,23 @@ const Drawer = styled(MuiDrawer, {
 
 export const NavBar = ({ userRole }) => {
     const dispatch = useDispatch();
+    const { name, rol } = useSelector((state) => state.auth);
+
+    // TODO: Change this to get the rol name from database
+    let rolText = '';
+    switch (rol) {
+        case 1:
+            rolText = 'Manager';
+
+        case 2:
+            rolText = 'Operation Manager';
+
+        case 3:
+            rolText = 'ICA Admin';
+
+        default:
+            break;
+    }
 
     const [open, setOpen] = useState(false);
 
@@ -191,6 +209,18 @@ export const NavBar = ({ userRole }) => {
             <CssBaseline />
             <Drawer variant="permanent" anchor="right" open={open}>
                 <DrawerHeader>
+                    {open && (
+                        <Box
+                            sx={{ display: 'flex', width: '100%', ml: '15px' }}
+                        >
+                            <Typography
+                                sx={{ fontWeight: '500' }}
+                            >{`${name} |`}</Typography>
+                            <Typography
+                                sx={{ ml: '5px' }}
+                            >{`${rolText}`}</Typography>
+                        </Box>
+                    )}
                     <IconButton onClick={handleDrawerClose}>
                         {open === true ? (
                             <ChevronRight />
