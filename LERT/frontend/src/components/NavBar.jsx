@@ -194,14 +194,12 @@ export const NavBar = () => {
             <Drawer variant="permanent" anchor="right" open={open}>
                 <DrawerHeader>
                     {open && (
-                        <Box
-                            sx={{ display: 'flex', width: '100%', ml: '15px' }}
-                        >
+                        <Box sx={{ width: '100%', ml: '15px' }}>
                             <Typography
                                 sx={{ fontWeight: '500' }}
-                            >{`${name} |`}</Typography>
+                            >{`${name}`}</Typography>
                             <Typography
-                                sx={{ ml: '5px' }}
+                                sx={{ fontSize: '12px' }}
                             >{`${rolName}`}</Typography>
                         </Box>
                     )}
