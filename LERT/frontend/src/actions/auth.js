@@ -19,6 +19,7 @@ export const startLogin = (email, password) => {
                         uid: user.uid,
                         name: user.fullName,
                         rol: user.rol,
+                        rolName: user.rolName,
                     })
                 );
             })
@@ -53,6 +54,7 @@ export const startChecking = () => {
                         uid: user.uid,
                         name: user.fullName,
                         rol: user.rol,
+                        rolName: user.rolName,
                     })
                 );
             })

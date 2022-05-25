@@ -83,25 +83,9 @@ const Drawer = styled(MuiDrawer, {
     }),
 }));
 
-export const NavBar = ({ userRole }) => {
+export const NavBar = () => {
     const dispatch = useDispatch();
-    const { name, rol } = useSelector((state) => state.auth);
-
-    // TODO: Change this to get the rol name from database
-    let rolText = '';
-    switch (rol) {
-        case 1:
-            rolText = 'Manager';
-
-        case 2:
-            rolText = 'Operation Manager';
-
-        case 3:
-            rolText = 'ICA Admin';
-
-        default:
-            break;
-    }
+    const { name, rol, rolName } = useSelector((state) => state.auth);
 
     const [open, setOpen] = useState(false);
 
@@ -126,7 +110,7 @@ export const NavBar = ({ userRole }) => {
     };
 
     useEffect(() => {
-        if (userRole === 1) {
+        if (rol === 1) {
             // Manager
             setBarBtns([
                 ...barBtns,
@@ -156,7 +140,7 @@ export const NavBar = ({ userRole }) => {
                     path: '/reports',
                 },
             ]);
-        } else if (userRole === 2) {
+        } else if (rol === 2) {
             // OP Manager
             setBarBtns([
                 ...barBtns,
@@ -191,7 +175,7 @@ export const NavBar = ({ userRole }) => {
                     path: '/edit',
                 },
             ]);
-        } else if (userRole === 3) {
+        } else if (rol === 3) {
             // Admin
             setBarBtns([
                 ...barBtns,
@@ -218,7 +202,7 @@ export const NavBar = ({ userRole }) => {
                             >{`${name} |`}</Typography>
                             <Typography
                                 sx={{ ml: '5px' }}
-                            >{`${rolText}`}</Typography>
+                            >{`${rolName}`}</Typography>
                         </Box>
                     )}
                     <IconButton onClick={handleDrawerClose}>

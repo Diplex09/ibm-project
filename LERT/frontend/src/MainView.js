@@ -1,13 +1,10 @@
 import { Box, CssBaseline } from '@mui/material';
-import { useSelector } from 'react-redux';
 
 import { NavBar } from './components/NavBar';
 import { Header } from './components/Header';
 import { MainContent } from './components/MainContent';
 
 export default function MainView() {
-    const { rol } = useSelector((state) => state.auth);
-
     return (
         <Box
             sx={{
@@ -19,7 +16,7 @@ export default function MainView() {
         >
             <CssBaseline />
             <Header />
-            <NavBar userRole={rol} />
+            <NavBar />
             <MainContent />
         </Box>
     );

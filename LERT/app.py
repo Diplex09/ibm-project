@@ -118,11 +118,20 @@ def login():
             print(password)
             if check_password_hash(password, _password):
                 session['username'] = email
+
+                sql = "SELECT rol_name FROM roles WHERE rol_id=%s"
+                sql_where = (row[4],)
+
+                cursor.execute(sql, sql_where)
+                rowRol = cursor.fetchone()
+
                 cursor.close()
+
                 response = jsonify({ 'msg': 'Login Successful', 'user' : {
                         "uid": row[0],
                         "fullName": row[1],
-                        "rol": row[4]
+                        "rol": row[4],
+                        "rolName": rowRol[0]
                     }})
                 access_token = create_access_token(identity=row[0])
                 set_access_cookies(response, access_token)
@@ -147,7 +156,7 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
-# Only for test
+# Check JWT
 @app.route("/check")
 @jwt_required()
 def protected():
@@ -159,10 +168,19 @@ def protected():
 
     cursor.execute(sql, sql_where)
     row = cursor.fetchone()
+
+    sql = "SELECT rol_name FROM roles WHERE rol_id=%s"
+    sql_where = (row[4],)
+    cursor.execute(sql, sql_where)
+    rowRol = cursor.fetchone()
+
+    cursor.close()
+
     return jsonify({'msg' : 'Valid token', 'user' : {
                         "uid": row[0],
                         "fullName": row[1],
-                        "rol": row[4]
+                        "rol": row[4],
+                        "rolName": rowRol[0]
                     }})
 
 api.add_resource(HelloApiHandler, '/flask/hello')
