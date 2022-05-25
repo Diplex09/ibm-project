@@ -1,6 +1,4 @@
-import React from "react";
 import { useState, useEffect, Fragment } from "react";
-
 import {
     Box,
     Divider,
@@ -14,9 +12,20 @@ import {
     Paper,
 } from "@mui/material";
 
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
+import { ReadRowHours } from "../EditFields/ReadRowHours";
+import { EditRowHours } from "../EditFields/EditRowHours";
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import {
     AttachMoney,
     EmailOutlined,
@@ -25,7 +34,11 @@ import {
     PublicOutlined,
 } from "@mui/icons-material";
 
-export const HourFields = (fetchData) => {
+export const HourFields = () => {
+    const [typeData, setTypeData] = useState([]);
+    const [rowId, setRowId] = useState(null);
+    const axios = require("axios").default;
+
     const [dateStart, setDateStart] = useState(
         new Date().toLocaleDateString("fr-FR")
     );
@@ -41,10 +54,67 @@ export const HourFields = (fetchData) => {
         dateFinish: "",
     });
 
+    const [editRecord, setEditRecord] = useState({
+        type: "",
+        band: "",
+        rate: "",
+        country: "",
+        dateStart: "",
+        dateFinish: "",
+    });
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios({
+            method: "get",
+            url: "http://localhost:3000/getHours",
+            responseType: "json",
+        }).then(function (response) {
+            setTypeData(response.data);
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         postNewHour(record);
-        fetchData.fetchData();
+        fetchData();
+    };
+
+    const deleteRecord = async (e, row) => {
+        deleteHour(row.id);
+        fetchData();
+    };
+
+    const handleEditRecord = (e) => {
+        e.preventDefault();
+
+        const fieldName = e.target.getAttribute("name");
+        console.log(fieldName);
+        const fieldValue = e.target.value;
+
+        const newRecord = { ...editRecord };
+        newRecord[fieldName] = fieldValue;
+
+        setEditRecord(newRecord);
+    };
+
+    const handleEditClick = (e, row) => {
+        e.preventDefault();
+        setRowId(row.id);
+
+        const formValues = {
+            type: row.name,
+            band: row.band,
+            rate: row.rate,
+            country: row.country,
+            dateStart: row.date_to_start,
+            dateFinish: row.date_to_finish,
+        };
+
+        setEditRecord(formValues);
     };
 
     return (
@@ -226,6 +296,67 @@ export const HourFields = (fetchData) => {
                     </Box>
                 </Box>
             </Paper>
+            <form>
+                <Paper>
+                    <TableContainer
+                        sx={{
+                            "& .MuiTableCell-head": {
+                                color: "#0062ff",
+                                textTransform: "uppercase",
+                                fontWeight: "500",
+                            },
+                            padding: "5px 20px",
+                        }}
+                    >
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Actions</TableCell>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell align="left">Country</TableCell>
+                                    <TableCell>Band</TableCell>
+                                    <TableCell>Rate</TableCell>
+                                    <TableCell>Date Start</TableCell>
+                                    <TableCell>Date Finish</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {typeData.map((row) => (
+                                    <TableRow
+                                        key={row.id}
+                                        sx={{
+                                            "&:last-child td, &:last-child th":
+                                                {
+                                                    border: 0,
+                                                },
+                                        }}
+                                    >
+                                        <Fragment>
+                                            {rowId === row.id ? (
+                                                <EditRowHours
+                                                    row={row}
+                                                    editRecord={editRecord}
+                                                    handleEditRecord={
+                                                        handleEditRecord
+                                                    }
+                                                />
+                                            ) : (
+                                                <ReadRowHours
+                                                    row={row}
+                                                    handleEditClick={
+                                                        handleEditClick
+                                                    }
+                                                    deleteRecord={deleteRecord}
+                                                />
+                                            )}
+                                        </Fragment>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
+            </form>
         </>
     );
 };
@@ -244,6 +375,18 @@ export function postNewHour(record) {
             date_to_start: record.dateStart,
             date_to_finish: record.dateFinish,
         })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export function deleteHour(id) {
+    const axios = require("axios").default;
+    axios
+        .delete(`http://localhost:3000/deleteHours/${id}`)
         .then(function (response) {
             console.log(response);
         })
