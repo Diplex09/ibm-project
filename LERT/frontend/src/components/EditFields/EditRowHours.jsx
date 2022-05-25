@@ -12,7 +12,7 @@ export const EditRowHours = ({
     return (
         <>
             <TableCell>
-                <IconButton onClick={(e) => handleEditSave(e, editRecord, row)}>
+                <IconButton>
                     <DoneOutlineOutlined />
                 </IconButton>
             </TableCell>
@@ -23,8 +23,6 @@ export const EditRowHours = ({
                     id="standard-basic"
                     label="TYPE"
                     variant="standard"
-                    defaultValue={editRecord.type}
-                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
@@ -33,8 +31,6 @@ export const EditRowHours = ({
                     id="standard-basic"
                     label="COUNTRY"
                     variant="standard"
-                    defaultValue={editRecord.country}
-                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
@@ -43,8 +39,6 @@ export const EditRowHours = ({
                     id="standard-basic"
                     label="BAND"
                     variant="standard"
-                    defaultValue={editRecord.band}
-                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
@@ -53,8 +47,6 @@ export const EditRowHours = ({
                     id="standard-basic"
                     label="RATE"
                     variant="standard"
-                    defaultValue={editRecord.rate}
-                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
@@ -63,8 +55,6 @@ export const EditRowHours = ({
                     id="standard-basic"
                     label="DATE START"
                     variant="standard"
-                    defaultValue={editRecord.dateStart}
-                    onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
@@ -73,8 +63,6 @@ export const EditRowHours = ({
                     id="standard-basic"
                     label="DATE FINISH"
                     variant="standard"
-                    defaultValue={editRecord.dateFinish}
-                    onChange={handleEditRecord}
                 />
             </TableCell>
         </>

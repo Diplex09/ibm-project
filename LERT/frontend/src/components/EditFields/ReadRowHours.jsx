@@ -6,7 +6,7 @@ export const ReadRowHours = ({ row, handleEditClick, deleteRecord }) => {
     return (
         <>
             <TableCell>
-                <IconButton>
+                <IconButton onClick={(e) => handleEditClick(e, row)}>
                     <ModeEditOutlineOutlined />
                 </IconButton>
 
