@@ -2,6 +2,9 @@ import { TableCell, IconButton } from "@mui/material";
 import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
 
 export const ReadRowHours = ({ row, handleEditClick, deleteRecord }) => {
+    {
+        console.log(row);
+    }
     return (
         <>
             <TableCell>

@@ -65,3 +65,18 @@ class Employee(Base):
             'startDate': self.start_date,
             'endDate': self.end_date
         }
+
+def getEmployees():
+    global db
+    if db==None:
+        db=DBManager.getInstance
+    employeeList = []
+
+    stmt = select(Employee)
+    for employee in db.session.scalars(stmt):
+        employeeList.append(employee)
+        # print(expense.id_type_of_expense)
+        # print(expense.type_name)
+        # print(expense.expense_amount)
+    resp = jsonify([e.serialize() for e in employeeList]) #Con esto puedes mandar lista de objetos en json
+    return resp

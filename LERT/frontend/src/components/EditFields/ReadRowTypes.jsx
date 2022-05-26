@@ -5,10 +5,10 @@ export const ReadRowTypes = ({ row, handleEditClick, deleteRecord }) => {
     return (
         <>
             <TableCell>
+                {console.log(row)}
                 <IconButton onClick={(e) => handleEditClick(e, row)}>
                     <ModeEditOutlineOutlined />
                 </IconButton>
-
                 <IconButton onClick={(e) => deleteRecord(e, row)}>
                     <DeleteOutlined />
                 </IconButton>

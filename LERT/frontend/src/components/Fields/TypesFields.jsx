@@ -331,6 +331,7 @@ export const TypesFields = () => {
                                     }}
                                 >
                                     <Fragment>
+                                        {console.log(row)}
                                         {rowId === row.id ? (
                                             <EditRowTypes
                                                 row={row}

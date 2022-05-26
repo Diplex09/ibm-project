@@ -1,3 +1,4 @@
+import { useState, useEffect, Fragment } from "react";
 import {
     Box,
     Divider,
@@ -18,22 +19,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
 
-const createData = (name, email, country, ica, band, type, status) => {
-    return { name, email, country, ica, band, type, status };
-};
-
-const rows = [...Array(5)].map((e, index) =>
-    createData(
-        "Nombre",
-        "luisalonsomg@ibm.com",
-        "Mexico",
-        "999AA000",
-        "7",
-        "CIO IBM SP",
-        "Active"
-    )
-);
-
 const useStyles = makeStyles((theme) => ({
     root: {
         borderColor: "#fff",
@@ -49,6 +34,33 @@ const useStyles = makeStyles((theme) => ({
 export const Employees = () => {
     const classes = useStyles();
     // const [displayModal, setDisplayModal] = useState(false);
+
+    const [record, setRecord] = useState({
+        type: "",
+        band: "",
+        rate: "",
+        country: "",
+        dateStart: "",
+        dateFinish: "",
+    });
+
+    const axios = require("axios").default;
+    const [typeData, setTypeData] = useState([]);
+    const URL = "http://localhost:3000/getEmployees";
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios({
+            method: "get",
+            url: "http://localhost:3000/getEmployees",
+            responseType: "json",
+        }).then(function (response) {
+            setTypeData(response.data);
+        });
+    };
 
     return (
         <>
@@ -123,24 +135,31 @@ export const Employees = () => {
                             <TableCell align="left">Actions</TableCell>
                             <TableCell align="left">Name</TableCell>
                             <TableCell align="left">Email</TableCell>
-                            <TableCell align="left">Country</TableCell>
+                            <TableCell align="left">Country Origin</TableCell>
                             <TableCell align="left">ICA</TableCell>
-                            <TableCell align="left">Band</TableCell>
+                            <TableCell align="left">
+                                Country Residence
+                            </TableCell>
                             <TableCell align="left">Type</TableCell>
-                            <TableCell align="left">Status</TableCell>
+                            <TableCell align="left">Band</TableCell>
+                            <TableCell align="left">Squad</TableCell>
+                            <TableCell align="left">Date Start</TableCell>
+                            <TableCell align="left">Date Finish</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row, index) => (
+                        {typeData.map((row) => (
                             <TableRow
-                                key={index}
+                                key={row.employee_id}
                                 sx={{
                                     "&:last-child td, &:last-child th": {
                                         border: 0,
                                     },
                                 }}
                             >
-                                <ReadRowEmployees row={row} />
+                                <Fragment>
+                                    <ReadRowEmployees row={row} />
+                                </Fragment>
                             </TableRow>
                         ))}
                     </TableBody>
