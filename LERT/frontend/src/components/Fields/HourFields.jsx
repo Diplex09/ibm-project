@@ -117,6 +117,15 @@ export const HourFields = () => {
         setEditRecord(formValues);
     };
 
+    const handleEditSave = (e, editRecord, row) => {
+        e.preventDefault();
+        {
+            console.log(editRecord);
+        }
+        updateHour(row.id, editRecord);
+        fetchData();
+    };
+
     return (
         <>
             <Paper>
@@ -339,6 +348,9 @@ export const HourFields = () => {
                                                     handleEditRecord={
                                                         handleEditRecord
                                                     }
+                                                    handleEditSave={
+                                                        handleEditSave
+                                                    }
                                                 />
                                             ) : (
                                                 <ReadRowHours
@@ -387,6 +399,25 @@ export function deleteHour(id) {
     const axios = require("axios").default;
     axios
         .delete(`http://localhost:3000/deleteHours/${id}`)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export function updateHour(id, editRecord) {
+    const axios = require("axios").default;
+    axios
+        .put(`http://localhost:3000/updateHours/${id}`, {
+            name: editRecord.type,
+            country: editRecord.country,
+            band: editRecord.band,
+            rate: editRecord.rate,
+            date_to_start: editRecord.dateStart,
+            date_to_finish: editRecord.dateFinish,
+        })
         .then(function (response) {
             console.log(response);
         })

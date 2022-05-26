@@ -15,7 +15,7 @@ from backend.HelloApiHandler import HelloApiHandler
 from backend.login import login
 from backend.DB_Connections.dbExpenseType import deleteExpenseType, getExpensesTypes, postExpenseType
 from backend.DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
-from backend.DB_Connections.dbHours import getHours, postHours, deleteHour
+from backend.DB_Connections.dbHours import getHours, postHours, deleteHour, updateHour
 
 
 
@@ -294,6 +294,9 @@ app.add_url_rule("/updateTypes/<int:id>", view_func=updateType, methods=['PUT'])
 app.add_url_rule("/getHours", view_func=getHours, methods=['GET'])
 app.add_url_rule("/newPostHour", view_func=postHours, methods=['POST'])
 app.add_url_rule("/deleteHours/<int:id>", view_func=deleteHour, methods=['DELETE'])
+app.add_url_rule("/updateHours/<int:id>", view_func=updateHour, methods=['PUT'])
+
+
 
 
 

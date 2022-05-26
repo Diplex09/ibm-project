@@ -97,3 +97,21 @@ def deleteHour(id):
         db.session.commit()
 
         return "Hour delete done"
+
+def updateHour(id):
+
+    _json = request.json
+    newHour = ExtraHourType(_json["name"],_json['band'], _json['country'],_json['rate'], _json['date_to_start'], _json['date_to_finish'] )
+    
+    editType = db.session.query(ExtraHourType).filter(ExtraHourType.id_type == id).one()
+    print(editType.type_name)
+    editType.type_name = newHour.type_name
+    editType.band = newHour.band
+    editType.country = newHour.country
+    editType.rate = newHour.rate
+    editType.date_to_start = newHour.date_to_start
+    editType.date_to_finish = newHour.date_to_finish
+
+    db.session.commit()
+
+    return "DONE"
