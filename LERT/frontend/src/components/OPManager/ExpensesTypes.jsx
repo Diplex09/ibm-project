@@ -17,13 +17,14 @@ import {
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
-export const ExpenseForm = () => {
+export const ExpenseForm = (fetch) => {
     const [textValue, setTextValue] = useState("");
     // const handleReset = () => setTextValue('');
 
     const validExpense = (e) => {
         e.preventDefault();
         postNewExpenseType(textValue);
+        fetch.fetchData();
     };
 
     return (
@@ -80,59 +81,72 @@ export const ExpensesTable = () => {
         });
     };
 
+    const deleteExpenseTypeRecord = (e, row) => {
+        e.preventDefault();
+        deleteExpenseType(row.id);
+        fetchData();
+    };
+
     return (
-        <TableContainer
-            component={Paper}
-            sx={{
-                "& .MuiTableCell-head": {
-                    color: "#0062ff",
-                    textTransform: "uppercase",
-                    fontWeight: "500",
-                },
-                display: "flex",
-                justifyContent: "center",
-                padding: "5px 20px",
-            }}
-        >
-            <Table sx={{ minWidth: 350 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Actions</TableCell>
-                        <TableCell align="left">Expense Type Name</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {expenseData.map((row) => (
-                        <TableRow
-                            key={row.id}
-                            sx={{
-                                "&:last-child td, &:last-child th": {
-                                    border: 0,
-                                },
-                            }}
-                        >
-                            <TableCell component="th" scope="row">
-                                <IconButton>
-                                    <DeleteOutlined />
-                                </IconButton>
+        <>
+            <ExpensesTypes />
+            <ExpenseForm fetchData={fetchData} />
+            <TableContainer
+                component={Paper}
+                sx={{
+                    "& .MuiTableCell-head": {
+                        color: "#0062ff",
+                        textTransform: "uppercase",
+                        fontWeight: "500",
+                    },
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "5px 20px",
+                }}
+            >
+                <Table sx={{ minWidth: 350 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Actions</TableCell>
+                            <TableCell align="left">
+                                Expense Type Name
                             </TableCell>
-                            <TableCell align="left">{row.typeName}</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {expenseData.map((row) => (
+                            <TableRow
+                                key={row.id}
+                                sx={{
+                                    "&:last-child td, &:last-child th": {
+                                        border: 0,
+                                    },
+                                }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    <IconButton
+                                        onClick={(e) =>
+                                            deleteExpenseTypeRecord(e, row)
+                                        }
+                                    >
+                                        <DeleteOutlined />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell align="left">
+                                    {row.typeName}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
     );
 };
 
 export const ExpensesTypes = () => {
     return (
-        <Box
-            sx={{
-                width: "100%",
-                height: "100%",
-            }}
-        >
+        <Box>
             <Typography
                 align="center"
                 variant="h3"
@@ -140,9 +154,6 @@ export const ExpensesTypes = () => {
             >
                 New Type of Expense
             </Typography>
-
-            <ExpenseForm />
-            <ExpensesTable />
         </Box>
     );
 };
@@ -160,11 +171,6 @@ export function postNewExpenseType(eName) {
             console.log(error);
         });
 }
-
-export const deleteExpenseTypeRecord = async (e, row) => {
-    // deleteType(row.id);
-    // fetchData();
-};
 
 export function deleteExpenseType(id) {
     const axios = require("axios").default;
