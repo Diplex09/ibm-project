@@ -38,6 +38,8 @@ class ExpenseType(Base):
 
 def getExpensesTypes():
     global db
+    if db==None:
+        db=DBManager.getInstance
     expenseList = []
 
     stmt = select(ExpenseType)

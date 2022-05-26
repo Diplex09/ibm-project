@@ -18,12 +18,13 @@ CREATE TABLE ICA
 	Minor Varchar (50),
 	Leru Varchar (50),
 	Description Varchar (200),
-	Type_Name Varchar (100),
+	id_type integer, 
 	NEC Int,
 	Total_Plus_Taxes Float,
 	Start_Date Date,
 	End_Date Date,
 	Cty_Name_Perf Varchar (50),
 	R_Cty_Perf Varchar (100),
-	Total_Billing Float
+	Total_Billing Float,
+	Foreign Key(id_type) REFERENCES Type(id_type)
 );
