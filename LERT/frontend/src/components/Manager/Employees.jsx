@@ -27,7 +27,7 @@ import {
     DeleteOutlined,
 } from "@mui/icons-material";
 import { makeStyles } from "@material-ui/core/styles";
-import { FormEmployee } from "../Fields/FormEmployee";
+import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
 
 const createData = (name, email, country, ica, band, type, status) => {
     return { name, email, country, ica, band, type, status };
@@ -151,34 +151,12 @@ export const Employees = () => {
                                     },
                                 }}
                             >
-                                <TableCell>
-                                    <IconButton
-                                        onClick={() => {
-                                            setDisplayModal(true);
-                                        }}
-                                    >
-                                        <ModeEditOutlineOutlined />
-                                    </IconButton>
-                                </TableCell>
-
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="left">{row.email}</TableCell>
-                                <TableCell align="left">
-                                    {row.country}
-                                </TableCell>
-                                <TableCell align="left">{row.ica}</TableCell>
-                                <TableCell align="left">{row.band}</TableCell>
-                                <TableCell align="left">{row.type}</TableCell>
-                                <TableCell align="left">{row.status}</TableCell>
+                                <ReadRowEmployees row={row} />
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-
-            {displayModal && <FormEmployee closeModal={setDisplayModal} />}
         </>
     );
 };
