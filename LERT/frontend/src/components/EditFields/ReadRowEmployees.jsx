@@ -5,7 +5,7 @@ import { FormEmployee } from "../Fields/FormEmployee";
 
 import { useState, useEffect, fra } from "react";
 
-export const ReadRowEmployees = (row) => {
+export const ReadRowEmployees = ({ row }) => {
     const [displayModal, setDisplayModal] = useState(false);
 
     return (
