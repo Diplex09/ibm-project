@@ -1,28 +1,9 @@
-import React from "react";
-import { useState, useEffect, Fragment } from "react";
-import { FormEmployee } from "../Fields/FormEmployee";
-import TableCell from "@mui/material/TableCell";
-import {
-    Box,
-    Divider,
-    IconButton,
-    InputAdornment,
-    InputBase,
-    Typography,
-    Paper,
-} from "@mui/material";
+import { useState } from "react";
+import { IconButton, TableCell } from "@mui/material";
+import { ModeEditOutlineOutlined } from "@mui/icons-material";
 
-import {
-    Search,
-    FilterList,
-    AttachMoney,
-    EmailOutlined,
-    CommentOutlined,
-    Send,
-    PublicOutlined,
-    ModeEditOutlineOutlined,
-    DeleteOutlined,
-} from "@mui/icons-material";
+import { FormEmployee } from "../Fields/FormEmployee";
+
 export const ReadRowEmployees = (row) => {
     const [displayModal, setDisplayModal] = useState(false);
     return (

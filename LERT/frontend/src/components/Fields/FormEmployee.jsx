@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
     Box,
     IconButton,
@@ -8,16 +8,12 @@ import {
     Paper,
     Modal,
     TextField,
-    InputAdornment,
     Button,
 } from "@mui/material";
 import { DeleteOutlined } from "@mui/icons-material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useState, useEffect, Fragment } from "react";
-
-import { EmailOutlined, ArrowForwardOutlined } from "@mui/icons-material";
 
 export const FormEmployee = ({ closeModal }) => {
     const [dateStart, setDateStart] = useState(new Date());

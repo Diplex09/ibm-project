@@ -1,4 +1,5 @@
-import { ArrowForwardOutlined } from '@mui/icons-material';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
     Box,
     Typography,
@@ -8,17 +9,16 @@ import {
     Button,
     Grid,
     Link,
-} from '@mui/material';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+} from "@mui/material";
+import { ArrowForwardOutlined } from "@mui/icons-material";
 
-import { startLogin } from '../../actions/auth';
+import { startLogin } from "../../actions/auth";
 
 export const Right = () => {
     const dispatch = useDispatch();
 
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
+    const [user, setUser] = useState("");
+    const [password, setPassword] = useState("");
 
     const validLogin = (e) => {
         e.preventDefault();
@@ -28,30 +28,30 @@ export const Right = () => {
     return (
         <Box
             sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '50%',
-                height: '100%',
-                backgroundColor: '#ffffff',
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "50%",
+                height: "100%",
+                backgroundColor: "#ffffff",
             }}
         >
             <Typography
                 component="h1"
                 variant="h5"
                 sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: '70%',
+                    display: "flex",
+                    alignItems: "center",
+                    width: "70%",
                 }}
             >
-                Log in to IBM{' '}
+                Log in to IBM{" "}
                 <Typography
                     sx={{
-                        fontSize: '1em',
-                        fontWeight: '600',
-                        marginLeft: '0.3rem',
+                        fontSize: "1em",
+                        fontWeight: "600",
+                        marginLeft: "0.3rem",
                     }}
                 >
                     LERT
@@ -63,9 +63,9 @@ export const Right = () => {
                 noValidate
                 sx={{
                     mt: 1,
-                    width: '70%',
-                    display: 'flex',
-                    flexDirection: 'column',
+                    width: "70%",
+                    display: "flex",
+                    flexDirection: "column",
                 }}
             >
                 <TextField
@@ -106,18 +106,18 @@ export const Right = () => {
                     sx={{
                         mt: 3,
                         mb: 2,
-                        width: '50%',
-                        height: '45px',
-                        borderRadius: '0px',
-                        bgcolor: '#0062ff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        textTransform: 'none',
-                        fontSize: '15px',
-                        fontWeight: '300',
-                        ':hover': {
-                            bgcolor: '#0255DA',
+                        width: "50%",
+                        height: "45px",
+                        borderRadius: "0px",
+                        bgcolor: "#0062ff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        textTransform: "none",
+                        fontSize: "15px",
+                        fontWeight: "300",
+                        ":hover": {
+                            bgcolor: "#0255DA",
                         },
                     }}
                 >

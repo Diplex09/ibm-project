@@ -1,11 +1,3 @@
-import { useState, useEffect, Fragment } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-
 import {
     Box,
     Divider,
@@ -14,19 +6,16 @@ import {
     InputBase,
     Typography,
     Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
 } from "@mui/material";
-import {
-    Search,
-    FilterList,
-    AttachMoney,
-    EmailOutlined,
-    CommentOutlined,
-    Send,
-    PublicOutlined,
-    ModeEditOutlineOutlined,
-    DeleteOutlined,
-} from "@mui/icons-material";
+import { Search, FilterList } from "@mui/icons-material";
 import { makeStyles } from "@material-ui/core/styles";
+
 import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
 
 const createData = (name, email, country, ica, band, type, status) => {
@@ -59,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Employees = () => {
     const classes = useStyles();
-    const [displayModal, setDisplayModal] = useState(false);
+    // const [displayModal, setDisplayModal] = useState(false);
 
     return (
         <>

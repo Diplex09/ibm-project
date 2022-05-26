@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import {
     Box,
     AppBar,
@@ -5,9 +6,9 @@ import {
     Typography,
     CardMedia,
     Divider,
-} from '@mui/material';
-import { useLocation } from 'react-router-dom';
-import { getHeadTitle } from '../utils/getHeadTitle';
+} from "@mui/material";
+
+import { getHeadTitle } from "../utils/getHeadTitle";
 
 export const Header = () => {
     const location = useLocation();
@@ -16,12 +17,12 @@ export const Header = () => {
     return (
         <AppBar
             sx={{
-                backgroundColor: 'white',
-                height: '60px',
+                backgroundColor: "white",
+                height: "60px",
             }}
         >
             <Toolbar>
-                <Box sx={{ width: '60px', marginRight: '5px' }}>
+                <Box sx={{ width: "60px", marginRight: "5px" }}>
                     <CardMedia
                         component="img"
                         sx={{
@@ -37,24 +38,24 @@ export const Header = () => {
                     component="div"
                     color="black"
                     fontWeight="Bold"
-                    marginLeft={'11px'}
+                    marginLeft={"11px"}
                 >
                     LERT
                 </Typography>
                 <Divider
                     orientation="vertical"
                     style={{
-                        marginLeft: '10px',
-                        height: '30px',
-                        width: '7px',
+                        marginLeft: "10px",
+                        height: "30px",
+                        width: "7px",
                     }}
                 />
                 <Typography
                     sx={{
-                        color: 'black',
-                        marginLeft: '18px',
-                        fontWeight: 'bold',
-                        textTransform: 'uppercase',
+                        color: "black",
+                        marginLeft: "18px",
+                        fontWeight: "bold",
+                        textTransform: "uppercase",
                     }}
                 >
                     {section}

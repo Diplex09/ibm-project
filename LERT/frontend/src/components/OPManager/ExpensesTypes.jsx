@@ -1,12 +1,12 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import { useState, useEffect } from "react";
 
-import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
 import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
     Typography,
     Button,
     Grid,
@@ -15,7 +15,7 @@ import {
     Paper,
     IconButton,
 } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { DeleteOutlined } from "@mui/icons-material";
 
 export const ExpenseForm = (fetch) => {
     const [textValue, setTextValue] = useState("");
@@ -65,7 +65,7 @@ export const ExpenseForm = (fetch) => {
 export const ExpensesTable = () => {
     const axios = require("axios").default;
     const [expenseData, getExpenseData] = useState([]);
-    const URL = "http://localhost:3000/expensesTypes";
+    // const URL = "http://localhost:3000/expensesTypes";
 
     useEffect(() => {
         fetchData();

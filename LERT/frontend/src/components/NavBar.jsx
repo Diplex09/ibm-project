@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 import {
     Box,
     List,
@@ -10,8 +12,8 @@ import {
     ListItemIcon,
     ListItemText,
     Typography,
-} from '@mui/material';
-import MuiDrawer from '@mui/material/Drawer';
+} from "@mui/material";
+import MuiDrawer from "@mui/material/Drawer";
 import {
     AccountBalanceOutlined,
     GroupAddOutlined,
@@ -28,58 +30,56 @@ import {
     AddAlarmOutlined,
     PeopleAltOutlined,
     EditOutlined,
-} from '@mui/icons-material';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+} from "@mui/icons-material";
 
-import { startLogout } from '../actions/auth';
+import { startLogout } from "../actions/auth";
 
 const drawerWidth = 300;
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
     }),
-    overflowX: 'hidden',
+    overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
     }),
-    overflowX: 'hidden',
+    overflowX: "hidden",
     width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
         width: `calc(${theme.spacing(8)} + 1px)`,
     },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+const DrawerHeader = styled("div")(({ theme }) => ({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
 }));
 
 const Drawer = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== 'open',
+    shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
+    whiteSpace: "nowrap",
+    boxSizing: "border-box",
     ...(open && {
         ...openedMixin(theme),
-        '& .MuiDrawer-paper': openedMixin(theme),
+        "& .MuiDrawer-paper": openedMixin(theme),
     }),
     ...(!open && {
         ...closedMixin(theme),
-        '& .MuiDrawer-paper': closedMixin(theme),
+        "& .MuiDrawer-paper": closedMixin(theme),
     }),
 }));
 
@@ -91,9 +91,9 @@ export const NavBar = () => {
 
     const [barBtns, setBarBtns] = useState([
         {
-            text: 'Home',
+            text: "Home",
             icon: <HomeOutlined />,
-            path: '/',
+            path: "/",
         },
     ]);
 
@@ -115,29 +115,29 @@ export const NavBar = () => {
             setBarBtns([
                 ...barBtns,
                 {
-                    text: 'Delegate',
+                    text: "Delegate",
                     icon: <GroupAddOutlined />,
-                    path: '/delegate',
+                    path: "/delegate",
                 },
                 {
-                    text: 'Employee',
+                    text: "Employee",
                     icon: <PersonOutlineOutlined />,
-                    path: '/employee',
+                    path: "/employee",
                 },
                 {
-                    text: 'Expenses',
+                    text: "Expenses",
                     icon: <AccountBalanceOutlined />,
-                    path: '/expenses',
+                    path: "/expenses",
                 },
                 {
-                    text: 'Recovery',
+                    text: "Recovery",
                     icon: <LoopOutlined />,
-                    path: '/recovery',
+                    path: "/recovery",
                 },
                 {
-                    text: 'Reports',
+                    text: "Reports",
                     icon: <PostAddOutlined />,
-                    path: '/reports',
+                    path: "/reports",
                 },
             ]);
         } else if (rol === 2) {
@@ -145,34 +145,34 @@ export const NavBar = () => {
             setBarBtns([
                 ...barBtns,
                 {
-                    text: 'Types',
+                    text: "Types",
                     icon: <TrackChangesOutlined />,
-                    path: '/types',
+                    path: "/types",
                 },
                 {
-                    text: 'ICAS',
+                    text: "ICAS",
                     icon: <ReceiptOutlined />,
-                    path: '/icas',
+                    path: "/icas",
                 },
                 {
-                    text: 'Expenses Types',
+                    text: "Expenses Types",
                     icon: <AttachMoneyOutlined />,
-                    path: '/expenses',
+                    path: "/expenses",
                 },
                 {
-                    text: 'Extra Hours',
+                    text: "Extra Hours",
                     icon: <AddAlarmOutlined />,
-                    path: '/hours',
+                    path: "/hours",
                 },
                 {
-                    text: 'Manage Manager Functions',
+                    text: "Manage Manager Functions",
                     icon: <PeopleAltOutlined />,
-                    path: '/manage',
+                    path: "/manage",
                 },
                 {
-                    text: 'Edit Manager Information',
+                    text: "Edit Manager Information",
                     icon: <EditOutlined />,
-                    path: '/edit',
+                    path: "/edit",
                 },
             ]);
         } else if (rol === 3) {
@@ -180,26 +180,26 @@ export const NavBar = () => {
             setBarBtns([
                 ...barBtns,
                 {
-                    text: 'Delegate',
+                    text: "Delegate",
                     icon: <GroupAddOutlined />,
-                    path: '/delegate',
+                    path: "/delegate",
                 },
             ]);
         }
     }, []);
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: "flex" }}>
             <CssBaseline />
             <Drawer variant="permanent" anchor="right" open={open}>
                 <DrawerHeader>
                     {open && (
-                        <Box sx={{ width: '100%', ml: '15px' }}>
+                        <Box sx={{ width: "100%", ml: "15px" }}>
                             <Typography
-                                sx={{ fontWeight: '500' }}
+                                sx={{ fontWeight: "500" }}
                             >{`${name}`}</Typography>
                             <Typography
-                                sx={{ fontSize: '12px' }}
+                                sx={{ fontSize: "12px" }}
                             >{`${rolName}`}</Typography>
                         </Box>
                     )}
@@ -207,7 +207,7 @@ export const NavBar = () => {
                         {open === true ? (
                             <ChevronRight />
                         ) : (
-                            <Menu sx={{ color: '#0062ff' }} />
+                            <Menu sx={{ color: "#0062ff" }} />
                         )}
                     </IconButton>
                 </DrawerHeader>
@@ -218,15 +218,15 @@ export const NavBar = () => {
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
+                                    justifyContent: open ? "initial" : "center",
                                     px: 2.5,
                                 }}
                             >
                                 <ListItemIcon
                                     sx={{
                                         minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
+                                        mr: open ? 3 : "auto",
+                                        justifyContent: "center",
                                     }}
                                 >
                                     {icon}
@@ -241,7 +241,7 @@ export const NavBar = () => {
                     <ListItemButton
                         sx={{
                             minHeight: 48,
-                            justifyContent: open ? 'initial' : 'center',
+                            justifyContent: open ? "initial" : "center",
                             px: 2.5,
                         }}
                         onClick={handleLogout}
@@ -249,8 +249,8 @@ export const NavBar = () => {
                         <ListItemIcon
                             sx={{
                                 minWidth: 0,
-                                mr: open ? 3 : 'auto',
-                                justifyContent: 'center',
+                                mr: open ? 3 : "auto",
+                                justifyContent: "center",
                             }}
                         >
                             <LogoutOutlined />
