@@ -83,7 +83,7 @@ export const ExpensesTable = () => {
 
     const deleteExpenseTypeRecord = (e, row) => {
         e.preventDefault();
-        deleteExpenseType(row.id);
+        deleteExpenseType(row.typeName);
         fetchData();
     };
 
@@ -172,10 +172,10 @@ export function postNewExpenseType(eName) {
         });
 }
 
-export function deleteExpenseType(id) {
+export function deleteExpenseType(name) {
     const axios = require("axios").default;
     axios
-        .delete(`http://localhost:3000/deleteExpenseType/${id}`)
+        .delete(`http://localhost:3000/delExpenseType/${name}`)
         .then(function (response) {
             console.log(response);
         })
