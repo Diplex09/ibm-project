@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { HourFields } from "../Fields/HourFields";
 import { TableInfo } from "../reusable/TableInfo";
+import { Typography } from "@mui/material";
 
 export const ExtraHoursOP = () => {
     const [typeData, setTypeData] = useState([]);
@@ -33,6 +34,15 @@ export const ExtraHoursOP = () => {
 
     return (
         <>
+            <Typography
+                component="h1"
+                variant="h4"
+                sx={{
+                    fontWeight: "600",
+                }}
+            >
+                Insert Extra Hour
+            </Typography>
             <HourFields fetchData={fetchData} />
             <TableInfo
                 fetchData={fetchData}

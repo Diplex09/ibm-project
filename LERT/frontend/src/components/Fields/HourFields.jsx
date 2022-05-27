@@ -43,32 +43,23 @@ export const HourFields = ({ fetchData }) => {
     };
 
     return (
-        <>
-            <Paper>
+        <Paper>
+            <Box
+                sx={{
+                    marginTop: "1rem",
+                    marginBottom: "1rem",
+                    padding: "20px",
+                }}
+            >
                 <Box
                     sx={{
-                        marginTop: "1rem",
-                        marginBottom: "2rem",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: "1rem",
                     }}
                 >
-                    <Typography
-                        sx={{
-                            paddingTop: "1.5rem",
-                            marginBottom: "2.5rem",
-                            textAlign: "center",
-                            fontWeight: "1000",
-                            fontSize: "1.5rem",
-                        }}
-                    >
-                        INSERT EXTRA HOUR
-                    </Typography>
-
                     <TextField
-                        sx={{
-                            marginRight: "10rem",
-                            marginLeft: "3rem",
-                            width: "18rem",
-                        }}
+                        sx={{ width: "18rem" }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -85,7 +76,7 @@ export const HourFields = ({ fetchData }) => {
                     />
 
                     <TextField
-                        sx={{ width: "18rem", marginRight: "9.8rem" }}
+                        sx={{ width: "18rem" }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -96,13 +87,14 @@ export const HourFields = ({ fetchData }) => {
                         id="standard-basic"
                         label="BAND NUMBER"
                         variant="standard"
+                        type="number"
                         onChange={(e) => {
                             setRecord({ ...record, band: e.target.value });
                         }}
                     />
 
                     <TextField
-                        sx={{ width: "18rem", marginRight: "3rem" }}
+                        sx={{ width: "18rem" }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -113,18 +105,14 @@ export const HourFields = ({ fetchData }) => {
                         id="standard-basic"
                         label="RATE"
                         variant="standard"
+                        type="number"
                         onChange={(e) => {
                             setRecord({ ...record, rate: e.target.value });
                         }}
                     />
 
                     <TextField
-                        sx={{
-                            marginTop: "2rem",
-                            marginRight: "10rem",
-                            marginLeft: "3rem",
-                            width: "18rem",
-                        }}
+                        sx={{ width: "18rem" }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -136,21 +124,27 @@ export const HourFields = ({ fetchData }) => {
                         label="COUNTRY"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, country: e.target.value });
+                            setRecord({
+                                ...record,
+                                country: e.target.value,
+                            });
                         }}
                     />
+                </Box>
 
-                    <LocalizationProvider
-                        marginRight="50rem"
-                        dateAdapter={AdapterDateFns}
-                    >
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        mb: "1rem",
+                    }}
+                >
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             label="Begin"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
-                                        marginTop: "2rem",
-                                        marginRight: "9.8rem",
                                         width: "18rem",
                                         border: "0",
                                     }}
@@ -159,26 +153,19 @@ export const HourFields = ({ fetchData }) => {
                             )}
                             value={dateStart}
                             onChange={(date) => {
-                                let d = new Date(date).toLocaleDateString(
-                                    "fr-FR"
-                                );
+                                let d = new Date(date).toLocaleDateString();
                                 setDateStart(d);
                                 setRecord({ ...record, dateStart: d });
                             }}
                         />
                     </LocalizationProvider>
 
-                    <LocalizationProvider
-                        marginRight="50rem"
-                        dateAdapter={AdapterDateFns}
-                    >
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             label="End"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
-                                        marginTop: "2rem",
-
                                         width: "18rem",
                                         border: "0",
                                     }}
@@ -187,41 +174,37 @@ export const HourFields = ({ fetchData }) => {
                             )}
                             value={dateFinish}
                             onChange={(date) => {
-                                let dF = new Date(date).toLocaleDateString(
-                                    "fr-FR"
-                                );
+                                let dF = new Date(date).toLocaleDateString();
+
                                 setDateFinish(dF);
                                 setRecord({ ...record, dateFinish: dF });
                             }}
                         />
                     </LocalizationProvider>
-
-                    <Box
-                        sx={{
-                            textAlign: "center",
-                            marginTop: "2rem",
-                            paddingBottom: "1rem",
-                        }}
-                    >
-                        <Button
-                            sx={{
-                                width: "500",
-                                borderRadius: "0",
-                                bgcolor: "#0062ff",
-                                ":hover": {
-                                    bgcolor: "#0255DA",
-                                },
-                            }}
-                            variant="contained"
-                            endIcon={<Send />}
-                            onClick={handleSubmit}
-                        >
-                            Submit
-                        </Button>
-                    </Box>
                 </Box>
-            </Paper>
-        </>
+
+                <Box
+                    sx={{
+                        textAlign: "center",
+                    }}
+                >
+                    <Button
+                        sx={{
+                            borderRadius: "0",
+                            bgcolor: "#0062ff",
+                            ":hover": {
+                                bgcolor: "#0255DA",
+                            },
+                        }}
+                        variant="contained"
+                        endIcon={<Send />}
+                        onClick={handleSubmit}
+                    >
+                        Submit
+                    </Button>
+                </Box>
+            </Box>
+        </Paper>
     );
 };
 
