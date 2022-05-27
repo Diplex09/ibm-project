@@ -1,13 +1,13 @@
 import { IconButton, TableCell } from "@mui/material";
-import { ModeEditOutlineOutlined } from "@mui/icons-material";
+import { ModeEditOutlineOutlined, DeleteOutlined } from "@mui/icons-material";
 
 import { FormEmployee } from "../Fields/FormEmployee";
 
 import { useState, useEffect, fra } from "react";
 
-export const ReadRowEmployees = ({ row }) => {
+export const ReadRowEmployees = ({ row, deleteRecord }) => {
     const [displayModal, setDisplayModal] = useState(false);
-
+    console.log(row);
     return (
         <>
             <TableCell>
@@ -17,6 +17,10 @@ export const ReadRowEmployees = ({ row }) => {
                     }}
                 >
                     <ModeEditOutlineOutlined />
+                </IconButton>
+
+                <IconButton onClick={(e) => deleteRecord(e, row)}>
+                    <DeleteOutlined />
                 </IconButton>
             </TableCell>
             <TableCell>

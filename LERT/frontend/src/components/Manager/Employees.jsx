@@ -62,6 +62,12 @@ export const Employees = () => {
         });
     };
 
+    const deleteRecord = async (e, row) => {
+        console.log(row.employee_id);
+        deleteEmployee(row.employee_id);
+        fetchData();
+    };
+
     return (
         <>
             <Box
@@ -158,7 +164,10 @@ export const Employees = () => {
                                 }}
                             >
                                 <Fragment>
-                                    <ReadRowEmployees row={row} />
+                                    <ReadRowEmployees
+                                        row={row}
+                                        deleteRecord={deleteRecord}
+                                    />
                                 </Fragment>
                             </TableRow>
                         ))}
@@ -168,3 +177,16 @@ export const Employees = () => {
         </>
     );
 };
+export default Employees;
+
+export function deleteEmployee(id) {
+    const axios = require("axios").default;
+    axios
+        .delete(`http://localhost:3000/deleteEmployees/${id}`)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}

@@ -80,3 +80,20 @@ def getEmployees():
         # print(expense.expense_amount)
     resp = jsonify([e.serialize() for e in employeeList]) #Con esto puedes mandar lista de objetos en json
     return resp
+
+def deleteEmployee(id):
+    global db
+    if request.method == 'DELETE':
+        # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
+        # db.session.execute(autoIncrement)
+        queryCheck = select(Employee).where(Employee.id_employee == id)
+        expType=db.session.scalar(queryCheck)
+        if(expType == None): #check if record does exist
+            return "Employee record not found"
+        else:
+            stmt = delete(Employee).where(Employee.id_employee == id)
+            print(stmt)
+            db.session.execute(stmt)
+            db.session.commit()
+
+            return "Employee delete done"

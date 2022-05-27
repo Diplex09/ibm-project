@@ -16,7 +16,7 @@ from backend.login import login
 from backend.DB_Connections.dbExpenseType import deleteExpenseType, getExpensesTypes, postExpenseType
 from backend.DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
 from backend.DB_Connections.dbHours import getHours, postHours, deleteHour, updateHour
-from backend.DB_Connections.dbEmployee import getEmployees
+from backend.DB_Connections.dbEmployee import getEmployees, deleteEmployee
 
 
 
@@ -298,6 +298,7 @@ app.add_url_rule("/deleteHours/<int:id>", view_func=deleteHour, methods=['DELETE
 app.add_url_rule("/updateHours/<int:id>", view_func=updateHour, methods=['PUT'])
 
 app.add_url_rule("/getEmployees", view_func=getEmployees, methods=['GET'])
+app.add_url_rule("/deleteEmployees/<int:id>", view_func=deleteEmployee, methods=['DELETE'])
 
 
 
