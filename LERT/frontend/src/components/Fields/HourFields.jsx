@@ -14,8 +14,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
     AttachMoney,
     EmailOutlined,
-    Send,
     PublicOutlined,
+    ArrowForwardOutlined,
 } from "@mui/icons-material";
 
 import { postNewHour } from "../../actions/OP Manager/extraHours";
@@ -55,7 +55,7 @@ export const HourFields = ({ fetchData }) => {
                     sx={{
                         display: "flex",
                         justifyContent: "space-between",
-                        mb: "1rem",
+                        mb: "1.5rem",
                     }}
                 >
                     <TextField
@@ -137,6 +137,7 @@ export const HourFields = ({ fetchData }) => {
                         display: "flex",
                         justifyContent: "space-evenly",
                         mb: "1rem",
+                        alignItems: "center",
                     }}
                 >
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -181,26 +182,26 @@ export const HourFields = ({ fetchData }) => {
                             }}
                         />
                     </LocalizationProvider>
-                </Box>
 
-                <Box
-                    sx={{
-                        textAlign: "center",
-                    }}
-                >
                     <Button
+                        variant="contained"
                         sx={{
-                            borderRadius: "0",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            textTransform: "none",
+                            borderRadius: "0px",
+                            width: "12rem",
+                            height: "40px",
+                            fontSize: "15px",
+                            fontWeight: "400",
                             bgcolor: "#0062ff",
                             ":hover": {
                                 bgcolor: "#0255DA",
                             },
                         }}
-                        variant="contained"
-                        endIcon={<Send />}
                         onClick={handleSubmit}
                     >
-                        Submit
+                        Submit <ArrowForwardOutlined />
                     </Button>
                 </Box>
             </Box>
