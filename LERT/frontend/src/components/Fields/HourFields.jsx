@@ -27,6 +27,12 @@ import {
     PublicOutlined,
 } from "@mui/icons-material";
 
+import {
+    deleteHour,
+    postNewHour,
+    updateHour,
+} from "../../actions/OP Manager/extraHours";
+
 export const HourFields = () => {
     const [typeData, setTypeData] = useState([]);
     const [rowId, setRowId] = useState(null);
@@ -65,7 +71,7 @@ export const HourFields = () => {
             method: "get",
             url: "http://localhost:3000/getHours",
             responseType: "json",
-        }).then(function (response) {
+        }).then((response) => {
             setTypeData(response.data);
         });
     };
@@ -367,54 +373,3 @@ export const HourFields = () => {
 };
 
 export default HourFields;
-
-export function postNewHour(record) {
-    const axios = require("axios").default;
-    console.log(record);
-    axios
-        .post("http://localhost:3000/newPostHour", {
-            name: record.type,
-            country: record.country,
-            band: record.band,
-            rate: record.rate,
-            date_to_start: record.dateStart,
-            date_to_finish: record.dateFinish,
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-export function deleteHour(id) {
-    const axios = require("axios").default;
-    axios
-        .delete(`http://localhost:3000/deleteHours/${id}`)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-export function updateHour(id, editRecord) {
-    const axios = require("axios").default;
-    axios
-        .put(`http://localhost:3000/updateHours/${id}`, {
-            name: editRecord.type,
-            country: editRecord.country,
-            band: editRecord.band,
-            rate: editRecord.rate,
-            date_to_start: editRecord.dateStart,
-            date_to_finish: editRecord.dateFinish,
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
