@@ -13,8 +13,9 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Button,
 } from "@mui/material";
-import { Search, FilterList } from "@mui/icons-material";
+import { Search, FilterList, ArrowForwardOutlined } from "@mui/icons-material";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
@@ -90,7 +91,29 @@ export const Employees = () => {
                 >
                     All Employees
                 </Typography>
-                <Paper
+
+                <Button
+                    variant="contained"
+                    sx={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        textTransform: "none",
+                        borderRadius: "0px",
+                        width: "12rem",
+                        height: "40px",
+                        fontSize: "15px",
+                        fontWeight: "400",
+                        bgcolor: "#0062ff",
+                        ":hover": {
+                            bgcolor: "#0255DA",
+                        },
+                    }}
+                >
+                    Add Employee <ArrowForwardOutlined />
+                </Button>
+                {/* <Paper
                     component="form"
                     sx={{
                         display: "flex",
@@ -123,7 +146,7 @@ export const Employees = () => {
                     <IconButton sx={{ p: "10px" }} aria-label="directions">
                         <FilterList />
                     </IconButton>
-                </Paper>
+                </Paper> */}
             </Box>
             <TableContainer
                 component={Paper}
