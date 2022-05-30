@@ -14,7 +14,7 @@ from flask import Flask, jsonify, request, session, send_from_directory
 
 from flask_cors import CORS
 
-from DB_Connections.DBManager import DBManager
+from backend.DB_Connections.DBManager import DBManager
 
 Base = declarative_base()
 db = DBManager.getInstance() 
