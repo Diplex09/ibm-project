@@ -20,8 +20,8 @@ class DBManager:
 
         # cargar valores desde configuracion
         config = ConfigParser()
-        config.read('config.ini')
-        db_config = config["DATABASE"]
+        config.read('backend\config.ini')
+        db_config = config['DATABASE']
 
         driver = db_config['DRIVER']
         user = db_config['USER']

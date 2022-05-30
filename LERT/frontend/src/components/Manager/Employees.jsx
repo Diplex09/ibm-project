@@ -18,6 +18,7 @@ import { Search, FilterList } from "@mui/icons-material";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
+import { deleteEmployee } from "../../actions/Manager/employee";
 
 const useStyles = makeStyles((theme) => ({
     root: {
