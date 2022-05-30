@@ -38,7 +38,7 @@ class ICA(Base):
     division = Column(String(50))
     major = Column(String(50))
     minor = Column(String(50))
-    leru - Column(String(50))
+    leru = Column(String(50))
     description = Column(String(200))
     id_type = Column(Integer, ForeignKey("type.id_type"))
     nec = Column(Integer)

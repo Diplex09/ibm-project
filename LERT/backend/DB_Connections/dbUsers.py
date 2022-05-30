@@ -43,7 +43,7 @@ class Users(Base):
         }
     
 def all_users():
-    if 'username' in session and session[ 'rol'] == 1:
+    if 'username' in session and session['rol'] == 1:
         all_people = []
 
         stmt = select(Users)
@@ -94,6 +94,7 @@ def create_user():
             if user_exists:
                 user = db.session.scalars(check_for_user)
                 resp = jsonify(user.serialize())
+                return resp
                 
             else:
                 resp = jsonify({'message' : 'Bad Request - could not create user'})
@@ -125,13 +126,13 @@ def edit_user():
                     continue
 
                 elif col == "fullname":
-                    update(Users).where(Users.id_user == _id).values(fullname = val)
+                    stmt = update(Users).where(Users.id_user == _id).values(fullname = val)
 
                 elif col == "mail":
-                    update(Users).where(Users.id_user == _id).values(mail = val)
+                    stmt = update(Users).where(Users.id_user == _id).values(mail = val)
 
                 elif col == "rol":
-                    update(Users).where(Users.id_user == _id).values(rol = val)
+                    stmt = update(Users).where(Users.id_user == _id).values(rol = val)
 
                 else:
                     resp = jsonify({'message' : 'Bad Request - field does not match columns in DB'})
@@ -139,7 +140,7 @@ def edit_user():
                     return resp
 
 
-                db.session.execute()
+                db.session.execute(stmt)
 
             check_for_user = select(Users).where(Users.id_user == _id)
             user_exists = db.session.execute(check_for_user)
