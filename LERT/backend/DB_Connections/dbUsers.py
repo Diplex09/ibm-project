@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 from flask import Flask, jsonify, request, session, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 from DB_Connections.DBManager import DBManager 
 
@@ -41,9 +42,19 @@ class Users(Base):
             'mail': self.mail,
             'rol': self.rol
         }
-    
+
+def check_rol(id):
+    check_for_user = select(Users.rol).where(Users.id_user == id)
+    rol = db.session.scalars(check_for_user).one()
+
+    return rol
+
+@jwt_required()
 def all_users():
-    if 'username' in session and session['rol'] == 1:
+    _id = get_jwt_identity()
+    rol = check_rol(_id)
+
+    if rol == 1:
         all_people = []
 
         stmt = select(Users)
@@ -58,7 +69,10 @@ def all_users():
         return resp
 
 def create_user():
-    if 'username' in session and session[ 'rol'] == 1:
+    _id = get_jwt_identity()
+    rol = check_rol(_id)
+
+    if rol == 1:
         _json = request.json
         _fullname = _json['fullname']
         _mail = _json['mail']
@@ -111,7 +125,10 @@ def create_user():
         return resp
 
 def edit_user():
-    if 'username' in session and session[ 'rol'] == 1:
+    _id = get_jwt_identity()
+    rol = check_rol(_id)
+
+    if rol == 1:
         _json = request.json
         _id = _json['id_user']
 
@@ -160,7 +177,10 @@ def edit_user():
         return resp
 
 def delete_user():
-    if 'username' in session and session[ 'rol'] == 1:
+    _id = get_jwt_identity()
+    rol = check_rol(_id)
+
+    if rol == 1:
         _json = request.json
         _id = _json['id_user']
 
