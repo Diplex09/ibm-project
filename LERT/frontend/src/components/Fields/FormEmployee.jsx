@@ -15,7 +15,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-export const FormEmployee = ({ closeModal }) => {
+export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
     const [dateStart, setDateStart] = useState(new Date());
     const [dateFinish, setDateFinish] = useState(new Date());
 
@@ -53,14 +53,16 @@ export const FormEmployee = ({ closeModal }) => {
                                     required
                                     size="small"
                                     label="First Name"
-                                    defaultValue="Hello World"
+                                    name="firstName"
+                                    defaultValue={editRecord.firstName}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
-                                    label="LastName"
-                                    defaultValue="Hello World"
+                                    label="Last Name"
+                                    name="lastName"
+                                    defaultValue={editRecord.lastName}
                                 />
                             </ListItem>
                             <ListItem>
@@ -69,14 +71,16 @@ export const FormEmployee = ({ closeModal }) => {
                                     required
                                     size="small"
                                     label="Email"
-                                    defaultValue="Hello World"
+                                    name="email"
+                                    defaultValue={editRecord.email}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
                                     label="Country from"
-                                    defaultValue="Hello World"
+                                    name="origiCountry"
+                                    defaultValue={editRecord.originCountry}
                                 />
                             </ListItem>
                             <ListItem>
@@ -85,14 +89,16 @@ export const FormEmployee = ({ closeModal }) => {
                                     required
                                     size="small"
                                     label="ICA "
-                                    defaultValue="Hello World"
+                                    name="ICA"
+                                    defaultValue={editRecord.ICA}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
                                     label="Country Working"
-                                    defaultValue="Hello World"
+                                    name="currentCountry"
+                                    defaultValue={editRecord.currentCountry}
                                 />
                             </ListItem>
                             <ListItem>
@@ -101,14 +107,16 @@ export const FormEmployee = ({ closeModal }) => {
                                     required
                                     size="small"
                                     label="Type"
-                                    defaultValue="Hello World"
+                                    name="type"
+                                    defaultValue={editRecord.type}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
                                     label="Band"
-                                    defaultValue="Hello World"
+                                    name="band"
+                                    defaultValue={editRecord.band}
                                 />
                             </ListItem>
                             <ListItem>
@@ -117,7 +125,8 @@ export const FormEmployee = ({ closeModal }) => {
                                     required
                                     size="small"
                                     label="Squad"
-                                    defaultValue="Hello World"
+                                    name="squad"
+                                    defaultValue={editRecord.squad}
                                 />
 
                                 <LocalizationProvider
@@ -131,7 +140,8 @@ export const FormEmployee = ({ closeModal }) => {
                                                 {...params}
                                             />
                                         )}
-                                        value={dateStart}
+                                        name="dateStart"
+                                        value={editRecord.dateStart}
                                         onChange={(date) => {
                                             const d = new Date(date);
                                             console.log(d);
@@ -152,7 +162,8 @@ export const FormEmployee = ({ closeModal }) => {
                                                 {...params}
                                             />
                                         )}
-                                        value={dateFinish}
+                                        name="dateFinish"
+                                        value={editRecord.dateFinish}
                                         onChange={(date) => {
                                             const dF = new Date(date);
                                             console.log(dF);
@@ -178,6 +189,7 @@ export const FormEmployee = ({ closeModal }) => {
                                             bgcolor: "#0255DA",
                                         },
                                     }}
+                                    onClick={() => closeModal(false)}
                                 >
                                     Cancel
                                 </Button>
@@ -202,10 +214,6 @@ export const FormEmployee = ({ closeModal }) => {
                             </ListItem>
                         </List>
                     </Box>
-
-                    <IconButton onClick={() => closeModal(false)}>
-                        <DeleteOutlined />
-                    </IconButton>
                 </Paper>
             </Modal>
         </>

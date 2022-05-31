@@ -46,11 +46,12 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                 paddingLeft: 5,
                                 paddingTop: 3,
                                 paddingBottom: 2,
+                                fontWeight: 700,
                             }}
-                            variant="h5"
+                            variant="h6"
                             component="h2"
                         >
-                            New Employee Information
+                            NEW EMPLOYEE INFORMATION
                         </Typography>
                         <List sx={{ paddingLeft: 10, display: "inline-block" }}>
                             <ListItem>

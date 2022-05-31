@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export const Employees = () => {
     const classes = useStyles();
     const [displayModal, setDisplayModal] = useState(false);
+    const [rowId, setRowId] = useState(null);
 
     const [record, setRecord] = useState({
         firstName: "",
@@ -51,6 +52,54 @@ export const Employees = () => {
         dateStart: "",
         dateFinish: "",
     });
+
+    const [editRecord, setEditRecord] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        originCountry: "",
+        ICA: "",
+        currentCountry: "",
+        type: "",
+        band: "",
+        squad: "",
+        dateStart: "",
+        dateFinish: "",
+    });
+
+    const handleEditRecord = (e, row) => {
+        e.preventDefault();
+
+        const fieldName = e.target.getAttribute("name");
+        console.log(fieldName);
+        const fieldValue = e.target.value;
+
+        const newRecord = { ...editRecord };
+        newRecord[fieldName] = fieldValue;
+
+        setEditRecord(newRecord);
+    };
+
+    const handleEditClick = (e, row) => {
+        e.preventDefault();
+        setRowId(row.employee_id);
+
+        const formValues = {
+            firstName: row.employeeName,
+            lastName: row.employeeLastName,
+            email: row.mail,
+            originCountry: row.countryOrigin,
+            ICA: row.ICA_ID,
+            currentCountry: row.countryResidence,
+            type: row.type_id,
+            band: row.band,
+            squad: row.squad,
+            dateStart: row.startDate,
+            dateFinish: row.endDate,
+        };
+
+        setEditRecord(formValues);
+    };
 
     const axios = require("axios").default;
     const [typeData, setTypeData] = useState([]);
@@ -206,6 +255,9 @@ export const Employees = () => {
                                 <Fragment>
                                     <ReadRowEmployees
                                         row={row}
+                                        handleEditClick={handleEditClick}
+                                        editRecord={editRecord}
+                                        handleEditRecord={handleEditRecord}
                                         deleteRecord={deleteRecord}
                                     />
                                 </Fragment>
