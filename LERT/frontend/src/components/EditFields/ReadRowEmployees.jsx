@@ -10,6 +10,7 @@ export const ReadRowEmployees = ({
     handleEditClick,
     editRecord,
     handleEditRecord,
+    handleEditSave,
     deleteRecord,
 }) => {
     const [displayModal, setDisplayModal] = useState(false);
@@ -48,6 +49,8 @@ export const ReadRowEmployees = ({
                     closeModal={setDisplayModal}
                     editRecord={editRecord}
                     handleEditRecord={handleEditRecord}
+                    handleEditSave={handleEditSave}
+                    row={row}
                 />
             )}
         </>

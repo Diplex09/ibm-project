@@ -125,3 +125,41 @@ def deleteEmployee(id):
             db.session.commit()
 
             return "Employee delete done"
+
+
+def updateEmployee(id):
+
+    _json = request.json
+    newEmployee = Employee(
+        _json['firstName'], 
+        _json['lastName'], 
+        _json['email'],
+        _json['originCountry'],
+        _json['ICA'], 
+        _json['currentCountry'],
+        _json['type'],
+        _json['band'],
+        _json['squad'],
+        _json['dateStart'],
+        _json['dateFinish'] 
+
+        )
+    
+    editEmployee = db.session.query(Employee).filter(Employee.id_employee == id).one()
+    print(editEmployee.employee_name)
+
+    editEmployee.employee_name = newEmployee.employee_name 
+    editEmployee.employee_lastname = newEmployee.employee_lastname 
+    editEmployee.mail = newEmployee.mail 
+    editEmployee.country_origin = newEmployee.country_origin 
+    editEmployee.id_ica = newEmployee.id_ica 
+    editEmployee.country_residence = newEmployee.country_residence 
+    editEmployee.id_type = newEmployee.id_type  
+    editEmployee.band = newEmployee.band  
+    editEmployee.squad = newEmployee.squad  
+    editEmployee.start_date = newEmployee.start_date  
+    editEmployee.end_date = newEmployee.end_date 
+
+    db.session.commit()
+
+    return "DONE"

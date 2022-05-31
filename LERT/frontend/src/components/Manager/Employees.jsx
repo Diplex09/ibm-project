@@ -21,6 +21,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
 import { AddFormEmployee } from "../Fields/AddFormEmployee";
 import { deleteEmployee } from "../../actions/Manager/employee";
+import { updateEmployee } from "../../actions/Manager/employee";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -122,6 +123,13 @@ export const Employees = () => {
     const deleteRecord = async (e, row) => {
         console.log(row.employee_id);
         deleteEmployee(row.employee_id);
+        fetchData();
+    };
+
+    const handleEditSave = (e, editRecord, row) => {
+        e.preventDefault();
+        console.log(editRecord);
+        updateEmployee(row.employee_id, editRecord);
         fetchData();
     };
 
@@ -258,6 +266,7 @@ export const Employees = () => {
                                         handleEditClick={handleEditClick}
                                         editRecord={editRecord}
                                         handleEditRecord={handleEditRecord}
+                                        handleEditSave={handleEditSave}
                                         deleteRecord={deleteRecord}
                                     />
                                 </Fragment>

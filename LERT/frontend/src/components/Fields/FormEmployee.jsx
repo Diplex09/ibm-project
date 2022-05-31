@@ -15,7 +15,13 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
+export const FormEmployee = ({
+    closeModal,
+    editRecord,
+    handleEditRecord,
+    handleEditSave,
+    row,
+}) => {
     const [dateStart, setDateStart] = useState(new Date());
     const [dateFinish, setDateFinish] = useState(new Date());
 
@@ -55,6 +61,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="First Name"
                                     name="firstName"
                                     defaultValue={editRecord.firstName}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
@@ -63,6 +70,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="Last Name"
                                     name="lastName"
                                     defaultValue={editRecord.lastName}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -73,6 +81,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="Email"
                                     name="email"
                                     defaultValue={editRecord.email}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
@@ -81,6 +90,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="Country from"
                                     name="origiCountry"
                                     defaultValue={editRecord.originCountry}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -91,6 +101,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="ICA "
                                     name="ICA"
                                     defaultValue={editRecord.ICA}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
@@ -99,6 +110,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="Country Working"
                                     name="currentCountry"
                                     defaultValue={editRecord.currentCountry}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -109,6 +121,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="Type"
                                     name="type"
                                     defaultValue={editRecord.type}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
@@ -117,6 +130,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="Band"
                                     name="band"
                                     defaultValue={editRecord.band}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -127,6 +141,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                     label="Squad"
                                     name="squad"
                                     defaultValue={editRecord.squad}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <LocalizationProvider
@@ -142,11 +157,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                         )}
                                         name="dateStart"
                                         value={editRecord.dateStart}
-                                        onChange={(date) => {
-                                            const d = new Date(date);
-                                            console.log(d);
-                                            setDateStart(d);
-                                        }}
+                                        onChange={handleEditRecord}
                                     />
                                 </LocalizationProvider>
                             </ListItem>
@@ -164,11 +175,7 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                         )}
                                         name="dateFinish"
                                         value={editRecord.dateFinish}
-                                        onChange={(date) => {
-                                            const dF = new Date(date);
-                                            console.log(dF);
-                                            setDateFinish(dF);
-                                        }}
+                                        onChange={handleEditRecord}
                                     />
                                 </LocalizationProvider>
                             </ListItem>
@@ -208,6 +215,9 @@ export const FormEmployee = ({ closeModal, editRecord, handleEditRecord }) => {
                                             bgcolor: "#0255DA",
                                         },
                                     }}
+                                    onClick={(e) =>
+                                        handleEditSave(e, editRecord, row)
+                                    }
                                 >
                                     Modify
                                 </Button>
