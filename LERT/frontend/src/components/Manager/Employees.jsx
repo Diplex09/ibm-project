@@ -19,6 +19,7 @@ import { Search, FilterList, ArrowForwardOutlined } from "@mui/icons-material";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
+import { AddFormEmployee } from "../Fields/AddFormEmployee";
 import { deleteEmployee } from "../../actions/Manager/employee";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,13 +36,18 @@ const useStyles = makeStyles((theme) => ({
 
 export const Employees = () => {
     const classes = useStyles();
-    // const [displayModal, setDisplayModal] = useState(false);
+    const [displayModal, setDisplayModal] = useState(false);
 
     const [record, setRecord] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        originCountry: "",
+        ICA: "",
+        currentCountry: "",
         type: "",
         band: "",
-        rate: "",
-        country: "",
+        squad: "",
         dateStart: "",
         dateFinish: "",
     });
@@ -110,9 +116,19 @@ export const Employees = () => {
                             bgcolor: "#0255DA",
                         },
                     }}
+                    onClick={() => {
+                        setDisplayModal(true);
+                    }}
                 >
                     Add Employee <ArrowForwardOutlined />
                 </Button>
+                {displayModal && (
+                    <AddFormEmployee
+                        closeModal={setDisplayModal}
+                        record={record}
+                        setRecord={setRecord}
+                    />
+                )}
                 {/* <Paper
                     component="form"
                     sx={{

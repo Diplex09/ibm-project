@@ -35,8 +35,7 @@ class Employee(Base):
     start_date = Column(Date)
     end_date = Column(Date)
 
-    def __init__(self, idEmp,name,lastName, mail, countryOrigin,idIcaTable,countryResidence,id_typeTable,band,squad,start_date,end_date):
-        self.id_employee = idEmp
+    def __init__(self,name,lastName, mail, countryOrigin,idIcaTable,countryResidence,id_typeTable,band,squad,start_date,end_date):
         self.employee_name = name
         self.employee_lastname = lastName
         self.mail = mail
@@ -80,6 +79,35 @@ def getEmployees():
         # print(expense.expense_amount)
     resp = jsonify([e.serialize() for e in employeeList]) #Con esto puedes mandar lista de objetos en json
     return resp
+
+def newPostEmployee():
+    print("si")
+    _json = request.json
+    _firstName = _json['firstName']
+    _lastName = _json['lastName']
+    _email = _json['email']
+    _originCountry = _json['originCountry']
+    _ICA = _json['ICA']
+    _currentCountry = _json['currentCountry']
+    _type = _json['type']
+    _band = _json['band']
+    _squad = _json['squad']
+    _dateStart = _json['dateStart']
+    _dateFinish = _json['dateFinish']
+    
+
+
+    if request.method == 'POST':
+        if not _firstName or not _lastName or not _email or not _originCountry or not _ICA or not _currentCountry or not _type or not _squad or not _dateStart or not _dateFinish:
+            return "Values fields are incomplete"
+        else:
+            employee = Employee( _firstName, _lastName,  _email,  _originCountry, _ICA,  _currentCountry,  _type, _band, _squad,  _dateStart, _dateFinish)
+            
+            db.session.add(employee)
+            db.session.commit()
+            
+            return "New Employee Uploaded Succesfully"
+
 
 def deleteEmployee(id):
     global db

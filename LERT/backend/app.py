@@ -18,6 +18,7 @@ from DB_Connections.dbUsers import all_users, edit_user, create_user, delete_use
 from DB_Connections.dbExpenseType import deleteExpenseType, getExpensesTypes, postExpenseType
 from DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
 from DB_Connections.dbHours import getHours, postHours, deleteHour
+from DB_Connections.dbEmployee import newPostEmployee
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_jwt_extended import get_jwt, set_access_cookies, unset_jwt_cookies
@@ -194,3 +195,6 @@ app.add_url_rule("/updateTypes/<int:id>", view_func=updateType, methods=['PUT'])
 app.add_url_rule("/getHours", view_func=getHours, methods=['GET'])
 app.add_url_rule("/newPostHour", view_func=postHours, methods=['POST'])
 app.add_url_rule("/deleteHours/<int:id>", view_func=deleteHour, methods=['DELETE'])
+
+#Metodos employees
+app.add_url_rule("/newPostEmployee", view_func=newPostEmployee, methods=['POST'])

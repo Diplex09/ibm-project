@@ -7,7 +7,7 @@ import { useState, useEffect, fra } from "react";
 
 export const ReadRowEmployees = ({ row, deleteRecord }) => {
     const [displayModal, setDisplayModal] = useState(false);
-    console.log(row);
+    //console.log(row);
     return (
         <>
             <TableCell>
