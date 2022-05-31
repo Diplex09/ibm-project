@@ -68,6 +68,7 @@ def all_users():
         resp.status_code = 401
         return resp
 
+@jwt_required()
 def create_user():
     _id = get_jwt_identity()
     rol = check_rol(_id)
@@ -124,6 +125,7 @@ def create_user():
         resp.status_code = 401
         return resp
 
+@jwt_required()
 def edit_user():
     _id = get_jwt_identity()
     rol = check_rol(_id)
@@ -176,6 +178,7 @@ def edit_user():
         resp.status_code = 401
         return resp
 
+@jwt_required()
 def delete_user():
     _id = get_jwt_identity()
     rol = check_rol(_id)
