@@ -3,6 +3,7 @@ import { HomeOP } from '../../components/OPManager/HomeOP'
 import { TypesOP } from "../../components/OPManager/TypesOP"
 import { ExtraHoursOP } from "../../components/OPManager/ExtraHoursOP"
 import { ExpensesTable } from '../../components/OPManager/ExpensesTypes';
+import { EditManager } from "../../components/OPManager/EditManager"
 
 export const OPManagerRouter = () => {
     return (
@@ -16,7 +17,7 @@ export const OPManagerRouter = () => {
                 path="/manage"
                 element={<div>Manage Manager Functions</div>}
             />
-            <Route path="/edit" element={<div>Edit Manager Information</div>} />
+            <Route path="/edit" element={<EditManager />} />
             <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
     );
