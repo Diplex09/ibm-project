@@ -4,13 +4,14 @@ import { TypesOP } from "../../components/OPManager/TypesOP"
 import { ExtraHoursOP } from "../../components/OPManager/ExtraHoursOP"
 import { ExpensesTable } from '../../components/OPManager/ExpensesTypes';
 import { EditManager } from "../../components/OPManager/EditManager"
+import { Icas } from "../../components/OPManager/ICAs"
 
 export const OPManagerRouter = () => {
     return (
         <Routes>
             <Route index element={<HomeOP/>} />
             <Route path="/types" element={<TypesOP />} />
-            <Route path="/icas" element={<div>ICAS</div>} />
+            <Route path="/icas" element={<Icas/>}/>
             <Route path="/expenses" element={<ExpensesTable />} />
             <Route path="/hours" element={<ExtraHoursOP />} />
             <Route
