@@ -46,7 +46,6 @@ export const HourFields = ({ fetchData }) => {
         <Paper>
             <Box
                 sx={{
-                    marginTop: "1rem",
                     marginBottom: "1rem",
                     padding: "20px",
                 }}

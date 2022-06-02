@@ -53,12 +53,24 @@ export const ExtraHoursOP = () => {
                 variant="h4"
                 sx={{
                     fontWeight: "600",
-                    textAlign: "center",
+                    fontSize: 25,
+                    marginBottom: "1rem",
                 }}
             >
-                Extra Hours
+                Insert Extra Hour
             </Typography>
             <HourFields fetchData={fetchData} />
+            <Typography
+                component="h1"
+                variant="h4"
+                sx={{
+                    fontWeight: "600",
+                    fontSize: 25,
+                    marginBottom: "1rem",
+                }}
+            >
+                All Extra Hours
+            </Typography>
             <TableInfo
                 fetchData={fetchData}
                 typeData={typeData}

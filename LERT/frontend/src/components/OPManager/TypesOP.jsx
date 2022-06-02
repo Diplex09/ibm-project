@@ -53,11 +53,24 @@ export const TypesOP = () => {
                 variant="h4"
                 sx={{
                     fontWeight: "600",
+                    fontSize: 25,
+                    marginBottom: "1rem",
                 }}
             >
                 Insert New Type
             </Typography>
             <TypesFields fetchData={fetchData} />
+            <Typography
+                component="h1"
+                variant="h4"
+                sx={{
+                    fontWeight: "600",
+                    fontSize: 25,
+                    marginBottom: "1rem",
+                }}
+            >
+                All types
+            </Typography>
             <TableInfo
                 fetchData={fetchData}
                 typeData={typeData}
