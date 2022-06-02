@@ -16,7 +16,7 @@ import {
 import { Search, FilterList } from "@mui/icons-material";
 import { makeStyles, styled } from "@material-ui/core/styles";
 
-import { FormFields } from "../Fields/FormFields";
+import { NewExpenseField } from "../Fields/NewExpenseField";
 
 const createData = (
     email,
@@ -69,6 +69,18 @@ export const ExpensesMg = () => {
 
     return (
         <>
+            <Typography
+                component="h1"
+                variant="h4"
+                sx={{
+                    fontWeight: "600",
+                    fontSize: 25,
+                    marginBottom: "1rem",
+                }}
+            >
+                Add New Expense
+            </Typography>
+            <NewExpenseField />
             <Box
                 sx={{
                     display: "flex",
@@ -76,21 +88,9 @@ export const ExpensesMg = () => {
                     alignItems: "start",
                     justifyContent: "space-between",
                     mb: "15px",
-                    height: "115px",
-                    marginBottom: "7rem",
+                    height: "50px",
                 }}
             >
-                <Paper
-                    sx={{
-                        background: "white",
-                        marginBottom: "2rem",
-                        paddingLeft: "1rem",
-                        paddingRight: "1rem",
-                    }}
-                >
-                    <FormFields />
-                </Paper>
-
                 <Paper
                     component="form"
                     sx={{
@@ -126,7 +126,6 @@ export const ExpensesMg = () => {
                     </IconButton>
                 </Paper>
             </Box>
-
             <TableContainer
                 component={Paper}
                 sx={{
@@ -136,7 +135,6 @@ export const ExpensesMg = () => {
                         fontWeight: "500",
                     },
                     padding: "5px 20px",
-                    marginTop: "17rem",
                 }}
             >
                 <Typography
