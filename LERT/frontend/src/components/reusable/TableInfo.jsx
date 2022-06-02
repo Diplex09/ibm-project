@@ -47,6 +47,7 @@ export const TableInfo = ({
         console.log(editRecord);
         await updateItem(row.id, editRecord);
         fetchData();
+        setRowId(null); // To go back to Read state (ReadComponent)
     };
 
     const deleteRecord = async (e, row) => {
