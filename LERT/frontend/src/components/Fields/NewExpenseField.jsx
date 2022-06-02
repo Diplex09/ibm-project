@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box, InputAdornment, TextField, Button, Paper } from "@mui/material";
+import {es} from 'date-fns/locale';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -15,7 +16,7 @@ import { postNewType } from "../../actions/OP Manager/types";
 
 export const NewExpenseField = ({ fetchData }) => {
     const [dateStart, setDateStart] = useState(
-        new Date().toLocaleDateString("fr-FR")
+        new Date()
     );
     const [dateFinish, setDateFinish] = useState(
         new Date().toLocaleDateString("fr-FR")
@@ -69,12 +70,11 @@ export const NewExpenseField = ({ fetchData }) => {
                         }}
                     />
 
-                    <LocalizationProvider
-                        marginRight="50rem"
-                        dateAdapter={AdapterDateFns}
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}
                     >
                         <DatePicker
                             label="Date"
+                            inputFormat="dd/MM/yyyy"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
@@ -85,12 +85,9 @@ export const NewExpenseField = ({ fetchData }) => {
                                 />
                             )}
                             value={dateStart}
-                            onChange={(date) => {
-                                let d = new Date(date).toLocaleDateString(
-                                    "fr-FR"
-                                );
-                                setDateStart(d);
-                                setRecord({ ...record, date_to_start: d });
+                            onChange={(newDate) => {
+                                setDateStart(newDate);
+                                setRecord({ ...record, dateStart: newDate });
                             }}
                         />
                     </LocalizationProvider>

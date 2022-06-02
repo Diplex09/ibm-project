@@ -7,6 +7,7 @@ import {
     Button,
     Paper,
 } from "@mui/material";
+import { es } from "date-fns/locale";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -21,31 +22,35 @@ import {
 import { postNewHour } from "../../actions/OP Manager/extraHours";
 
 export const HourFields = ({ fetchData }) => {
+    const locale = 'es-MX';
+    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
     const [dateStart, setDateStart] = useState(
-        new Date().toLocaleDateString("fr-FR")
+        new Date()
     );
     const [dateFinish, setDateFinish] = useState(
-        new Date().toLocaleDateString("fr-FR")
+        new Date()
     );
     const [record, setRecord] = useState({
-        name: "",
+        type: "",
         band: "",
         rate: "",
         country: "",
-        date_to_start: "",
-        date_to_finish: "",
+        dateStart: "",
+        dateFinish: "",
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        postNewHour(record);
-        fetchData();
+        postNewHour(record)
+            .then(fetchData());
     };
 
     return (
         <Paper>
             <Box
                 sx={{
+                    marginTop: "1rem",
                     marginBottom: "1rem",
                     padding: "20px",
                 }}
@@ -70,7 +75,7 @@ export const HourFields = ({ fetchData }) => {
                         label="TYPE"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, name: e.target.value });
+                            setRecord({ ...record, type: e.target.value });
                         }}
                     />
 
@@ -139,9 +144,11 @@ export const HourFields = ({ fetchData }) => {
                         alignItems: "center",
                     }}
                 >
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}
+                    >
                         <DatePicker
                             label="Begin"
+                            inputFormat="dd/MM/yyyy"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
@@ -152,17 +159,15 @@ export const HourFields = ({ fetchData }) => {
                                 />
                             )}
                             value={dateStart}
-                            onChange={(date) => {
-                                let d = new Date(date).toLocaleDateString();
-                                setDateStart(d);
-                                setRecord({ ...record, date_to_start: d });
+                            onChange={(newDate) => {
+                                setDateStart(newDate);
+                                setRecord({ ...record, dateStart: newDate });
                             }}
                         />
-                    </LocalizationProvider>
 
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             label="End"
+                            inputFormat="dd/MM/yyyy"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
@@ -173,11 +178,9 @@ export const HourFields = ({ fetchData }) => {
                                 />
                             )}
                             value={dateFinish}
-                            onChange={(date) => {
-                                let dF = new Date(date).toLocaleDateString();
-
-                                setDateFinish(dF);
-                                setRecord({ ...record, date_to_finish: dF });
+                            onChange={(newDate) => {
+                                setDateFinish(newDate);
+                                setRecord({ ...record, dateFinish: newDate });
                             }}
                         />
                     </LocalizationProvider>

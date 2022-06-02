@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, InputAdornment, TextField, Button, Paper } from "@mui/material";
+import {es} from 'date-fns/locale';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -13,12 +14,15 @@ import {
 
 import { postNewType } from "../../actions/OP Manager/types";
 
-export const TypesFields = ({ fetchData }) => {
+export const TypesFields = ({ fetchTypeData }) => {
+    const locale = 'es-MX';
+    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
     const [dateStart, setDateStart] = useState(
-        new Date().toLocaleDateString("fr-FR")
+        new Date()
     );
     const [dateFinish, setDateFinish] = useState(
-        new Date().toLocaleDateString("fr-FR")
+        new Date()
     );
 
     //Variables para textfields
@@ -31,10 +35,28 @@ export const TypesFields = ({ fetchData }) => {
         date_to_finish: "",
     });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        postNewType(record);
+    const axios = require("axios").default;
+    const [typeData, setTypeData] = useState([]);
+    const URL = "https://lert-api.mybluemix.net/getTypes";
+
+    useEffect(() => {
         fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios({
+            method: "get",
+            url: "https://lert-api.mybluemix.net/getTypes",
+            responseType: "json",
+        }).then(function (response) {
+            setTypeData(response.data);
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        postNewType(record)
+            .then(fetchData());
     };
 
     return (
@@ -129,12 +151,11 @@ export const TypesFields = ({ fetchData }) => {
                         alignItems: "center",
                     }}
                 >
-                    <LocalizationProvider
-                        marginRight="50rem"
-                        dateAdapter={AdapterDateFns}
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}
                     >
                         <DatePicker
                             label="Begin"
+                            inputFormat="dd/MM/yyyy"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
@@ -145,19 +166,15 @@ export const TypesFields = ({ fetchData }) => {
                                 />
                             )}
                             value={dateStart}
-                            onChange={(date) => {
-                                let d = new Date(date).toLocaleDateString(
-                                    "fr-FR"
-                                );
-                                setDateStart(d);
-                                setRecord({ ...record, date_to_start: d });
+                            onChange={(newDate) => {
+                                setDateStart(newDate);
+                                setRecord({ ...record, dateStart: newDate });
                             }}
                         />
-                    </LocalizationProvider>
 
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DatePicker
                             label="End"
+                            inputFormat="dd/MM/yyyy"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
@@ -168,12 +185,9 @@ export const TypesFields = ({ fetchData }) => {
                                 />
                             )}
                             value={dateFinish}
-                            onChange={(date) => {
-                                let dF = new Date(date).toLocaleDateString(
-                                    "fr-FR"
-                                );
-                                setDateFinish(dF);
-                                setRecord({ ...record, date_to_finish: dF });
+                            onChange={(newDate) => {
+                                setDateFinish(newDate);
+                                setRecord({ ...record, dateFinish: newDate });
                             }}
                         />
                     </LocalizationProvider>
@@ -205,3 +219,54 @@ export const TypesFields = ({ fetchData }) => {
 };
 
 export default TypesFields;
+
+// export function postNewType(record) {
+//     const axios = require("axios").default;
+//     console.log(record);
+//     axios
+//         .post("https://lert-api.mybluemix.net/newPostType", {
+//             name: record.type,
+//             country: record.country,
+//             band: record.band,
+//             rate: record.rate,
+//             date_to_start: record.dateStart,
+//             date_to_finish: record.dateFinish,
+//         })
+//         .then(function (response) {
+//             console.log(response);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         });
+// }
+
+export function deleteType(id) {
+    const axios = require("axios").default;
+    axios
+        .delete(`https://lert-api.mybluemix.net/deleteTypes/${id}`)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+export function updateType(id, editRecord) {
+    const axios = require("axios").default;
+    axios
+        .put(`https://lert-api.mybluemix.net/updateTypes/${id}`, {
+            name: editRecord.type,
+            country: editRecord.country,
+            band: editRecord.band,
+            rate: editRecord.rate,
+            date_to_start: editRecord.dateStart,
+            date_to_finish: editRecord.dateFinish,
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
