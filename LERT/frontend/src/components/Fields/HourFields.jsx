@@ -48,6 +48,16 @@ export const HourFields = ({ fetchData }) => {
 
     return (
         <Paper>
+            <Typography
+                component="h2"
+                variant="h5"
+                sx={{
+                    fontWeight: "600",
+                    textAlign: "center",
+                }}
+            >
+                Insert Extra Hour
+            </Typography>
             <Box
                 sx={{
                     marginTop: "1rem",

@@ -42,7 +42,7 @@ export const ExtraHoursOP = () => {
                     textAlign: "center",
                 }}
             >
-                Insert Extra Hour
+                Extra Hours
             </Typography>
             <HourFields fetchData={fetchData} />
             <TableInfo
