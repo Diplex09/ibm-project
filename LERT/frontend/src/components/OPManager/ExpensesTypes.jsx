@@ -148,9 +148,14 @@ export const ExpensesTypes = () => {
     return (
         <Box>
             <Typography
-                align="center"
-                variant="h3"
-                sx={{ marginBottom: "4.5rem", fontWeight: "300" }}
+                component="h1"
+                variant="h4"
+                sx={{
+                    marginBottom: "3.5rem",
+                    fontWeight: "300",
+                    fontWeight: "600",
+                    textAlign: "center",
+                }}
             >
                 New Type of Expense
             </Typography>
