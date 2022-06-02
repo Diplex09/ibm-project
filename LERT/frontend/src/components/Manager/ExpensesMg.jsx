@@ -5,44 +5,41 @@ import {
     InputAdornment,
     InputBase,
     Typography,
-    Table,
-    TableBody,
-    TableCell,
     TableContainer,
-    TableHead,
-    TableRow,
     Paper,
 } from "@mui/material";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import { Search, FilterList } from "@mui/icons-material";
 import { makeStyles, styled } from "@material-ui/core/styles";
 
+import { TableInfo } from "../reusable/TableInfo";
 import { NewExpenseField } from "../Fields/NewExpenseField";
 
-const createData = (
-    email,
-    type,
-    cost,
-    date,
-    ica,
-    icaManager,
-    administrator,
-    comment
-) => {
-    return { email, type, cost, date, ica, icaManager, administrator, comment };
-};
+import { ReadRowExpenses } from "../EditFields/ReadRowExpenses";
+import { EditRowExpenses } from "../EditFields/EditRowExpenses";
 
-const rows = [...Array(7)].map((e, index) =>
-    createData(
-        "luisalonsomg@ibm.com",
-        "Course",
-        "100",
-        "2022-02-10",
-        "781L2355",
-        "luisalonsomg@ibm.com",
-        "luisalonsomg@ibm.com",
-        "Test comment"
-    )
-);
+const columns = [
+    "Actions",
+    "Employee Mail",
+    "Type",
+    "Cost",
+    "Date",
+    "ICA",
+    "ICA MANAGER",
+    "ADMINISTRATOR",
+    "COMMENT",
+];
+
+const initialRecord = {
+    mail: "",
+    date: "",
+    cost: "",
+    comment: "",
+    ica: "",
+    type: "",
+};
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,6 +63,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export const ExpensesMg = () => {
     const classes = useStyles();
+    const [typeData, setTypeData] = useState([]);
 
     return (
         <>
@@ -153,50 +151,16 @@ export const ExpensesMg = () => {
                     sx={{ height: 1, m: 0.5, width: "10rem" }}
                     orientation="horizontal"
                 />
-
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">EMPLOYEE EMAIl</TableCell>
-                            <TableCell align="left">TYPE</TableCell>
-                            <TableCell align="left">COST</TableCell>
-                            <TableCell align="left">DATE</TableCell>
-                            <TableCell align="left">ICA</TableCell>
-                            <TableCell align="left">ICA MANAGER</TableCell>
-                            <TableCell align="left">ADMINISTRATOR</TableCell>
-                            <TableCell align="left">COMMENT</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row, index) => (
-                            <TableRow
-                                key={index}
-                                sx={{
-                                    "&:last-child td, &:last-child th": {
-                                        border: 0,
-                                    },
-                                }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row.email}
-                                </TableCell>
-                                <TableCell align="left">{row.type}</TableCell>
-                                <TableCell align="left">{row.cost}</TableCell>
-                                <TableCell align="left">{row.date}</TableCell>
-                                <TableCell align="left">{row.ica}</TableCell>
-                                <TableCell align="left">
-                                    {row.icaManager}
-                                </TableCell>
-                                <TableCell align="left">
-                                    {row.administrator}
-                                </TableCell>
-                                <TableCell align="left">
-                                    {row.comment}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                <TableInfo
+                    columns={columns}
+                    fetchData={fetchData}
+                    typeData={typeData}
+                    initialRecord={initialRecord}
+                    ReadComponent={(props) => <ReadRowExpenses {...props} />}
+                    EditComponent={(props) => <EditRowExpenses {...props} />}
+                    updateItem={updateType}
+                    deleteItem={deleteType}
+                />
             </TableContainer>
         </>
     );
