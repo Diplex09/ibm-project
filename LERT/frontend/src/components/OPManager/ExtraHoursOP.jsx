@@ -39,6 +39,7 @@ export const ExtraHoursOP = () => {
                 variant="h4"
                 sx={{
                     fontWeight: "600",
+                    textAlign: "center",
                 }}
             >
                 Insert Extra Hour
