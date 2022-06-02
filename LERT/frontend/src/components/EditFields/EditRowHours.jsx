@@ -18,11 +18,11 @@ export const EditRowHours = ({
 
             <TableCell>
                 <TextField
-                    name="type"
+                    name="name"
                     id="standard-basic"
                     label="TYPE"
                     variant="standard"
-                    defaultValue={editRecord.type}
+                    defaultValue={editRecord.name}
                     onChange={handleEditRecord}
                 />
             </TableCell>
@@ -58,21 +58,21 @@ export const EditRowHours = ({
             </TableCell>
             <TableCell>
                 <TextField
-                    name="dateStart"
+                    name="date_to_start"
                     id="standard-basic"
                     label="DATE START"
                     variant="standard"
-                    defaultValue={editRecord.dateStart}
+                    defaultValue={editRecord.date_to_start}
                     onChange={handleEditRecord}
                 />
             </TableCell>
             <TableCell>
                 <TextField
-                    name="dateFinish"
+                    name="date_to_finish"
                     id="standard-basic"
                     label="DATE FINISH"
                     variant="standard"
-                    defaultValue={editRecord.dateFinish}
+                    defaultValue={editRecord.date_to_finish}
                     onChange={handleEditRecord}
                 />
             </TableCell>

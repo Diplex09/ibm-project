@@ -28,12 +28,12 @@ export const HourFields = ({ fetchData }) => {
         new Date().toLocaleDateString("fr-FR")
     );
     const [record, setRecord] = useState({
-        type: "",
+        name: "",
         band: "",
         rate: "",
         country: "",
-        dateStart: "",
-        dateFinish: "",
+        date_to_start: "",
+        date_to_finish: "",
     });
 
     const handleSubmit = (e) => {
@@ -71,7 +71,7 @@ export const HourFields = ({ fetchData }) => {
                         label="TYPE"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, type: e.target.value });
+                            setRecord({ ...record, name: e.target.value });
                         }}
                     />
 
@@ -156,7 +156,7 @@ export const HourFields = ({ fetchData }) => {
                             onChange={(date) => {
                                 let d = new Date(date).toLocaleDateString();
                                 setDateStart(d);
-                                setRecord({ ...record, dateStart: d });
+                                setRecord({ ...record, date_to_start: d });
                             }}
                         />
                     </LocalizationProvider>
@@ -178,7 +178,7 @@ export const HourFields = ({ fetchData }) => {
                                 let dF = new Date(date).toLocaleDateString();
 
                                 setDateFinish(dF);
-                                setRecord({ ...record, dateFinish: dF });
+                                setRecord({ ...record, date_to_finish: dF });
                             }}
                         />
                     </LocalizationProvider>
