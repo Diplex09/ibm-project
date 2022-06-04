@@ -1,9 +1,13 @@
 from configparser import ConfigParser
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from sqlalchemy.ext.declarative import declarative_base
 import psycopg2
 import psycopg2.extras
 # singleton para acceso a recursos de DB
+
+# Base = declarative_base()
+from backend.DB_Connections.DBManager import Base
 
 class DBManager:
 

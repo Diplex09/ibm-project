@@ -17,7 +17,9 @@ from flask_cors import CORS
 
 from backend.DB_Connections.DBManager import DBManager 
 
-Base = declarative_base()
+#Base = declarative_base()
+from backend.DB_Connections.DBManager import Base
+
 db = DBManager.getInstance() 
 
 

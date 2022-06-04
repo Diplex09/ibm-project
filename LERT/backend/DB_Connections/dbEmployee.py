@@ -18,7 +18,9 @@ from backend.DB_Connections.DBManager import DBManager
 from backend.DB_Connections.dbIca import ICA
 from backend.DB_Connections.dbtypes import Types
 
-Base = declarative_base()
+
+#Base = declarative_base()
+from backend.DB_Connections.DBManager import Base
 db = DBManager.getInstance() 
 
 
