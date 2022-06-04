@@ -18,7 +18,7 @@ from backend.DB_Connections.DBManager import DBManager
 
 
 #Base = declarative_base()
-from backend.DB_Connections.DBManager import Base
+from backend.DB_Connections.baseInstance import Base
 
 db = DBManager.getInstance() 
 
