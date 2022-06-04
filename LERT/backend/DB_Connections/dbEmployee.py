@@ -15,8 +15,12 @@ from flask import Flask, jsonify, request, session, send_from_directory
 from flask_cors import CORS
 
 from backend.DB_Connections.DBManager import DBManager
+from backend.DB_Connections.dbIca import ICA
+from backend.DB_Connections.dbtypes import Types
 
-Base = declarative_base()
+
+#Base = declarative_base()
+from backend.DB_Connections.baseInstance import Base
 db = DBManager.getInstance() 
 
 
@@ -65,83 +69,10 @@ class Employee(Base):
             'endDate': self.end_date
         }
 
-class ICA(Base):
-    __tablename__ = "ica"
-    id_ica = Column(Integer, primary_key=True)
-    ica_code = Column(String(120))
-    ica_core = Column(String(120))
-    year = Column(String(120))
-    id_planning = Column(String(50))
-    ica_owner = Column(String(150))
-    budget = Column(Integer)
-    country = Column(String(120))
-    status = Column(String(200))
-    depto = Column(String(50))
-    frequency_bill = Column(String(50))
-    cc = Column(String(50))
-    city_name_req = Column(String(100))
-    division = Column(String(50))
-    major = Column(String(50))
-    minor = Column(String(50))
-    leru = Column(String(50))
-    description = Column(String(200))
-    id_type = Column(Integer, ForeignKey("type.id_type"))
-    nec = Column(Integer)
-    total_plus_taxes = Column(Float)
-    start_Date = Column(Date)
-    end_date = Column(Date)
-    cty_name_perf = Column(String(50))
-    R_Cty_Perf = Column(String(100))
-    total_billing = Column(Float)
-
-    def __init__(self,idIca,icaCode,icaCore,year,idPlanning,icaOwner,budget,country,status,depto,frequencyBill,cc,cityNameReq,division,major,
-    minor,leru,description,idType,nec,totalPlusTax,startDate,endDate,ctyNamePerf,rCtyPerf,totalBilling):
-        self.id_ica = idIca
-        self.ica_code = icaCode
-        self.ica_core = icaCore
-        self.year = year
-        self.id_planning = idPlanning
-        self.ica_owner = icaOwner
-        self.budget = budget
-        self.country = country
-        self.status = status
-        self.depto = depto
-        self.frequency_bill = frequencyBill
-        self.cc = cc
-        self.city_name_req = cityNameReq
-        self.division = division
-        self.major = major
-        self.minor = minor
-        self.leru = leru
-        self.description = description
-        self.id_type = idType
-        self.nec = nec
-        self.total_plus_taxes = totalPlusTax
-        self.start_Date = startDate
-        self.end_date = endDate
-        self.cty_name_perf= ctyNamePerf
-        self.R_Cty_Perf = rCtyPerf
-        self.total_billing = totalBilling
 
 
-class Types(Base):
-   
-    __tablename__ = "type"
-    id_type = Column(Integer, primary_key=True)
-    type_name = Column(String(150))
-    band = Column(Integer)
-    country = Column(String(150))
-    rate = Column(Integer)
-    date_to_start = Column(Date)
-    date_to_finish = Column(Date)
 
-    def __init__(self, name, band, country, rate, date_start, date_finish):
-        self.type_name = name
-        self.band = band
-        self.country = country
-        self.rate = rate
-        self.date_to_start = date_start 
-        self.date_to_finish = date_finish
+
 
 def getEmployees():
     global db
