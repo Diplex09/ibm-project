@@ -1,14 +1,9 @@
 from ast import Import
-import json
-import sys
-from unicodedata import numeric
 import psycopg2
 import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Session
 
 from flask import Flask, jsonify, request, session, send_from_directory
 
