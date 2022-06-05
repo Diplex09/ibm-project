@@ -3,7 +3,6 @@ from tokenize import Double
 from unicodedata import decimal
 from flask import Flask, jsonify, request, session, send_from_directory
 from flask_restful import Api, Resource, reqparse
-from itsdangerous import NoneAlgorithm
 #library for encrypting
 from werkzeug.security import generate_password_hash, check_password_hash
 #from flask_cors import CORS #pip install -U flask-cors
@@ -13,12 +12,14 @@ import psycopg2.extras
 
 from flask_cors import CORS #comment this on deployment
 from HelloApiHandler import HelloApiHandler
+from DB_Connections.dbUsers import delete_user
 from login import login
-from DB_Connections.dbUsers import all_users, edit_user, create_user, delete_user
 from DB_Connections.dbExpenseType import deleteExpenseType, getExpensesTypes, postExpenseType
 from DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
-from DB_Connections.dbHours import getHours, postHours, deleteHour
-from DB_Connections.dbEmployee import newPostEmployee
+from DB_Connections.dbHours import getHours, postHours, deleteHour, updateHour
+from DB_Connections.dbEmployee import getEmployees, deleteEmployee, newPostEmployee, updateEmployee
+from DB_Connections.dbUsers import all_users, create_user, edit_user, delete_user
+
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_jwt_extended import get_jwt, set_access_cookies, unset_jwt_cookies
@@ -34,17 +35,9 @@ from flask_jwt_extended import get_jwt, set_access_cookies, unset_jwt_cookies
 
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
-CORS(app, support_credentials=True) #comment this on deployment
 api = Api(app)
 
-
-
-
-@app.route("/", defaults={'path':''})
-def serve(path):
-    return send_from_directory(app.static_folder,'index.html')
-
-
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['SECRET_KEY'] = 'lert-teamafk'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 
@@ -57,7 +50,7 @@ app.config["JWT_SECRET_KEY"] = 'lert-secret'
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=10)
 
 jwt = JWTManager(app)
-CORS(app)
+cors = CORS(app, origins=["http://localhost", "https://lert.mybluemix.net"])
 
 DB_HOST = "localhost"
 DB_NAME = "lert"
@@ -77,6 +70,11 @@ def refresh_expiring_jwts(response):
         if target_timestamp > exp_timestamp:
             access_token = create_access_token(identity=get_jwt_identity())
             set_access_cookies(response, access_token)
+
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+        
         return response
     except (RuntimeError, KeyError):
         # Case where there is not a valid JWT. Just return the original response
@@ -84,18 +82,14 @@ def refresh_expiring_jwts(response):
 
 #/login 
 @app.route("/")
+# @jwt_required()
 def home():
-        # passhash = generate_password_hash('password')
-        # print(passhash)
-        if 'username' in session:
-            username = session['username']
-            return jsonify({'message' : 'You are already logged in','username': username})
-        else:
-            resp = jsonify({'message' : 'Unauthorized'})
-            resp.status_code = 401
-            return resp
-
-        # return passhash
+    
+    # if identity:
+    res = jsonify({'message' : 'You are already logged in','uid': 1})
+    res.status_code = 200
+    return res
+       
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -116,17 +110,26 @@ def login():
         email = row[2]
         password = row[3]
         if row:
+            print(password)
             if check_password_hash(password, _password):
                 session['username'] = email
-                session['rol'] = row[4]
+
+                sql = "SELECT rol_name FROM roles WHERE rol_id=%s"
+                sql_where = (row[4],)
+
+                cursor.execute(sql, sql_where)
+                rowRol = cursor.fetchone()
+
                 cursor.close()
+
                 response = jsonify({ 'msg': 'Login Successful', 'user' : {
-                        "id_user": row[0],
-                        "fullname": row[1],
-                        "mail":
-                        row[2],
-                        "rol": row[4]
+                        "uid": row[0],
+                        "fullName": row[1],
+                        "rol": row[4],
+                        "rolName": rowRol[0]
                     }})
+                response.status_code = 200
+
                 access_token = create_access_token(identity=row[0])
                 set_access_cookies(response, access_token)
                 return response
@@ -143,14 +146,11 @@ def login():
 
 @app.route('/logout')
 def logout():
-    if 'username' in session:
-        session.pop('username', None)
-
     response = jsonify({'msg':'You successfully logged out'})
     unset_jwt_cookies(response)
     return response
 
-# Only for test
+# Check JWT
 @app.route("/check")
 @jwt_required()
 def protected():
@@ -162,23 +162,29 @@ def protected():
 
     cursor.execute(sql, sql_where)
     row = cursor.fetchone()
+
+    sql = "SELECT rol_name FROM roles WHERE rol_id=%s"
+    sql_where = (row[4],)
+    cursor.execute(sql, sql_where)
+    rowRol = cursor.fetchone()
+
+    cursor.close()
+
     return jsonify({'msg' : 'Valid token', 'user' : {
                         "uid": row[0],
                         "fullName": row[1],
-                        "rol": row[4]
+                        "rol": row[4],
+                        "rolName": rowRol[0]
                     }})
 
 api.add_resource(HelloApiHandler, '/flask/hello')
 
-## ADMIN ACTIONS
-
-####################Test tabla DB expeses type
-
-#Metodos users
+# Metodos Admin/Manager User
 app.add_url_rule("/all_users", view_func=all_users, methods=['GET'])
-app.add_url_rule("/create_user", view_func=create_user, methods=['POST'])
-app.add_url_rule("/edit_user", view_func=edit_user, methods=['PUT'])
-app.add_url_rule("/delete_user", view_func=delete_user, methods=['DELETE'])
+app.add_url_rule("/create_users", view_func=all_users, methods=['GET', 'POST'])
+app.add_url_rule("/edit_users", view_func=all_users, methods=['GET', 'PUT'])
+app.add_url_rule("/all_users", view_func=all_users, methods=['GET', 'DELETE'])
+
 
 #Metodos expensesTypes
 app.add_url_rule("/expensesTypes", view_func=getExpensesTypes, methods=['GET'])
@@ -195,6 +201,9 @@ app.add_url_rule("/updateTypes/<int:id>", view_func=updateType, methods=['PUT'])
 app.add_url_rule("/getHours", view_func=getHours, methods=['GET'])
 app.add_url_rule("/newPostHour", view_func=postHours, methods=['POST'])
 app.add_url_rule("/deleteHours/<int:id>", view_func=deleteHour, methods=['DELETE'])
+app.add_url_rule("/updateHours/<int:id>", view_func=updateHour, methods=['PUT'])
 
-#Metodos employees
+app.add_url_rule("/getEmployees", view_func=getEmployees, methods=['GET'])
+app.add_url_rule("/deleteEmployees/<int:id>", view_func=deleteEmployee, methods=['DELETE'])
 app.add_url_rule("/newPostEmployee", view_func=newPostEmployee, methods=['POST'])
+app.add_url_rule("/updateEmployees/<int:id>", view_func=updateEmployee, methods=['PUT'])
