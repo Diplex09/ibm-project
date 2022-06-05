@@ -8,6 +8,7 @@ import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
+from sqlalchemy import exc
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import Session
 
@@ -107,6 +108,181 @@ class ICA(Base):
             'cty_name_perf': self.cty_name_perf,
             'R_Cty_Perf': self.R_Cty_Perf,
             'total_billing': self.total_billing
-        }
+        } 
+
+def allICAs():
+    global db
+    if db==None:
+        db=DBManager.getInstance
+    icaList = []
+
+    stmt = select(ICA)
+    for ica in db.session.scalars(stmt):
+        icaList.append(ica)
+    resp = jsonify([e.serialize() for e in icaList]) #Con esto puedes mandar lista de objetos en json
+    return resp
+
+def postIca():
+    json = request.json
+    _id_ica = json['idIca']
+    _ica_code = json['icaCode']
+    _ica_core = json['icaCore']
+    _year = json['year']
+    _id_planning = json['idPlanning']
+    _ica_owner = json['icaOwner']
+    _budget = json['budget']
+    _country = json['country']
+    _status = json['status']
+    _depto = json['depto']
+    _frequency_bill = json['frequencyBill']
+    _cc = json['cc']
+    _city_name_req = json['cityNameReq']
+    _division = json['division']
+    _major = json['major']
+    _minor = json['minor']
+    _leru = json['leru']
+    _description = json['description']
+    _id_type = json['idType']
+    _nec = json['nec']
+    _total_plus_taxes = json['totalPlusTax']
+    _start_Date = json['startDate']
+    _end_date = json['endDate']
+    _cty_name_perf= json['ctyNamePerf']
+    _R_Cty_Perf = json['rCtyPerf']
+    _total_billing = json['totalBilling']
+    print("Posting ICA on endpoint...", file=sys.stdout)
+
+    if not _id_ica or not _ica_code or not _ica_core or not _year or not _id_planning or not _ica_owner or not _budget or not _country or not _status or not _depto or not _frequency_bill or not _cc or not _city_name_req or not _division or not _major or not _minor or not _leru or not _description or not _id_type or not _nec or not _total_plus_taxes or not _start_Date or not _end_date or not _cty_name_perf or not _R_Cty_Perf or not _total_billing:
+            return "Values fields are incomplete"
+    else:
+        ica = ICA(_id_ica, _ica_code, _ica_core, _year, 
+        _id_planning, _ica_owner, _budget, _country, 
+        _status, _depto, _frequency_bill, _cc, 
+        _city_name_req, _division, _major, _minor, 
+        _leru, _description, _id_type, _nec, 
+        _total_plus_taxes, _start_Date, _end_date, 
+        _cty_name_perf, _R_Cty_Perf, _total_billing)
         
+        try:
+            db.session.add(ica)
+            db.session.commit()
+            
+            resp = jsonify({'message' : 'New ICA Uploaded Succesfully', 'ica': ica.serialize()})
+            resp.status_code = 200
+            resp.headers.add('Access-Control-Allow-Origin', '*')
+            return resp
+
+        except exc.SQLAlchemyError as e:
+
+            db.session.rollback()
+            resp = jsonify({'message' : 'Error in postHours', 'error': str(e.orig)})
+            resp.status_code = 500
+            return resp
+
+        finally:
+            db.session.close()
+
+def deleteICA(id):
+    db = DBManager.getInstance() 
+    
+    delete = "delete from ICA where id_ica="+ str(id)
+    
+    try:
+        db.session.execute(delete)
+        db.session.commit()
+
+        resp = jsonify({'message' : 'ICA delete done'})
+        resp.status_code = 200
+        return resp
+
+    except exc.SQLAlchemyError as e:
+        db.session.rollback()
+        resp = jsonify({'message' : 'Error in deleteICA', 'error': str(e.orig)})
+        resp.status_code = 500
+        return resp
         
+    finally:
+        db.session.close()
+
+def updateICA(id):
+    json = request.json
+    _id_ica = json['idIca']
+    _ica_code = json['icaCode']
+    _ica_core = json['icaCore']
+    _year = json['year']
+    _id_planning = json['idPlanning']
+    _ica_owner = json['icaOwner']
+    _budget = json['budget']
+    _country = json['country']
+    _status = json['status']
+    _depto = json['depto']
+    _frequency_bill = json['frequencyBill']
+    _cc = json['cc']
+    _city_name_req = json['cityNameReq']
+    _division = json['division']
+    _major = json['major']
+    _minor = json['minor']
+    _leru = json['leru']
+    _description = json['description']
+    _id_type = json['idType']
+    _nec = json['nec']
+    _total_plus_taxes = json['totalPlusTax']
+    _start_Date = json['startDate']
+    _end_date = json['endDate']
+    _cty_name_perf= json['ctyNamePerf']
+    _R_Cty_Perf = json['rCtyPerf']
+    _total_billing = json['totalBilling']
+    
+    newICA = ICA(_id_ica, _ica_code, _ica_core, _year, 
+        _id_planning, _ica_owner, _budget, _country, 
+        _status, _depto, _frequency_bill, _cc, 
+        _city_name_req, _division, _major, _minor, 
+        _leru, _description, _id_type, _nec, 
+        _total_plus_taxes, _start_Date, _end_date, 
+        _cty_name_perf, _R_Cty_Perf, _total_billing)
+
+    try:
+        editICA = db.session.query(ICA).filter(ICA.id_ica == id).one()
+        
+        editICA.id_ica = newICA.id_ica
+        editICA.ica_code = newICA.ica_code
+        editICA.ica_core = newICA.ica_core
+        editICA.year = newICA.year
+        editICA.id_planning = newICA.id_planning
+        editICA.ica_owner = newICA.ica_owner
+        editICA.budget = newICA.budget
+        editICA.country = newICA.country
+        editICA.status = newICA.status
+        editICA.depto = newICA.depto
+        editICA.frequency_bill = newICA.frequency_bill
+        editICA.cc = newICA.cc
+        editICA.city_name_req = newICA.city_name_req
+        editICA.division = newICA.division
+        editICA.major = newICA.major
+        editICA.minor = newICA.minor
+        editICA.leru = newICA.leru
+        editICA.description = newICA.description
+        editICA.id_type = newICA.id_type
+        editICA.nec = newICA.nec
+        editICA.total_plus_taxes = newICA.total_plus_taxes
+        editICA.start_Date = newICA.start_Date
+        editICA.end_date = newICA.end_date
+        editICA.cty_name_perf= newICA.cty_name_perf
+        editICA.R_Cty_Perf = newICA.R_Cty_Perf
+        editICA.total_billing = newICA.total_billing
+
+        db.session.commit()
+
+        resp = jsonify({'message' : 'ICA Updated Succesfully', 'ica': editICA.serialize()})
+        resp.status_code = 200
+        resp.headers.add('Access-Control-Allow-Origin', '*')
+        return resp
+
+    except exc.SQLAlchemyError as e:
+        db.session.rollback()
+        resp = jsonify({'message' : 'Error in updateICA', 'error': str(e.orig)})
+        resp.status_code = 500
+        return resp
+    
+    finally:
+        db.session.close()

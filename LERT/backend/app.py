@@ -19,7 +19,7 @@ from DB_Connections.dbtypes import getTypes, postType, deleteType, updateType
 from DB_Connections.dbHours import getHours, postHours, deleteHour, updateHour
 from DB_Connections.dbEmployee import getEmployees, deleteEmployee, newPostEmployee, updateEmployee
 from DB_Connections.dbUsers import all_users, create_user, edit_user, delete_user
-
+from DB_Connections.dbIca import allICAs, postIca, deleteICA, updateICA
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_jwt_extended import get_jwt, set_access_cookies, unset_jwt_cookies
@@ -207,3 +207,9 @@ app.add_url_rule("/getEmployees", view_func=getEmployees, methods=['GET'])
 app.add_url_rule("/deleteEmployees/<int:id>", view_func=deleteEmployee, methods=['DELETE'])
 app.add_url_rule("/newPostEmployee", view_func=newPostEmployee, methods=['POST'])
 app.add_url_rule("/updateEmployees/<int:id>", view_func=updateEmployee, methods=['PUT'])
+
+#Metodos ICAs
+app.add_url_rule("/getICAs", view_func=allICAs, methods=['GET'])
+app.add_url_rule("/postICA", view_func=postIca, methods=['GET', 'POST'])
+app.add_url_rule("/deleteICA/<int:id>", view_func=deleteICA, methods=['DELETE'])
+app.add_url_rule("/updateICA/<int:id>", view_func=updateICA, methods=['GET', 'PUT'])
