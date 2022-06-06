@@ -22,7 +22,7 @@ db = DBManager.getInstance()
 
 class AllExpenses(Base):
     __tablename__ = "expenses"
-    id_expense = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     employee_mail = Column(String(150))
     date_limit = Column(Date)
     cost = Column(Float)
@@ -48,7 +48,7 @@ class AllExpenses(Base):
 
     def serialize(self):
         return {
-            'expense_id': self.id_expense, 
+            'id': self.id, 
             'mail': self.employee_mail,
             'date_limit':  self.date_limit,
             'cost':  self.cost,
@@ -103,12 +103,12 @@ def deleteAllExpense(id):
     if request.method == 'DELETE':
         # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
         # db.session.execute(autoIncrement)
-        queryCheck = select(AllExpenses).where(AllExpenses.id_expense == id)
+        queryCheck = select(AllExpenses).where(AllExpenses.id == id)
         expType=db.session.scalar(queryCheck)
         if(expType == None): #check if record does exist
             return "Expense record not found"
         else:
-            stmt = delete(AllExpenses).where(AllExpenses.id_expense == id)
+            stmt = delete(AllExpenses).where(AllExpenses.id == id)
             print(stmt)
             db.session.execute(stmt)
             db.session.commit()
@@ -121,7 +121,7 @@ def updateExpense(id):
     _json = request.json
     newAllExpense = AllExpenses(_json['mail'],_json['date'], _json['cost'],_json['comment'], _json['ica'], _json['type'], _json['ica_manager'], _json['administrator'] )
     
-    editExpense = db.session.query(AllExpenses).filter(AllExpenses.id_type == id).one()
+    editExpense = db.session.query(AllExpenses).filter(AllExpenses.id == id).one()
     editExpense.employee_mail = newAllExpense.employee_mail
     editExpense.date_limit = newAllExpense.date_limit
     editExpense.cost = newAllExpense.cost

@@ -1,6 +1,6 @@
 CREATE TABLE Expenses
 (
-    Id_expense SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     employee_mail Varchar(150),
     date_limit Varchar(150),
     cost float,

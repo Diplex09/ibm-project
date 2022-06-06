@@ -38,6 +38,7 @@ export const TableInfo = ({
     const handleEditClick = (e, row) => {
         e.preventDefault();
         setRowId(row.id);
+        console.log(row);
 
         setEditRecord({ ...row });
     };
@@ -52,11 +53,6 @@ export const TableInfo = ({
 
     const deleteRecord = async (e, row) => {
         await deleteItem(row.id);
-        fetchData();
-    };
-
-    const deleteRecordExpense = async (e, row) => {
-        await deleteItem(row.expense_id);
         fetchData();
     };
 

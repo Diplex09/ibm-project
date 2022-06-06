@@ -28,6 +28,8 @@ export const NewExpenseField = ({ fetchData }) => {
         comment: "",
         ica: "",
         type: "",
+        ica_manager: "",
+        administrator: "",
     });
 
     const handleSubmit = (e) => {

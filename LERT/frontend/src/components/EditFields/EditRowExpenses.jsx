@@ -10,6 +10,7 @@ export const EditRowExpenses = ({
 }) => {
     return (
         <>
+            {console.log(editRecord)}
             <TableCell>
                 <IconButton onClick={(e) => handleEditSave(e, editRecord, row)}>
                     <DoneOutlineOutlined />
@@ -73,6 +74,26 @@ export const EditRowExpenses = ({
                     label="Type"
                     variant="standard"
                     defaultValue={editRecord.type}
+                    onChange={handleEditRecord}
+                />
+            </TableCell>
+            <TableCell>
+                <TextField
+                    name="ica_manager"
+                    id="standard-basic"
+                    label="Type"
+                    variant="standard"
+                    defaultValue={editRecord.ica_manager}
+                    onChange={handleEditRecord}
+                />
+            </TableCell>
+            <TableCell>
+                <TextField
+                    name="administrator"
+                    id="standard-basic"
+                    label="Type"
+                    variant="standard"
+                    defaultValue={editRecord.administrator}
                     onChange={handleEditRecord}
                 />
             </TableCell>

@@ -10,6 +10,7 @@ export const EditRowHours = ({
 }) => {
     return (
         <>
+            {console.log(editRecord)}
             <TableCell>
                 <IconButton onClick={(e) => handleEditSave(e, editRecord, row)}>
                     <DoneOutlineOutlined />
