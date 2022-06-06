@@ -15,10 +15,10 @@ export const ReadRowExpenses = ({ row, handleEditClick, deleteRecord }) => {
             <TableCell component="th" scope="row">
                 {row.mail}
             </TableCell>
-            <TableCell align="left">{row.type}</TableCell>
+            <TableCell align="left">{row.type_id}</TableCell>
             <TableCell align="left">{row.cost}</TableCell>
-            <TableCell align="left">{row.date}</TableCell>
-            <TableCell align="left">{row.ica}</TableCell>
+            <TableCell align="left">{row.date_limit}</TableCell>
+            <TableCell align="left">{row.ica_id}</TableCell>
             <TableCell align="left">{row.ica_manager}</TableCell>
             <TableCell align="left">{row.administrator}</TableCell>
             <TableCell align="left">{row.comment}</TableCell>

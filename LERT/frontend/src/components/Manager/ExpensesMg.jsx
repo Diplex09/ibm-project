@@ -65,6 +65,20 @@ export const ExpensesMg = () => {
     const classes = useStyles();
     const [typeData, setTypeData] = useState([]);
 
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios({
+            method: "get",
+            url: "http://localhost:3000/getExpenses",
+            responseType: "json",
+        }).then((response) => {
+            setTypeData(response.data);
+        });
+    };
+
     return (
         <>
             <Typography
@@ -124,17 +138,7 @@ export const ExpensesMg = () => {
                     </IconButton>
                 </Paper>
             </Box>
-            <TableContainer
-                component={Paper}
-                sx={{
-                    "& .MuiTableCell-head": {
-                        color: "#0062ff",
-                        textTransform: "uppercase",
-                        fontWeight: "500",
-                    },
-                    padding: "5px 20px",
-                }}
-            >
+            <TableContainer>
                 <Typography
                     sx={{
                         fontWeight: "600",
@@ -147,10 +151,6 @@ export const ExpensesMg = () => {
                     All Expenses
                 </Typography>
 
-                <Divider
-                    sx={{ height: 1, m: 0.5, width: "10rem" }}
-                    orientation="horizontal"
-                />
                 <TableInfo
                     columns={columns}
                     fetchData={fetchData}
@@ -158,8 +158,8 @@ export const ExpensesMg = () => {
                     initialRecord={initialRecord}
                     ReadComponent={(props) => <ReadRowExpenses {...props} />}
                     EditComponent={(props) => <EditRowExpenses {...props} />}
-                    updateItem={updateType}
-                    deleteItem={deleteType}
+                    /*updateItem={updateType}
+                    deleteItem={deleteType} */
                 />
             </TableContainer>
         </>

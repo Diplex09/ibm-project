@@ -10,13 +10,13 @@ from flask import Flask, jsonify, request, session, send_from_directory
 
 from flask_cors import CORS
 
-from backend.DB_Connections.DBManager import DBManager
-from backend.DB_Connections.dbIca import ICA
-from backend.DB_Connections.dbtypes import Types
+from DB_Connections.DBManager import DBManager
+from DB_Connections.dbIca import ICA
+from DB_Connections.dbtypes import Types
 
 
 #Base = declarative_base()
-from backend.DB_Connections.baseInstance import Base
+from DB_Connections.baseInstance import Base
 db = DBManager.getInstance() 
 
 
@@ -25,10 +25,10 @@ class AllExpenses(Base):
     id_expense = Column(Integer, primary_key=True)
     employee_mail = Column(String(150))
     date_limit = Column(Date)
-    cost = Column(float)
+    cost = Column(Float)
     comment = Column(String(150))
-    id_ICA = Column(Integer, ForeignKey("ica.id_ica"))
-    id_Type = Column(Integer, ForeignKey("type.id_type"))
+    id_ica = Column(Integer, ForeignKey("ica.id_ica"))
+    id_type = Column(Integer, ForeignKey("type.id_type"))
     ica_manager = Column(String(150))
     administrator = Column(String(150))
 
@@ -53,9 +53,21 @@ class AllExpenses(Base):
             'date_limit':  self.date_limit,
             'cost':  self.cost,
             'comment': self.comment,
-            'ICA_ID': self.id_ica,
-            'TYPE_ID': self.id_type,
+            'ica_id': self.id_ica,
+            'type_id': self.id_type,
             'ica_manager': self.ica_manager,
-            'admninistrator': self.administrator,
+            'administrator': self.administrator,
             
         }
+
+def getAllExpenses():
+    global db
+    if db==None:
+        db=DBManager.getInstance
+    expensesList = []
+
+    stmt = select(AllExpenses)
+    for allExpenses in db.session.scalars(stmt):
+        expensesList.append(allExpenses)
+    resp = jsonify([e.serialize() for e in expensesList]) #Con esto puedes mandar lista de objetos en json
+    return resp
