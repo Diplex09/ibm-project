@@ -7,7 +7,7 @@ import psycopg2.extras
 # singleton para acceso a recursos de DB
 
 # Base = declarative_base()
-from backend.DB_Connections.baseInstance import Base
+from DB_Connections.baseInstance import Base
 
 class DBManager:
 
