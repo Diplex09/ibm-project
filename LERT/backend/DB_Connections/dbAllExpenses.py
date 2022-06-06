@@ -97,3 +97,20 @@ def newAllPostExpense():
             db.session.commit()
             
             return "New All Expense Uploaded Succesfully"
+
+def deleteAllExpense(id):
+    global db
+    if request.method == 'DELETE':
+        # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
+        # db.session.execute(autoIncrement)
+        queryCheck = select(AllExpenses).where(AllExpenses.id_expense == id)
+        expType=db.session.scalar(queryCheck)
+        if(expType == None): #check if record does exist
+            return "Expense record not found"
+        else:
+            stmt = delete(AllExpenses).where(AllExpenses.id_expense == id)
+            print(stmt)
+            db.session.execute(stmt)
+            db.session.commit()
+
+            return "Expense delete done"

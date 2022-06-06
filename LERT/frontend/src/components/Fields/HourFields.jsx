@@ -22,28 +22,28 @@ import {
 import { postNewHour } from "../../actions/OP Manager/extraHours";
 
 export const HourFields = ({ fetchData }) => {
-    const locale = 'es-MX';
-    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const locale = "es-MX";
+    let options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
 
-    const [dateStart, setDateStart] = useState(
-        new Date()
-    );
-    const [dateFinish, setDateFinish] = useState(
-        new Date()
-    );
+    const [dateStart, setDateStart] = useState(new Date());
+    const [dateFinish, setDateFinish] = useState(new Date());
     const [record, setRecord] = useState({
-        type: "",
+        name: "",
         band: "",
         rate: "",
         country: "",
-        dateStart: "",
-        dateFinish: "",
+        date_to_start: "",
+        date_to_finish: "",
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        postNewHour(record)
-            .then(fetchData());
+        postNewHour(record).then(fetchData());
     };
 
     return (
@@ -75,7 +75,7 @@ export const HourFields = ({ fetchData }) => {
                         label="TYPE"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, type: e.target.value });
+                            setRecord({ ...record, name: e.target.value });
                         }}
                     />
 
@@ -144,7 +144,9 @@ export const HourFields = ({ fetchData }) => {
                         alignItems: "center",
                     }}
                 >
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}
+                    <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={es}
                     >
                         <DatePicker
                             label="Begin"
@@ -161,7 +163,10 @@ export const HourFields = ({ fetchData }) => {
                             value={dateStart}
                             onChange={(newDate) => {
                                 setDateStart(newDate);
-                                setRecord({ ...record, dateStart: newDate });
+                                setRecord({
+                                    ...record,
+                                    date_to_start: newDate,
+                                });
                             }}
                         />
 
@@ -180,7 +185,10 @@ export const HourFields = ({ fetchData }) => {
                             value={dateFinish}
                             onChange={(newDate) => {
                                 setDateFinish(newDate);
-                                setRecord({ ...record, dateFinish: newDate });
+                                setRecord({
+                                    ...record,
+                                    date_to_finish: newDate,
+                                });
                             }}
                         />
                     </LocalizationProvider>
