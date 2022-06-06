@@ -55,6 +55,11 @@ export const TableInfo = ({
         fetchData();
     };
 
+    const deleteRecordExpense = async (e, row) => {
+        await deleteItem(row.expense_id);
+        fetchData();
+    };
+
     return (
         <form>
             <Paper>

@@ -16,6 +16,7 @@ import { makeStyles, styled } from "@material-ui/core/styles";
 
 import { TableInfo } from "../reusable/TableInfo";
 import { NewExpenseField } from "../Fields/NewExpenseField";
+import { deleteExpense } from "../../actions/Manager/allExpenses";
 
 import { ReadRowExpenses } from "../EditFields/ReadRowExpenses";
 import { EditRowExpenses } from "../EditFields/EditRowExpenses";
@@ -158,8 +159,8 @@ export const ExpensesMg = () => {
                     initialRecord={initialRecord}
                     ReadComponent={(props) => <ReadRowExpenses {...props} />}
                     EditComponent={(props) => <EditRowExpenses {...props} />}
-                    /*updateItem={updateType}
-                    deleteItem={deleteType} */
+                    /*updateItem={updateType} */
+                    deleteItem={deleteExpense}
                 />
             </TableContainer>
         </>

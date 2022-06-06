@@ -17,3 +17,15 @@ export const postNewExpense = async (record) => {
             console.log(error);
         });
 };
+
+export const deleteExpense = async (id) => {
+    const axios = require("axios").default;
+    axios
+        .delete(`http://localhost:3000/deleteExpense/${id}`)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
