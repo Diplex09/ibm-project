@@ -114,3 +114,23 @@ def deleteAllExpense(id):
             db.session.commit()
 
             return "Expense delete done"
+
+
+def updateExpense(id):
+
+    _json = request.json
+    newAllExpense = AllExpenses(_json['mail'],_json['date'], _json['cost'],_json['comment'], _json['ica'], _json['type'], _json['ica_manager'], _json['administrator'] )
+    
+    editExpense = db.session.query(AllExpenses).filter(AllExpenses.id_type == id).one()
+    editExpense.employee_mail = newAllExpense.employee_mail
+    editExpense.date_limit = newAllExpense.date_limit
+    editExpense.cost = newAllExpense.cost
+    editExpense.comment = newAllExpense.comment
+    editExpense.id_ica = newAllExpense.id_ica
+    editExpense.id_type = newAllExpense.id_type
+    editExpense.ica_manager = newAllExpense.ica_manager
+    editExpense.administrator = newAllExpense.administrator
+
+    db.session.commit()
+
+    return "Expense updated done"
