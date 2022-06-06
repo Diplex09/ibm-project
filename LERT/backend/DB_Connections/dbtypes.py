@@ -15,10 +15,10 @@ from flask import Flask, jsonify, request, session, send_from_directory
 
 from flask_cors import CORS
 
-from backend.DB_Connections.DBManager import DBManager 
+from DB_Connections.DBManager import DBManager 
 
 # Base = declarative_base()
-from backend.DB_Connections.baseInstance import Base
+from DB_Connections.baseInstance import Base
 
 db = DBManager.getInstance() 
 

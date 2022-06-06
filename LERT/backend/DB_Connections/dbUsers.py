@@ -19,7 +19,7 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from DB_Connections.DBManager import DBManager 
 
 # Base = declarative_base()
-from backend.DB_Connections.baseInstance import Base
+from DB_Connections.baseInstance import Base
 db = DBManager.getInstance() 
 
 class Users(Base):
