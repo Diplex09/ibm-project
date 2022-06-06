@@ -1,36 +1,22 @@
 import { useState } from "react";
-import {
-    Box,
-    InputAdornment,
-    Typography,
-    TextField,
-    Button,
-    Paper,
-} from "@mui/material";
-import esLocale from 'date-fns/locale/es';
+import { Box, InputAdornment, TextField, Button, Paper } from "@mui/material";
+import esLocale from "date-fns/locale/es";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-import {
-    AttachMoney,
-    EmailOutlined,
-    PublicOutlined,
-    ArrowForwardOutlined,
-} from "@mui/icons-material";
+import { ArrowForwardOutlined, AttachMoney } from "@mui/icons-material";
 
-import { postNewHour } from "../../actions/OP Manager/extraHours";
+import { postNewIca } from "../../actions/OP Manager/icas";
 
-export const HourFields = ({ fetchData }) => {
-
+export const IcaFields = ({ fetchData }) => {
     const [dateStart, setDateStart] = useState(
-        new Date().toLocaleDateString('es')
+        new Date().toLocaleDateString("es")
     );
     const [dateFinish, setDateFinish] = useState(
-        new Date().toLocaleDateString('es')
+        new Date().toLocaleDateString("es")
     );
     const [record, setRecord] = useState({
-        id_ica: "",
         ica_code: "",
         ica_core: "",
         year: "",
@@ -55,27 +41,16 @@ export const HourFields = ({ fetchData }) => {
         end_date: "",
         cty_name_perf: "",
         R_Cty_Perf: "",
-        total_billing: ""
+        total_billing: "",
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        postNewHour(record)
-            .then(fetchData());
+        postNewIca(record).then(fetchData());
     };
 
     return (
         <Paper>
-            <Typography
-                component="h2"
-                variant="h5"
-                sx={{
-                    fontWeight: "600",
-                    textAlign: "center",
-                }}
-            >
-                Insert ICA
-            </Typography>
             <Box
                 sx={{
                     marginTop: "1rem",
@@ -85,80 +60,260 @@ export const HourFields = ({ fetchData }) => {
             >
                 <Box
                     sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fill, 18rem)",
+                        columnGap: "1rem",
+                        rowGap: "1rem",
                         mb: "1.5rem",
+                        justifyContent: "center",
                     }}
                 >
                     <TextField
-                        sx={{ width: "18rem" }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <EmailOutlined size="10rem" />
-                                </InputAdornment>
-                            ),
-                        }}
                         id="standard-basic"
-                        label="TYPE"
+                        label="ICA Code"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, type: e.target.value });
+                            setRecord({ ...record, ica_code: e.target.value });
                         }}
                     />
 
                     <TextField
-                        sx={{ width: "18rem" }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <AttachMoney size="10rem" />
-                                </InputAdornment>
-                            ),
-                        }}
                         id="standard-basic"
-                        label="BAND NUMBER"
+                        label="ICA Core"
                         variant="standard"
-                        type="number"
                         onChange={(e) => {
-                            setRecord({ ...record, band: e.target.value });
+                            setRecord({ ...record, ica_core: e.target.value });
                         }}
                     />
 
                     <TextField
-                        sx={{ width: "18rem" }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <AttachMoney size="10rem" />
-                                </InputAdornment>
-                            ),
-                        }}
                         id="standard-basic"
-                        label="RATE"
+                        label="Year"
                         variant="standard"
-                        type="number"
                         onChange={(e) => {
-                            setRecord({ ...record, rate: e.target.value });
+                            setRecord({ ...record, year: e.target.value });
                         }}
                     />
 
                     <TextField
-                        sx={{ width: "18rem" }}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <PublicOutlined size="10rem" />
-                                </InputAdornment>
-                            ),
-                        }}
                         id="standard-basic"
-                        label="COUNTRY"
+                        label="ID Planning"
                         variant="standard"
                         onChange={(e) => {
                             setRecord({
                                 ...record,
-                                country: e.target.value,
+                                id_planning: e.target.value,
+                            });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="ICA Owner"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, ica_owner: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Budget"
+                        variant="standard"
+                        type="number"
+                        onChange={(e) => {
+                            setRecord({ ...record, budget: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Country"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, country: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Status"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, status: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Depto"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, depto: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Frequency Bill"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({
+                                ...record,
+                                frequency_bill: e.target.value,
+                            });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="CC"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, cc: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="City Name Req"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({
+                                ...record,
+                                city_name_req: e.target.value,
+                            });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Division"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, division: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Major"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, major: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Minor"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, minor: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Leru"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, leru: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Description"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({
+                                ...record,
+                                description: e.target.value,
+                            });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="ID Type"
+                        variant="standard"
+                        type="number"
+                        onChange={(e) => {
+                            setRecord({ ...record, id_type: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Nec"
+                        variant="standard"
+                        type="number"
+                        onChange={(e) => {
+                            setRecord({ ...record, nec: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Total Plus Taxes"
+                        variant="standard"
+                        type="number"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AttachMoney size="10rem" />
+                                </InputAdornment>
+                            ),
+                        }}
+                        onChange={(e) => {
+                            setRecord({
+                                ...record,
+                                total_plus_taxes: e.target.value,
+                            });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="City Name Perf"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({
+                                ...record,
+                                cty_name_perf: e.target.value,
+                            });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="R Cty Perf"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({
+                                ...record,
+                                R_Cty_Perf: e.target.value,
+                            });
+                        }}
+                    />
+
+                    <TextField
+                        id="standard-basic"
+                        label="Total Billing"
+                        variant="standard"
+                        type="number"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AttachMoney size="10rem" />
+                                </InputAdornment>
+                            ),
+                        }}
+                        onChange={(e) => {
+                            setRecord({
+                                ...record,
+                                total_billing: e.target.value,
                             });
                         }}
                     />
@@ -172,11 +327,13 @@ export const HourFields = ({ fetchData }) => {
                         alignItems: "center",
                     }}
                 >
-                    <LocalizationProvider dateAdapter={AdapterDateFns}adapterLocale={esLocale}
+                    <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={esLocale}
                     >
                         <DatePicker
                             label="Begin"
-                            mask='__/__/____'
+                            mask="__/__/____"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
@@ -189,16 +346,18 @@ export const HourFields = ({ fetchData }) => {
                             value={dateStart}
                             onChange={(newDate) => {
                                 setDateStart(newDate);
-                                setRecord({ ...record, dateStart: newDate });
+                                setRecord({ ...record, start_Date: newDate });
                             }}
                         />
                     </LocalizationProvider>
 
-                    <LocalizationProvider dateAdapter={AdapterDateFns}adapterLocale={esLocale}
+                    <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={esLocale}
                     >
                         <DatePicker
                             label="End"
-                            mask='__/__/____'
+                            mask="__/__/____"
                             renderInput={(params) => (
                                 <TextField
                                     sx={{
@@ -211,7 +370,7 @@ export const HourFields = ({ fetchData }) => {
                             value={dateFinish}
                             onChange={(newDate) => {
                                 setDateFinish(newDate);
-                                setRecord({ ...record, dateFinish: newDate });
+                                setRecord({ ...record, end_date: newDate });
                             }}
                         />
                     </LocalizationProvider>
@@ -242,4 +401,4 @@ export const HourFields = ({ fetchData }) => {
     );
 };
 
-export default HourFields;
+export default IcaFields;
