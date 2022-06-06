@@ -92,7 +92,7 @@ export const ExpensesMg = () => {
             >
                 Add New Expense
             </Typography>
-            <NewExpenseField />
+            <NewExpenseField fetchData={fetchData} />
             <Box
                 sx={{
                     display: "flex",

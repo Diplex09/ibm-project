@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, InputAdornment, TextField, Button, Paper } from "@mui/material";
-import {es} from 'date-fns/locale';
+import { es } from "date-fns/locale";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -12,29 +12,27 @@ import {
     ArrowForwardOutlined,
 } from "@mui/icons-material";
 
-import { postNewType } from "../../actions/OP Manager/types";
+import { postNewExpense } from "../../actions/Manager/allExpenses";
 
 export const NewExpenseField = ({ fetchData }) => {
-    const [dateStart, setDateStart] = useState(
-        new Date()
-    );
+    const [dateStart, setDateStart] = useState(new Date());
     const [dateFinish, setDateFinish] = useState(
         new Date().toLocaleDateString("fr-FR")
     );
 
     //Variables para textfields
     const [record, setRecord] = useState({
-        name: "",
-        band: "",
-        rate: "",
-        country: "",
-        date_to_start: "",
-        date_to_finish: "",
+        mail: "",
+        date: "",
+        cost: "",
+        comment: "",
+        ica: "",
+        type: "",
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        postNewType(record);
+        postNewExpense(record);
         fetchData();
     };
 
@@ -66,11 +64,13 @@ export const NewExpenseField = ({ fetchData }) => {
                         label="Employee mail"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, name: e.target.value });
+                            setRecord({ ...record, mail: e.target.value });
                         }}
                     />
 
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}
+                    <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={es}
                     >
                         <DatePicker
                             label="Date"
@@ -87,7 +87,7 @@ export const NewExpenseField = ({ fetchData }) => {
                             value={dateStart}
                             onChange={(newDate) => {
                                 setDateStart(newDate);
-                                setRecord({ ...record, dateStart: newDate });
+                                setRecord({ ...record, date: newDate });
                             }}
                         />
                     </LocalizationProvider>
@@ -105,7 +105,7 @@ export const NewExpenseField = ({ fetchData }) => {
                         label="Cost"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, rate: e.target.value });
+                            setRecord({ ...record, cost: e.target.value });
                         }}
                     />
 
@@ -122,7 +122,7 @@ export const NewExpenseField = ({ fetchData }) => {
                         label="Comment"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, country: e.target.value });
+                            setRecord({ ...record, comment: e.target.value });
                         }}
                     />
                 </Box>
@@ -148,7 +148,7 @@ export const NewExpenseField = ({ fetchData }) => {
                         label="ICA"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, name: e.target.value });
+                            setRecord({ ...record, ica: e.target.value });
                         }}
                     />
 
@@ -165,7 +165,7 @@ export const NewExpenseField = ({ fetchData }) => {
                         label="TYPE"
                         variant="standard"
                         onChange={(e) => {
-                            setRecord({ ...record, name: e.target.value });
+                            setRecord({ ...record, type: e.target.value });
                         }}
                     />
 

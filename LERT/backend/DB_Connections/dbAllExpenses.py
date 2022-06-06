@@ -71,3 +71,29 @@ def getAllExpenses():
         expensesList.append(allExpenses)
     resp = jsonify([e.serialize() for e in expensesList]) #Con esto puedes mandar lista de objetos en json
     return resp
+
+def newAllPostExpense():
+    print("All Expenses Post")
+    _json = request.json
+    _mail = _json['mail']
+    _date_limit = _json['date']
+    _cost = _json['cost']
+    _comment = _json['comment']
+    _ica = _json['ica']
+    _type = _json['type']
+    _ica_manager = "test@ibm.com"
+    _administrator = "test@ibm.com"
+    
+    
+
+
+    if request.method == 'POST':
+        if not _mail or not _date_limit or not _cost or not _comment or not _ica or not _type or not _ica_manager or not _administrator:
+            return "Values fields are incomplete"
+        else:
+            expense = AllExpenses(  _mail ,_date_limit, _cost , _comment ,_ica , _type ,_ica_manager, _administrator)
+            
+            db.session.add(expense)
+            db.session.commit()
+            
+            return "New All Expense Uploaded Succesfully"

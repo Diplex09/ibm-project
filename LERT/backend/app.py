@@ -20,7 +20,7 @@ from DB_Connections.dbHours import getHours, postHours, deleteHour, updateHour
 from DB_Connections.dbEmployee import getEmployees, deleteEmployee, newPostEmployee, updateEmployee
 from DB_Connections.dbUsers import all_users, create_user, edit_user, delete_user
 from DB_Connections.dbIca import allICAs, postIca, deleteICA, updateICA
-from DB_Connections.dbAllExpenses import getAllExpenses
+from DB_Connections.dbAllExpenses import getAllExpenses, newAllPostExpense
 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_jwt_extended import get_jwt, set_access_cookies, unset_jwt_cookies
@@ -218,3 +218,4 @@ app.add_url_rule("/updateICA/<int:id>", view_func=updateICA, methods=['GET', 'PU
 
 #Metodos allExpenses
 app.add_url_rule("/getExpenses", view_func=getAllExpenses, methods=['GET'])
+app.add_url_rule("/newPostExpenses", view_func=newAllPostExpense, methods=['POST'])
