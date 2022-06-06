@@ -1,16 +1,62 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-import { HourFields } from "../Fields/IcaFields.jsx";
-import { TableInfo } from "../reusable/TableInfo";
 import { Typography } from "@mui/material";
+
+import { IcaFields } from "../Fields/IcaFields.jsx";
+import { TableInfo } from "../reusable/TableInfo";
+
+import { ReadRowICAs } from "../EditFields/ReadRowICAs.jsx";
+import { EditRowICAs } from "../EditFields/EditRowICAs.jsx";
+
+import { deleteIca, updateIca } from "../../actions/OP Manager/icas.js";
 
 export const Icas = () => {
     const [typeData, setTypeData] = useState([]);
-    const [rowId, setRowId] = useState(null);
 
-    const [editRecord, setEditRecord] = useState({
-        id_ica: "",
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        axios({
+            method: "get",
+            url: "http://localhost:3000/getICAs",
+            responseType: "json",
+        }).then((response) => {
+            setTypeData(response.data);
+        });
+    };
+
+    const columns = [
+        "Actions",
+        "ICA Code",
+        "ICA Core",
+        "Year",
+        "ID Planning",
+        "ICA Owner",
+        "Budget",
+        "Country",
+        "Status",
+        "Depto",
+        "Frequency Bills",
+        "CC",
+        "City Name Req",
+        "Division",
+        "Major",
+        "Minor",
+        "Leru",
+        "Description",
+        "ID Type",
+        "Nec",
+        "Total Plus Taxes",
+        "Start Date",
+        "End Date",
+        "City Name Perf",
+        "R Cty Perf",
+        "Total Billing",
+    ];
+
+    const initialRecord = {
         ica_code: "",
         ica_core: "",
         year: "",
@@ -35,21 +81,7 @@ export const Icas = () => {
         end_date: "",
         cty_name_perf: "",
         R_Cty_Perf: "",
-        total_billing: ""
-    });
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = () => {
-        axios({
-            method: "get",
-            url: "http://localhost:3000/getIcas",
-            responseType: "json",
-        }).then((response) => {
-            setTypeData(response.data);
-        });
+        total_billing: "",
     };
 
     return (
@@ -59,19 +91,22 @@ export const Icas = () => {
                 variant="h4"
                 sx={{
                     fontWeight: "600",
-                    textAlign: "center",
+                    fontSize: 25,
+                    marginBottom: "1rem",
                 }}
             >
-                ICAs
+                Insert New ICA
             </Typography>
-            <HourFields fetchData={fetchData} />
+            <IcaFields fetchData={fetchData} />
             <TableInfo
                 fetchData={fetchData}
                 typeData={typeData}
-                rowId={rowId}
-                setRowId={setRowId}
-                editRecord={editRecord}
-                setEditRecord={setEditRecord}
+                columns={columns}
+                initialRecord={initialRecord}
+                ReadComponent={(props) => <ReadRowICAs {...props} />}
+                EditComponent={(props) => <EditRowICAs {...props} />}
+                updateItem={updateIca}
+                deleteItem={deleteIca}
             />
         </>
     );
