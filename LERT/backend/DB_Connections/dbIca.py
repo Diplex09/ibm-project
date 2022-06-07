@@ -45,15 +45,14 @@ class ICA(Base):
     id_type = Column(Integer, ForeignKey("type.id_type"))
     nec = Column(Integer)
     total_plus_taxes = Column(Float)
-    start_Date = Column(Date)
+    start_date = Column(Date)
     end_date = Column(Date)
     cty_name_perf = Column(String(50))
-    R_Cty_Perf = Column(String(100))
+    r_cty_perf = Column(String(100))
     total_billing = Column(Float)
 
-    def __init__(self,idIca,icaCode,icaCore,year,idPlanning,icaOwner,budget,country,status,depto,frequencyBill,cc,cityNameReq,division,major,
+    def __init__(self, icaCode,icaCore,year,idPlanning,icaOwner,budget,country,status,depto,frequencyBill,cc,cityNameReq,division,major,
     minor,leru,description,idType,nec,totalPlusTax,startDate,endDate,ctyNamePerf,rCtyPerf,totalBilling):
-        self.id_ica = idIca
         self.ica_code = icaCode
         self.ica_core = icaCore
         self.year = year
@@ -74,10 +73,10 @@ class ICA(Base):
         self.id_type = idType
         self.nec = nec
         self.total_plus_taxes = totalPlusTax
-        self.start_Date = startDate
+        self.start_date = startDate
         self.end_date = endDate
         self.cty_name_perf= ctyNamePerf
-        self.R_Cty_Perf = rCtyPerf
+        self.r_cty_perf = rCtyPerf
         self.total_billing = totalBilling
 
     def serialize(self):
@@ -103,10 +102,10 @@ class ICA(Base):
             'id_type': self.id_type,
             'nec': self.nec,
             'total_plus_taxes': self.total_plus_taxes,
-            'start_Date': self.start_Date,
+            'start_date': self.start_date,
             'end_date': self.end_date ,
             'cty_name_perf': self.cty_name_perf,
-            'R_Cty_Perf': self.R_Cty_Perf,
+            'r_cty_perf': self.r_cty_perf,
             'total_billing': self.total_billing
         } 
 
@@ -124,38 +123,37 @@ def allICAs():
 
 def postIca():
     json = request.json
-    _id_ica = json['idIca']
-    _ica_code = json['icaCode']
-    _ica_core = json['icaCore']
+    _ica_code = json['ica_code']
+    _ica_core = json['ica_core']
     _year = json['year']
-    _id_planning = json['idPlanning']
-    _ica_owner = json['icaOwner']
+    _id_planning = json['id_planning']
+    _ica_owner = json['ica_owner']
     _budget = json['budget']
     _country = json['country']
     _status = json['status']
     _depto = json['depto']
-    _frequency_bill = json['frequencyBill']
+    _frequency_bill = json['frequency_bill']
     _cc = json['cc']
-    _city_name_req = json['cityNameReq']
+    _city_name_req = json['city_name_req']
     _division = json['division']
     _major = json['major']
     _minor = json['minor']
     _leru = json['leru']
     _description = json['description']
-    _id_type = json['idType']
+    _id_type = json['id_type']
     _nec = json['nec']
-    _total_plus_taxes = json['totalPlusTax']
-    _start_Date = json['startDate']
-    _end_date = json['endDate']
-    _cty_name_perf= json['ctyNamePerf']
-    _R_Cty_Perf = json['rCtyPerf']
-    _total_billing = json['totalBilling']
+    _total_plus_taxes = json['total_plus_taxes']
+    _start_Date = json['start_date']
+    _end_date = json['end_date']
+    _cty_name_perf= json['cty_name_perf']
+    _R_Cty_Perf = json['r_cty_perf']
+    _total_billing = json['total_billing']
     print("Posting ICA on endpoint...", file=sys.stdout)
 
-    if not _id_ica or not _ica_code or not _ica_core or not _year or not _id_planning or not _ica_owner or not _budget or not _country or not _status or not _depto or not _frequency_bill or not _cc or not _city_name_req or not _division or not _major or not _minor or not _leru or not _description or not _id_type or not _nec or not _total_plus_taxes or not _start_Date or not _end_date or not _cty_name_perf or not _R_Cty_Perf or not _total_billing:
+    if not _ica_code or not _ica_core or not _year or not _id_planning or not _ica_owner or not _budget or not _country or not _status or not _depto or not _frequency_bill or not _cc or not _city_name_req or not _division or not _major or not _minor or not _leru or not _description or not _id_type or not _nec or not _total_plus_taxes or not _start_Date or not _end_date or not _cty_name_perf or not _R_Cty_Perf or not _total_billing:
             return "Values fields are incomplete"
     else:
-        ica = ICA(_id_ica, _ica_code, _ica_core, _year, 
+        ica = ICA(_ica_code, _ica_core, _year, 
         _id_planning, _ica_owner, _budget, _country, 
         _status, _depto, _frequency_bill, _cc, 
         _city_name_req, _division, _major, _minor, 
@@ -206,34 +204,33 @@ def deleteICA(id):
 
 def updateICA(id):
     json = request.json
-    _id_ica = json['idIca']
-    _ica_code = json['icaCode']
-    _ica_core = json['icaCore']
+    _ica_code = json['ica_code']
+    _ica_core = json['ica_core']
     _year = json['year']
-    _id_planning = json['idPlanning']
-    _ica_owner = json['icaOwner']
+    _id_planning = json['id_planning']
+    _ica_owner = json['ica_owner']
     _budget = json['budget']
     _country = json['country']
     _status = json['status']
     _depto = json['depto']
-    _frequency_bill = json['frequencyBill']
+    _frequency_bill = json['frequency_bill']
     _cc = json['cc']
-    _city_name_req = json['cityNameReq']
+    _city_name_req = json['city_name_req']
     _division = json['division']
     _major = json['major']
     _minor = json['minor']
     _leru = json['leru']
     _description = json['description']
-    _id_type = json['idType']
+    _id_type = json['id_type']
     _nec = json['nec']
-    _total_plus_taxes = json['totalPlusTax']
-    _start_Date = json['startDate']
-    _end_date = json['endDate']
-    _cty_name_perf= json['ctyNamePerf']
-    _R_Cty_Perf = json['rCtyPerf']
-    _total_billing = json['totalBilling']
+    _total_plus_taxes = json['total_plus_taxes']
+    _start_Date = json['start_date']
+    _end_date = json['end_date']
+    _cty_name_perf= json['cty_name_perf']
+    _R_Cty_Perf = json['r_cty_perf']
+    _total_billing = json['total_billing']
     
-    newICA = ICA(_id_ica, _ica_code, _ica_core, _year, 
+    newICA = ICA(_ica_code, _ica_core, _year, 
         _id_planning, _ica_owner, _budget, _country, 
         _status, _depto, _frequency_bill, _cc, 
         _city_name_req, _division, _major, _minor, 
@@ -243,8 +240,7 @@ def updateICA(id):
 
     try:
         editICA = db.session.query(ICA).filter(ICA.id_ica == id).one()
-        
-        editICA.id_ica = newICA.id_ica
+
         editICA.ica_code = newICA.ica_code
         editICA.ica_core = newICA.ica_core
         editICA.year = newICA.year
@@ -265,10 +261,10 @@ def updateICA(id):
         editICA.id_type = newICA.id_type
         editICA.nec = newICA.nec
         editICA.total_plus_taxes = newICA.total_plus_taxes
-        editICA.start_Date = newICA.start_Date
+        editICA.start_date = newICA.start_date
         editICA.end_date = newICA.end_date
         editICA.cty_name_perf= newICA.cty_name_perf
-        editICA.R_Cty_Perf = newICA.R_Cty_Perf
+        editICA.r_cty_perf = newICA.r_cty_perf
         editICA.total_billing = newICA.total_billing
 
         db.session.commit()
