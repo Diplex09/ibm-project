@@ -23,6 +23,7 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         postNewEmployee(record);
+        closeModal(false);
     };
 
     return (
