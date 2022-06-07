@@ -35,11 +35,11 @@ export const updateExpense = async (id, editRecord) => {
     await axios
         .put(`http://localhost:3000/updateExpenses/${id}`, {
             mail: editRecord.mail,
-            date: editRecord.date,
+            date: editRecord.date_limit,
             cost: editRecord.cost,
             comment: editRecord.comment,
-            ica: editRecord.ica,
-            type: editRecord.type,
+            ica: editRecord.ica_id,
+            type: editRecord.type_id,
             ica_manager: editRecord.ica_manager,
             administrator: editRecord.administrator
 

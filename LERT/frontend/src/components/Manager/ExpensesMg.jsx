@@ -36,11 +36,11 @@ const columns = [
 
 const initialRecord = {
     mail: "",
-    date: "",
+    date_limit: "",
     cost: "",
     comment: "",
-    ica: "",
-    type: "",
+    ica_id: "",
+    type_id: "",
     ica_manager: "",
     administrator: "",
 };

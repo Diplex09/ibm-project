@@ -29,11 +29,11 @@ export const EditRowExpenses = ({
             </TableCell>
             <TableCell>
                 <TextField
-                    name="date"
+                    name="type_id"
                     id="standard-basic"
-                    label="Date"
+                    label="Type"
                     variant="standard"
-                    defaultValue={editRecord.date}
+                    defaultValue={editRecord.type_id}
                     onChange={handleEditRecord}
                 />
             </TableCell>
@@ -49,39 +49,31 @@ export const EditRowExpenses = ({
             </TableCell>
             <TableCell>
                 <TextField
-                    name="comment"
+                    name="date_limit"
                     id="standard-basic"
-                    label="Comment"
+                    label="Date"
                     variant="standard"
-                    defaultValue={editRecord.comment}
+                    defaultValue={editRecord.date_limit}
                     onChange={handleEditRecord}
                 />
             </TableCell>
+
             <TableCell>
                 <TextField
-                    name="ica"
+                    name="ica_id"
                     id="standard-basic"
                     label="ICA"
                     variant="standard"
-                    defaultValue={editRecord.ica}
+                    defaultValue={editRecord.ica_id}
                     onChange={handleEditRecord}
                 />
             </TableCell>
-            <TableCell>
-                <TextField
-                    name="type"
-                    id="standard-basic"
-                    label="Type"
-                    variant="standard"
-                    defaultValue={editRecord.type}
-                    onChange={handleEditRecord}
-                />
-            </TableCell>
+
             <TableCell>
                 <TextField
                     name="ica_manager"
                     id="standard-basic"
-                    label="Type"
+                    label="ICA Manager"
                     variant="standard"
                     defaultValue={editRecord.ica_manager}
                     onChange={handleEditRecord}
@@ -91,9 +83,19 @@ export const EditRowExpenses = ({
                 <TextField
                     name="administrator"
                     id="standard-basic"
-                    label="Type"
+                    label="Administrator"
                     variant="standard"
                     defaultValue={editRecord.administrator}
+                    onChange={handleEditRecord}
+                />
+            </TableCell>
+            <TableCell>
+                <TextField
+                    name="comment"
+                    id="standard-basic"
+                    label="Comment"
+                    variant="standard"
+                    defaultValue={editRecord.comment}
                     onChange={handleEditRecord}
                 />
             </TableCell>
