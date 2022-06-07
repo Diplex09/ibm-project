@@ -84,15 +84,7 @@ export const Icas = () => {
         total_billing: "",
     };
 
-    // Delete when backend is fixed
-    const fixed = false;
-
-    return fixed === false ? (
-        <div>
-            The frontend of this view is already finished, the backend part is
-            being fixed. This text is displayed so as not to generate errors.
-        </div>
-    ) : (
+    return (
         <>
             <Typography
                 component="h1"
