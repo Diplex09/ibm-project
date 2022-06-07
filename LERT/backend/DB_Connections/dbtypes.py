@@ -87,7 +87,7 @@ def postType():
             db.session.add(type)
             db.session.commit()
             
-            return "New Expense Type Uploaded Succesfully"
+            return jsonify(type.serialize())
 
 def deleteType(id):
     
