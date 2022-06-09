@@ -1,9 +1,13 @@
 from configparser import ConfigParser
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from sqlalchemy.ext.declarative import declarative_base
 import psycopg2
 import psycopg2.extras
 # singleton para acceso a recursos de DB
+
+# Base = declarative_base()
+from DB_Connections.baseInstance import Base
 
 class DBManager:
 
@@ -21,7 +25,7 @@ class DBManager:
         # cargar valores desde configuracion
         config = ConfigParser()
         config.read('config.ini')
-        db_config = config["DATABASE"]
+        db_config = config['DATABASE']
 
         driver = db_config['DRIVER']
         user = db_config['USER']

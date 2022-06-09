@@ -13,11 +13,15 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Button,
 } from "@mui/material";
-import { Search, FilterList } from "@mui/icons-material";
+import { Search, FilterList, ArrowForwardOutlined } from "@mui/icons-material";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { ReadRowEmployees } from "../EditFields/ReadRowEmployees";
+import { AddFormEmployee } from "../Fields/AddFormEmployee";
+import { deleteEmployee } from "../../actions/Manager/employee";
+import { updateEmployee } from "../../actions/Manager/employee";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,16 +37,70 @@ const useStyles = makeStyles((theme) => ({
 
 export const Employees = () => {
     const classes = useStyles();
-    // const [displayModal, setDisplayModal] = useState(false);
+    const [displayModal, setDisplayModal] = useState(false);
+    const [rowId, setRowId] = useState(null);
 
     const [record, setRecord] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        originCountry: "",
+        ICA: "",
+        currentCountry: "",
         type: "",
         band: "",
-        rate: "",
-        country: "",
+        squad: "",
         dateStart: "",
         dateFinish: "",
     });
+
+    const [editRecord, setEditRecord] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        originCountry: "",
+        ICA: "",
+        currentCountry: "",
+        type: "",
+        band: "",
+        squad: "",
+        dateStart: "",
+        dateFinish: "",
+    });
+
+    const handleEditRecord = (e, row) => {
+        e.preventDefault();
+
+        const fieldName = e.target.getAttribute("name");
+        console.log(fieldName);
+        const fieldValue = e.target.value;
+
+        const newRecord = { ...editRecord };
+        newRecord[fieldName] = fieldValue;
+
+        setEditRecord(newRecord);
+    };
+
+    const handleEditClick = (e, row) => {
+        e.preventDefault();
+        setRowId(row.employee_id);
+
+        const formValues = {
+            firstName: row.employeeName,
+            lastName: row.employeeLastName,
+            email: row.mail,
+            originCountry: row.countryOrigin,
+            ICA: row.ICA_ID,
+            currentCountry: row.countryResidence,
+            type: row.type_id,
+            band: row.band,
+            squad: row.squad,
+            dateStart: row.startDate,
+            dateFinish: row.endDate,
+        };
+
+        setEditRecord(formValues);
+    };
 
     const axios = require("axios").default;
     const [typeData, setTypeData] = useState([]);
@@ -68,6 +126,13 @@ export const Employees = () => {
         fetchData();
     };
 
+    const handleEditSave = (e, editRecord, row) => {
+        e.preventDefault();
+        console.log(editRecord);
+        updateEmployee(row.employee_id, editRecord);
+        fetchData();
+    };
+
     return (
         <>
             <Box
@@ -89,7 +154,39 @@ export const Employees = () => {
                 >
                     All Employees
                 </Typography>
-                <Paper
+
+                <Button
+                    variant="contained"
+                    sx={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        textTransform: "none",
+                        borderRadius: "0px",
+                        width: "12rem",
+                        height: "40px",
+                        fontSize: "15px",
+                        fontWeight: "400",
+                        bgcolor: "#0062ff",
+                        ":hover": {
+                            bgcolor: "#0255DA",
+                        },
+                    }}
+                    onClick={() => {
+                        setDisplayModal(true);
+                    }}
+                >
+                    Add Employee <ArrowForwardOutlined />
+                </Button>
+                {displayModal && (
+                    <AddFormEmployee
+                        closeModal={setDisplayModal}
+                        record={record}
+                        setRecord={setRecord}
+                    />
+                )}
+                {/* <Paper
                     component="form"
                     sx={{
                         display: "flex",
@@ -122,7 +219,7 @@ export const Employees = () => {
                     <IconButton sx={{ p: "10px" }} aria-label="directions">
                         <FilterList />
                     </IconButton>
-                </Paper>
+                </Paper> */}
             </Box>
             <TableContainer
                 component={Paper}
@@ -166,6 +263,10 @@ export const Employees = () => {
                                 <Fragment>
                                     <ReadRowEmployees
                                         row={row}
+                                        handleEditClick={handleEditClick}
+                                        editRecord={editRecord}
+                                        handleEditRecord={handleEditRecord}
+                                        handleEditSave={handleEditSave}
                                         deleteRecord={deleteRecord}
                                     />
                                 </Fragment>
@@ -178,15 +279,3 @@ export const Employees = () => {
     );
 };
 export default Employees;
-
-export function deleteEmployee(id) {
-    const axios = require("axios").default;
-    axios
-        .delete(`http://localhost:3000/deleteEmployees/${id}`)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}

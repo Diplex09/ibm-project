@@ -1,65 +1,43 @@
-import { useState, useEffect, Fragment } from "react";
-import {
-    Box,
-    InputAdornment,
-    Typography,
-    TextField,
-    Button,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-} from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, InputAdornment, TextField, Button, Paper } from "@mui/material";
+import {es} from 'date-fns/locale';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import {
     AttachMoney,
     EmailOutlined,
-    Send,
     PublicOutlined,
+    ArrowForwardOutlined,
 } from "@mui/icons-material";
 
-// import { set } from "date-fns";
-// import id from "date-fns/esm/locale/id/index.js";
+import { postNewType } from "../../actions/OP Manager/types";
 
-import { ReadRowTypes } from "../EditFields/ReadRowTypes";
-import { EditRowTypes } from "../EditFields/EditRowTypes";
+export const TypesFields = ({ fetchTypeData }) => {
+    const locale = 'es-MX';
+    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-export const TypesFields = () => {
-    const [value, setValue] = useState(null);
-    const [rowId, setRowId] = useState(null);
     const [dateStart, setDateStart] = useState(
-        new Date().toLocaleDateString("fr-FR")
+        new Date()
     );
     const [dateFinish, setDateFinish] = useState(
-        new Date().toLocaleDateString("fr-FR")
+        new Date()
     );
 
     //Variables para textfields
     const [record, setRecord] = useState({
-        type: "",
+        name: "",
         band: "",
         rate: "",
         country: "",
-        dateStart: "",
-        dateFinish: "",
-    });
-
-    const [editRecord, setEditRecord] = useState({
-        type: "",
-        band: "",
-        rate: "",
-        country: "",
-        dateStart: "",
-        dateFinish: "",
+        date_to_start: "",
+        date_to_finish: "",
     });
 
     const axios = require("axios").default;
     const [typeData, setTypeData] = useState([]);
-    const URL = "http://localhost:3000/getTypes";
+    const URL = "https://lert-api.mybluemix.net/getTypes";
 
     useEffect(() => {
         fetchData();
@@ -68,7 +46,7 @@ export const TypesFields = () => {
     const fetchData = () => {
         axios({
             method: "get",
-            url: "http://localhost:3000/getTypes",
+            url: "https://lert-api.mybluemix.net/getTypes",
             responseType: "json",
         }).then(function (response) {
             setTypeData(response.data);
@@ -77,316 +55,195 @@ export const TypesFields = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        postNewType(record);
-        fetchData();
-    };
-
-    const handleEditRecord = (e) => {
-        e.preventDefault();
-
-        const fieldName = e.target.getAttribute("name");
-        console.log(fieldName);
-        const fieldValue = e.target.value;
-
-        const newRecord = { ...editRecord };
-        newRecord[fieldName] = fieldValue;
-
-        setEditRecord(newRecord);
-    };
-
-    const handleEditClick = (e, row) => {
-        e.preventDefault();
-        setRowId(row.id);
-
-        const formValues = {
-            type: row.name,
-            band: row.band,
-            rate: row.rate,
-            country: row.country,
-            dateStart: row.date_to_start,
-            dateFinish: row.date_to_finish,
-        };
-
-        setEditRecord(formValues);
-    };
-
-    const deleteRecord = async (e, row) => {
-        deleteType(row.id);
-        fetchData();
-    };
-
-    const handleEditSave = (e, editRecord, row) => {
-        e.preventDefault();
-        {
-            console.log(editRecord);
-        }
-        updateType(row.id, editRecord);
-        fetchData();
+        postNewType(record)
+            .then(fetchData());
     };
 
     return (
-        <>
+        <Paper>
             <Box
                 sx={{
-                    marginTop: "1rem",
-                    marginBottom: "2rem",
+                    marginBottom: "1rem",
+                    padding: "20px",
                 }}
             >
-                <Typography
+                <Box
                     sx={{
-                        paddingTop: "1.5rem",
-                        marginBottom: "2.5rem",
-                        textAlign: "center",
-                        fontWeight: "1000",
-                        fontSize: "1.5rem",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: "1.5rem",
                     }}
                 >
-                    ADD NEW TYPE
-                </Typography>
-
-                <TextField
-                    sx={{
-                        marginRight: "10rem",
-                        marginLeft: "3rem",
-                        width: "18rem",
-                    }}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <EmailOutlined size="10rem" />
-                            </InputAdornment>
-                        ),
-                    }}
-                    id="standard-basic"
-                    label="TYPE"
-                    variant="standard"
-                    onChange={(e) => {
-                        setRecord({ ...record, type: e.target.value });
-                    }}
-                />
-
-                <TextField
-                    sx={{ width: "18rem", marginRight: "9.8rem" }}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <AttachMoney size="10rem" />
-                            </InputAdornment>
-                        ),
-                    }}
-                    id="standard-basic"
-                    label="BAND NUMBER"
-                    variant="standard"
-                    onChange={(e) => {
-                        setRecord({ ...record, band: e.target.value });
-                    }}
-                />
-
-                <TextField
-                    sx={{ width: "18rem", marginRight: "3rem" }}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <AttachMoney size="10rem" />
-                            </InputAdornment>
-                        ),
-                    }}
-                    id="standard-basic"
-                    label="RATE"
-                    variant="standard"
-                    onChange={(e) => {
-                        setRecord({ ...record, rate: e.target.value });
-                    }}
-                />
-
-                <TextField
-                    sx={{
-                        marginTop: "2rem",
-                        marginRight: "10rem",
-                        marginLeft: "3rem",
-                        width: "18rem",
-                    }}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <PublicOutlined size="10rem" />
-                            </InputAdornment>
-                        ),
-                    }}
-                    id="standard-basic"
-                    label="COUNTRY"
-                    variant="standard"
-                    onChange={(e) => {
-                        setRecord({ ...record, country: e.target.value });
-                    }}
-                />
-
-                <LocalizationProvider
-                    marginRight="50rem"
-                    dateAdapter={AdapterDateFns}
-                >
-                    <DatePicker
-                        label="Begin"
-                        renderInput={(params) => (
-                            <TextField
-                                sx={{
-                                    marginTop: "2rem",
-                                    marginRight: "9.8rem",
-                                    width: "18rem",
-                                    border: "0",
-                                }}
-                                {...params}
-                            />
-                        )}
-                        value={dateStart}
-                        onChange={(date) => {
-                            let d = new Date(date).toLocaleDateString("fr-FR");
-                            setDateStart(d);
-                            setRecord({ ...record, dateStart: d });
+                    <TextField
+                        sx={{ width: "18rem" }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <EmailOutlined size="10rem" />
+                                </InputAdornment>
+                            ),
+                        }}
+                        id="standard-basic"
+                        label="TYPE"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, name: e.target.value });
                         }}
                     />
-                </LocalizationProvider>
 
-                <LocalizationProvider
-                    marginRight="50rem"
-                    dateAdapter={AdapterDateFns}
-                >
-                    <DatePicker
-                        label="End"
-                        renderInput={(params) => (
-                            <TextField
-                                sx={{
-                                    marginTop: "2rem",
-
-                                    width: "18rem",
-                                    border: "0",
-                                }}
-                                {...params}
-                            />
-                        )}
-                        value={dateFinish}
-                        onChange={(date) => {
-                            let dF = new Date(date).toLocaleDateString("fr-FR");
-                            setDateFinish(dF);
-                            setRecord({ ...record, dateFinish: dF });
+                    <TextField
+                        sx={{ width: "18rem" }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AttachMoney size="10rem" />
+                                </InputAdornment>
+                            ),
+                        }}
+                        id="standard-basic"
+                        label="BAND NUMBER"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, band: e.target.value });
                         }}
                     />
-                </LocalizationProvider>
+
+                    <TextField
+                        sx={{ width: "18rem" }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AttachMoney size="10rem" />
+                                </InputAdornment>
+                            ),
+                        }}
+                        id="standard-basic"
+                        label="RATE"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, rate: e.target.value });
+                        }}
+                    />
+
+                    <TextField
+                        sx={{ width: "18rem" }}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <PublicOutlined size="10rem" />
+                                </InputAdornment>
+                            ),
+                        }}
+                        id="standard-basic"
+                        label="COUNTRY"
+                        variant="standard"
+                        onChange={(e) => {
+                            setRecord({ ...record, country: e.target.value });
+                        }}
+                    />
+                </Box>
 
                 <Box
                     sx={{
-                        textAlign: "center",
-                        marginTop: "2rem",
-                        paddingBottom: "1rem",
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        mb: "1rem",
+                        alignItems: "center",
                     }}
                 >
+                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}
+                    >
+                        <DatePicker
+                            label="Begin"
+                            inputFormat="dd/MM/yyyy"
+                            renderInput={(params) => (
+                                <TextField
+                                    sx={{
+                                        width: "18rem",
+                                        border: "0",
+                                    }}
+                                    {...params}
+                                />
+                            )}
+                            value={dateStart}
+                            onChange={(newDate) => {
+                                setDateStart(newDate);
+                                setRecord({ ...record, dateStart: newDate });
+                            }}
+                        />
+
+                        <DatePicker
+                            label="End"
+                            inputFormat="dd/MM/yyyy"
+                            renderInput={(params) => (
+                                <TextField
+                                    sx={{
+                                        width: "18rem",
+                                        border: "0",
+                                    }}
+                                    {...params}
+                                />
+                            )}
+                            value={dateFinish}
+                            onChange={(newDate) => {
+                                setDateFinish(newDate);
+                                setRecord({ ...record, dateFinish: newDate });
+                            }}
+                        />
+                    </LocalizationProvider>
+
                     <Button
+                        variant="contained"
                         sx={{
-                            width: "500",
-                            borderRadius: "0",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            textTransform: "none",
+                            borderRadius: "0px",
+                            width: "12rem",
+                            height: "40px",
+                            fontSize: "15px",
+                            fontWeight: "400",
                             bgcolor: "#0062ff",
                             ":hover": {
                                 bgcolor: "#0255DA",
                             },
                         }}
-                        variant="contained"
-                        endIcon={<Send />}
                         onClick={handleSubmit}
                     >
-                        Submit
+                        Submit <ArrowForwardOutlined />
                     </Button>
                 </Box>
             </Box>
-            <form>
-                <TableContainer
-                    sx={{
-                        "& .MuiTableCell-head": {
-                            color: "#0062ff",
-                            textTransform: "uppercase",
-                            fontWeight: "500",
-                        },
-                        padding: "5px 20px",
-                    }}
-                >
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Actions</TableCell>
-                                <TableCell>Type</TableCell>
-                                <TableCell align="left">Country</TableCell>
-                                <TableCell>Band</TableCell>
-                                <TableCell>Rate</TableCell>
-                                <TableCell>Date Start</TableCell>
-                                <TableCell>Date Finish</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {typeData.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    sx={{
-                                        "&:last-child td, &:last-child th": {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <Fragment>
-                                        {console.log(row)}
-                                        {rowId === row.id ? (
-                                            <EditRowTypes
-                                                row={row}
-                                                editRecord={editRecord}
-                                                handleEditRecord={
-                                                    handleEditRecord
-                                                }
-                                                handleEditSave={handleEditSave}
-                                            />
-                                        ) : (
-                                            <ReadRowTypes
-                                                row={row}
-                                                handleEditClick={
-                                                    handleEditClick
-                                                }
-                                                deleteRecord={deleteRecord}
-                                            />
-                                        )}
-                                    </Fragment>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </form>
-        </>
+        </Paper>
     );
 };
 
 export default TypesFields;
 
-export function postNewType(record) {
-    const axios = require("axios").default;
-    console.log(record);
-    axios
-        .post("http://localhost:3000/newPostType", {
-            name: record.type,
-            country: record.country,
-            band: record.band,
-            rate: record.rate,
-            date_to_start: record.dateStart,
-            date_to_finish: record.dateFinish,
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+// export function postNewType(record) {
+//     const axios = require("axios").default;
+//     console.log(record);
+//     axios
+//         .post("https://lert-api.mybluemix.net/newPostType", {
+//             name: record.type,
+//             country: record.country,
+//             band: record.band,
+//             rate: record.rate,
+//             date_to_start: record.dateStart,
+//             date_to_finish: record.dateFinish,
+//         })
+//         .then(function (response) {
+//             console.log(response);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         });
+// }
 
 export function deleteType(id) {
     const axios = require("axios").default;
     axios
-        .delete(`http://localhost:3000/deleteTypes/${id}`)
+        .delete(`https://lert-api.mybluemix.net/deleteTypes/${id}`)
         .then(function (response) {
             console.log(response);
         })
@@ -398,7 +255,7 @@ export function deleteType(id) {
 export function updateType(id, editRecord) {
     const axios = require("axios").default;
     axios
-        .put(`http://localhost:3000/updateTypes/${id}`, {
+        .put(`https://lert-api.mybluemix.net/updateTypes/${id}`, {
             name: editRecord.type,
             country: editRecord.country,
             band: editRecord.band,

@@ -7,9 +7,12 @@ Repository for the TC3004B subject of the ITC study plan at the Tecnológico de 
 
 Roles:
 
-- Manuel Ignacio Cota Casas: Team Lead
-- Aldo Alejandro Degollado Padilla: Back-end developer
-- Abraham Mendoza Pérez: Project Manager
-- Luis Alonso Martínez García: Back-end developer
-- Diego Velazquez Moreno: Tester
-- Sebastian Andrés Rojas Salazar: Full stack developer
+
+- Manuel Ignacio Cota Casas: `Squad Leader`
+- Aldo Alejandro Degollado Padilla: `Frontend` / `Backend`
+- Abraham Mendoza Pérez: `Project Manager` / `Frontend` / `Backend`
+- Luis Alonso Martínez García: `Frontend` / `Backend`
+- Diego Velazquez Moreno: `Tester` / `Backend`
+- Sebastian Andrés Rojas Salazar: `Scrum Master`/ `Frontend`/`Backend`
+- Gerardo Novelo De Anda:  `Frontend`
+

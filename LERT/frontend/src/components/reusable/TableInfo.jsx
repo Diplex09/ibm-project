@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import {
     Paper,
     Table,
@@ -9,24 +9,24 @@ import {
     TableRow,
 } from "@mui/material";
 
-import { ReadRowHours } from "../EditFields/ReadRowHours";
-import { EditRowHours } from "../EditFields/EditRowHours";
-
-import { deleteHour, updateHour } from "../../actions/OP Manager/extraHours";
-
 export const TableInfo = ({
     fetchData,
     typeData,
-    rowId,
-    setRowId,
-    editRecord,
-    setEditRecord,
+    columns,
+    initialRecord,
+    ReadComponent,
+    EditComponent,
+    deleteItem,
+    updateItem,
 }) => {
+    const [rowId, setRowId] = useState(null);
+
+    const [editRecord, setEditRecord] = useState(initialRecord);
+
     const handleEditRecord = (e) => {
         e.preventDefault();
 
         const fieldName = e.target.getAttribute("name");
-        console.log(fieldName);
         const fieldValue = e.target.value;
 
         const newRecord = { ...editRecord };
@@ -38,28 +38,21 @@ export const TableInfo = ({
     const handleEditClick = (e, row) => {
         e.preventDefault();
         setRowId(row.id);
+        console.log(row);
 
-        const formValues = {
-            type: row.name,
-            band: row.band,
-            rate: row.rate,
-            country: row.country,
-            dateStart: row.date_to_start,
-            dateFinish: row.date_to_finish,
-        };
-
-        setEditRecord(formValues);
+        setEditRecord({ ...row });
     };
 
-    const handleEditSave = (e, editRecord, row) => {
+    const handleEditSave = async (e, editRecord, row) => {
         e.preventDefault();
         console.log(editRecord);
-        updateHour(row.id, editRecord);
+        await updateItem(row.id, editRecord);
         fetchData();
+        setRowId(null); // To go back to Read state (ReadComponent)
     };
 
     const deleteRecord = async (e, row) => {
-        deleteHour(row.id);
+        await deleteItem(row.id);
         fetchData();
     };
 
@@ -79,13 +72,9 @@ export const TableInfo = ({
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Actions</TableCell>
-                                <TableCell>Type</TableCell>
-                                <TableCell align="left">Country</TableCell>
-                                <TableCell>Band</TableCell>
-                                <TableCell>Rate</TableCell>
-                                <TableCell>Date Start</TableCell>
-                                <TableCell>Date Finish</TableCell>
+                                {columns.map((c, index) => (
+                                    <TableCell key={index}>{c}</TableCell>
+                                ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -100,7 +89,7 @@ export const TableInfo = ({
                                 >
                                     <Fragment>
                                         {rowId === row.id ? (
-                                            <EditRowHours
+                                            <EditComponent
                                                 row={row}
                                                 editRecord={editRecord}
                                                 handleEditRecord={
@@ -109,7 +98,7 @@ export const TableInfo = ({
                                                 handleEditSave={handleEditSave}
                                             />
                                         ) : (
-                                            <ReadRowHours
+                                            <ReadComponent
                                                 row={row}
                                                 handleEditClick={
                                                     handleEditClick

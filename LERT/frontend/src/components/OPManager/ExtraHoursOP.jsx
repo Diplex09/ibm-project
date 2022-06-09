@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Typography } from "@mui/material";
 
 import { HourFields } from "../Fields/HourFields";
 import { TableInfo } from "../reusable/TableInfo";
-import { Typography } from "@mui/material";
+
+import { ReadRowHours } from "../EditFields/ReadRowHours";
+import { EditRowHours } from "../EditFields/EditRowHours";
+
+import { deleteHour, updateHour } from "../../actions/OP Manager/extraHours";
 
 export const ExtraHoursOP = () => {
     const [typeData, setTypeData] = useState([]);
-    const [rowId, setRowId] = useState(null);
-
-    const [editRecord, setEditRecord] = useState({
-        type: "",
-        band: "",
-        rate: "",
-        country: "",
-        dateStart: "",
-        dateFinish: "",
-    });
 
     useEffect(() => {
         fetchData();
@@ -32,6 +27,25 @@ export const ExtraHoursOP = () => {
         });
     };
 
+    const columns = [
+        "Actions",
+        "Type",
+        "Country",
+        "Band",
+        "Rate",
+        "Date Start",
+        "Date Finish",
+    ];
+
+    const initialRecord = {
+        name: "",
+        band: "",
+        rate: "",
+        country: "",
+        date_to_start: "",
+        date_to_finish: "",
+    };
+
     return (
         <>
             <Typography
@@ -39,18 +53,33 @@ export const ExtraHoursOP = () => {
                 variant="h4"
                 sx={{
                     fontWeight: "600",
+                    fontSize: 25,
+                    marginBottom: "1rem",
                 }}
             >
                 Insert Extra Hour
             </Typography>
             <HourFields fetchData={fetchData} />
+            <Typography
+                component="h1"
+                variant="h4"
+                sx={{
+                    fontWeight: "600",
+                    fontSize: 25,
+                    marginBottom: "1rem",
+                }}
+            >
+                All Extra Hours
+            </Typography>
             <TableInfo
                 fetchData={fetchData}
                 typeData={typeData}
-                rowId={rowId}
-                setRowId={setRowId}
-                editRecord={editRecord}
-                setEditRecord={setEditRecord}
+                columns={columns}
+                initialRecord={initialRecord}
+                ReadComponent={(props) => <ReadRowHours {...props} />}
+                EditComponent={(props) => <EditRowHours {...props} />}
+                updateItem={updateHour}
+                deleteItem={deleteHour}
             />
         </>
     );

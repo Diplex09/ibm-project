@@ -5,14 +5,22 @@ import { FormEmployee } from "../Fields/FormEmployee";
 
 import { useState, useEffect, fra } from "react";
 
-export const ReadRowEmployees = ({ row, deleteRecord }) => {
+export const ReadRowEmployees = ({
+    row,
+    handleEditClick,
+    editRecord,
+    handleEditRecord,
+    handleEditSave,
+    deleteRecord,
+}) => {
     const [displayModal, setDisplayModal] = useState(false);
-    console.log(row);
+    //console.log(row);
     return (
         <>
             <TableCell>
                 <IconButton
-                    onClick={() => {
+                    onClick={(e) => {
+                        handleEditClick(e, row);
                         setDisplayModal(true);
                     }}
                 >
@@ -36,7 +44,15 @@ export const ReadRowEmployees = ({ row, deleteRecord }) => {
             <TableCell>{row.startDate}</TableCell>
             <TableCell>{row.endDate}</TableCell>
 
-            {displayModal && <FormEmployee closeModal={setDisplayModal} />}
+            {displayModal && (
+                <FormEmployee
+                    closeModal={setDisplayModal}
+                    editRecord={editRecord}
+                    handleEditRecord={handleEditRecord}
+                    handleEditSave={handleEditSave}
+                    row={row}
+                />
+            )}
         </>
     );
 };

@@ -1,22 +1,21 @@
 from ast import Import
-import json
-import sys
-from unicodedata import numeric
 import psycopg2
 import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Session
 
 from flask import Flask, jsonify, request, session, send_from_directory
 
 from flask_cors import CORS
 
-from backend.DB_Connections.DBManager import DBManager
+from DB_Connections.DBManager import DBManager
+from DB_Connections.dbIca import ICA
+from DB_Connections.dbtypes import Types
 
-Base = declarative_base()
+
+#Base = declarative_base()
+from DB_Connections.baseInstance import Base
 db = DBManager.getInstance() 
 
 
@@ -35,8 +34,7 @@ class Employee(Base):
     start_date = Column(Date)
     end_date = Column(Date)
 
-    def __init__(self, idEmp,name,lastName, mail, countryOrigin,idIcaTable,countryResidence,id_typeTable,band,squad,start_date,end_date):
-        self.id_employee = idEmp
+    def __init__(self,name,lastName, mail, countryOrigin,idIcaTable,countryResidence,id_typeTable,band,squad,start_date,end_date):
         self.employee_name = name
         self.employee_lastname = lastName
         self.mail = mail
@@ -66,6 +64,11 @@ class Employee(Base):
             'endDate': self.end_date
         }
 
+
+
+
+
+
 def getEmployees():
     global db
     if db==None:
@@ -80,6 +83,35 @@ def getEmployees():
         # print(expense.expense_amount)
     resp = jsonify([e.serialize() for e in employeeList]) #Con esto puedes mandar lista de objetos en json
     return resp
+
+def newPostEmployee():
+    print("si")
+    _json = request.json
+    _firstName = _json['firstName']
+    _lastName = _json['lastName']
+    _email = _json['email']
+    _originCountry = _json['originCountry']
+    _ICA = _json['ICA']
+    _currentCountry = _json['currentCountry']
+    _type = _json['type']
+    _band = _json['band']
+    _squad = _json['squad']
+    _dateStart = _json['dateStart']
+    _dateFinish = _json['dateFinish']
+    
+
+
+    if request.method == 'POST':
+        if not _firstName or not _lastName or not _email or not _originCountry or not _ICA or not _currentCountry or not _type or not _squad or not _dateStart or not _dateFinish:
+            return "Values fields are incomplete"
+        else:
+            employee = Employee( _firstName, _lastName,  _email,  _originCountry, _ICA,  _currentCountry,  _type, _band, _squad,  _dateStart, _dateFinish)
+            
+            db.session.add(employee)
+            db.session.commit()
+            
+            return "New Employee Uploaded Succesfully"
+
 
 def deleteEmployee(id):
     global db
@@ -97,3 +129,41 @@ def deleteEmployee(id):
             db.session.commit()
 
             return "Employee delete done"
+
+
+def updateEmployee(id):
+
+    _json = request.json
+    newEmployee = Employee(
+        _json['firstName'], 
+        _json['lastName'], 
+        _json['email'],
+        _json['originCountry'],
+        _json['ICA'], 
+        _json['currentCountry'],
+        _json['type'],
+        _json['band'],
+        _json['squad'],
+        _json['dateStart'],
+        _json['dateFinish'] 
+
+        )
+    
+    editEmployee = db.session.query(Employee).filter(Employee.id_employee == id).one()
+    print(editEmployee.employee_name)
+
+    editEmployee.employee_name = newEmployee.employee_name 
+    editEmployee.employee_lastname = newEmployee.employee_lastname 
+    editEmployee.mail = newEmployee.mail 
+    editEmployee.country_origin = newEmployee.country_origin 
+    editEmployee.id_ica = newEmployee.id_ica 
+    editEmployee.country_residence = newEmployee.country_residence 
+    editEmployee.id_type = newEmployee.id_type  
+    editEmployee.band = newEmployee.band  
+    editEmployee.squad = newEmployee.squad  
+    editEmployee.start_date = newEmployee.start_date  
+    editEmployee.end_date = newEmployee.end_date 
+
+    db.session.commit()
+
+    return "DONE"
