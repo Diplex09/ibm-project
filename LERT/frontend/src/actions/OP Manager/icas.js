@@ -23,10 +23,10 @@ export const postNewIca = async (record) => {
             id_type: record.id_type,
             nec: record.nec,
             total_plus_taxes: record.total_plus_taxes,
-            start_Date: record.start_Date,
+            start_date: record.start_Date,
             end_date: record.end_date,
             cty_name_perf: record.cty_name_perf,
-            R_Cty_Perf: record.R_Cty_Perf,
+            r_cty_perf: record.R_Cty_Perf,
             total_billing: record.total_billing,
         })
         .then((response) => {
