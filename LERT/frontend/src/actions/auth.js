@@ -1,14 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 import {
     authLogin,
     authLogout,
     authCheckingFinish,
-} from '../reducers/authSlice';
+} from "../reducers/authSlice";
 
 export const startLogin = (email, password) => {
     return async (dispatch) => {
         await axios
-            .post('/login', {
+            .post("http://localhost:3000/login", {
                 email,
                 password,
             })
@@ -32,7 +32,7 @@ export const startLogin = (email, password) => {
 export const startLogout = () => {
     return async (dispatch) => {
         await axios
-            .get('/logout')
+            .get("http://localhost:3000/logout")
             .then((resp) => {
                 dispatch(authLogout());
             })
@@ -45,7 +45,7 @@ export const startLogout = () => {
 export const startChecking = () => {
     return async (dispatch) => {
         await axios
-            .get('/check')
+            .get("http://localhost:3000/check")
             .then((resp) => {
                 console.log(resp);
                 const { user } = resp.data;
@@ -59,7 +59,7 @@ export const startChecking = () => {
                 );
             })
             .catch((error) => {
-                if (window.location.pathname !== '/login') {
+                if (window.location.pathname !== "/login") {
                     dispatch(startLogout());
                 }
                 dispatch(checkingFinish());
