@@ -13,9 +13,9 @@ import { deleteIca, updateIca } from "../../actions/OP Manager/icas.js";
 export const Icas = () => {
     const [typeData, setTypeData] = useState([]);
 
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const fetchData = () => {
         axios({
