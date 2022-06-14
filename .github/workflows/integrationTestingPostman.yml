@@ -18,18 +18,20 @@ jobs:
         python-version: [3.x]
     services:
      # Label used to access the service container
-     postgres:
-       # Docker Hub image
-       image: postgres
-       # Provide the password for postgres
-       env:
-         POSTGRES_PASSWORD: postgres
-       # Set health checks to wait until postgres has started
-       options: >-
-         --health-cmd pg_isready
-         --health-interval 10s
-         --health-timeout 5s
-         --health-retries 5
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: lert        
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
    
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -53,9 +55,12 @@ jobs:
         if [ -f api/requirements.txt ]; then pip install -r api/requirements.txt; fi
     - name: Install Newman dependency
       run: npm install --prefix tests/postman/
-    - name: Connect to PostgreSQL
-       # Runs a script that creates a PostgreSQL table, populates
-       # the table with data, and then retrieves the data.
+    - name: Setup Database
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
     - name: Run the API and Postman's tests
       run: |
         cd api && flask run &
@@ -65,11 +70,6 @@ jobs:
       env:
         FLASK_ENV: development
         API_HOST: localhost
-        POSTGRES_HOST: Postgres
-        # Puerto PostgreSQL predeterminado
-        POSTGRES_PORT: 5432
         FLASK_APP: main.py
-        DB_NAME: lert
-        DB_HOST: localhost
-        DB_PASS: password
+        
         CI: true
