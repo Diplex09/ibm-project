@@ -11,18 +11,17 @@ import {
     Link,
 } from "@mui/material";
 import { ArrowForwardOutlined } from "@mui/icons-material";
-
-import { startLogin } from "../../actions/auth";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const Right = () => {
-    const dispatch = useDispatch();
+    const { startLogin } = useAuthStore();
 
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
 
     const validLogin = (e) => {
         e.preventDefault();
-        dispatch(startLogin(user, password));
+        startLogin(user, password);
     };
 
     return (

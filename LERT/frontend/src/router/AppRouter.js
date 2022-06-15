@@ -1,19 +1,19 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { useEffect } from "react";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
-import { PublicRoute } from './PublicRoute';
-import { PrivateRoute } from './PrivateRoute';
-import Login from '../components/Login';
-import MainView from '../MainView';
-import { useEffect } from 'react';
-import { startChecking } from '../actions/auth';
+import { PublicRoute } from "./PublicRoute";
+import { PrivateRoute } from "./PrivateRoute";
+import Login from "../components/Login";
+import MainView from "../MainView";
+import { useAuthStore } from "../hooks/useAuthStore";
 
 export const AppRouter = () => {
-    const dispatch = useDispatch();
-    const { checking, uid } = useSelector((state) => state.auth);
+    const { checking, uid, startChecking } = useAuthStore();
+    // const dispatch = useDispatch();
+    // const { checking, uid } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        dispatch(startChecking());
+        startChecking();
     }, []);
 
     if (checking) {
