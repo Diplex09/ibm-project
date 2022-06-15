@@ -28,5 +28,6 @@ jobs:
       # Go to frontend path, Install dependencies, and run tests
       - name: Front test
         run: |
-          cd frontend
+          cd LERT/frontend
           npm install
+          npm run test
