@@ -1,11 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { act, renderHook } from "@testing-library/react";
 import { Provider } from "react-redux";
+import axios from "axios";
 
-import { initialState, notAuthenticatedState } from "../fixtures/authStates";
+import {
+    authenticatedState,
+    initialState,
+    notAuthenticatedState,
+} from "../fixtures/authStates";
 import { useAuthStore } from "../../hooks/useAuthStore";
 import { authSlice } from "../../reducers/authSlice";
-import { testUserCredentials } from "../fixtures/testUser";
+import { testUserCredentials, testUserInfo } from "../fixtures/testUser";
 
 const getMockStore = (initialState) => {
     return configureStore({
@@ -61,10 +66,10 @@ describe("Test in auth actions", () => {
 
         expect({ checking, uid, name, rol, rolName }).toEqual({
             checking: false,
-            uid: 4,
-            name: "Test OPManager",
-            rol: 2,
-            rolName: "Operation Manager",
+            uid: testUserInfo.uid,
+            name: testUserInfo.name,
+            rol: testUserInfo.rol,
+            rolName: testUserInfo.rolName,
         });
     });
 
@@ -88,6 +93,48 @@ describe("Test in auth actions", () => {
         expect({ checking, uid }).toEqual({
             checking: false,
             uid: undefined,
+        });
+    });
+
+    test("startChecking should fail if there is no token", async () => {
+        const mockStore = getMockStore({ ...initialState });
+
+        const { result } = renderHook(() => useAuthStore(), {
+            wrapper: ({ children }) => (
+                <Provider store={mockStore}>{children}</Provider>
+            ),
+        });
+
+        await act(async () => {
+            await result.current.startChecking();
+        });
+
+        const { checking, uid } = result.current;
+
+        expect({ checking, uid }).toEqual({
+            checking: false,
+            uid: undefined,
+        });
+    });
+
+    test("startChecking should authenticate user if there is valid token", async () => {
+        const mockStore = getMockStore({ ...authenticatedState });
+
+        const { result } = renderHook(() => useAuthStore(), {
+            wrapper: ({ children }) => (
+                <Provider store={mockStore}>{children}</Provider>
+            ),
+        });
+
+        await act(async () => {
+            await result.current.startChecking();
+        });
+
+        const { checking, uid } = result.current;
+
+        expect({ checking, uid }).toEqual({
+            checking: false,
+            uid: testUserInfo.uid,
         });
     });
 });

@@ -65,9 +65,9 @@ export const useAuthStore = () => {
             })
             .catch((error) => {
                 if (window.location.pathname !== "/login") {
-                    dispatch(startLogout());
+                    startLogout();
                 }
-                dispatch(checkingFinish());
+                checkingFinish();
             });
     };
 

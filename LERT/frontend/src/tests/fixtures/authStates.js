@@ -5,17 +5,13 @@ export const initialState = {
 };
 
 export const authenticatedState = {
-    initialState: {
-        checking: false,
-        uid: 1,
-        name: "Remy Sharp",
-        rol: 1,
-        rolName: "Manager",
-    },
+    checking: false,
+    uid: 4,
+    name: "Test OPManager",
+    rol: 2,
+    rolName: "Operation Manager",
 };
 
 export const notAuthenticatedState = {
-    initialState: {
-        checking: false,
-    },
+    checking: false,
 };
