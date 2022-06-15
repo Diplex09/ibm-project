@@ -30,7 +30,10 @@ export const useAuthStore = () => {
                 );
             })
             .catch((error) => {
-                console.log(error);
+                if (error.response) {
+                    // console.log(error.response.data);
+                    checkingFinish();
+                }
             });
     };
 

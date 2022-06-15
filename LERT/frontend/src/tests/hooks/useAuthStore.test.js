@@ -67,4 +67,27 @@ describe("Test in auth actions", () => {
             rolName: "Operation Manager",
         });
     });
+
+    test("startLogin should fail authentication", async () => {
+        const mockStore = getMockStore({ ...notAuthenticatedState });
+
+        const { result } = renderHook(() => useAuthStore(), {
+            wrapper: ({ children }) => (
+                <Provider store={mockStore}>{children}</Provider>
+            ),
+        });
+
+        await act(async () => {
+            await result.current.startLogin(
+                testUserCredentials.email,
+                "wrongpassword"
+            );
+        });
+
+        const { checking, uid } = result.current;
+        expect({ checking, uid }).toEqual({
+            checking: false,
+            uid: undefined,
+        });
+    });
 });
