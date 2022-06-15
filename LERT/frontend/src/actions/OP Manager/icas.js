@@ -71,10 +71,10 @@ export const updateIca = async (id, editRecord) => {
             id_type: editRecord.id_type,
             nec: editRecord.nec,
             total_plus_taxes: editRecord.total_plus_taxes,
-            start_Date: editRecord.start_Date,
+            start_Date: editRecord.start_date,
             end_date: editRecord.end_date,
             cty_name_perf: editRecord.cty_name_perf,
-            R_Cty_Perf: editRecord.R_Cty_Perf,
+            R_Cty_Perf: editRecord.r_cty_perf,
             total_billing: editRecord.total_billing,
         })
         .then((response) => {
