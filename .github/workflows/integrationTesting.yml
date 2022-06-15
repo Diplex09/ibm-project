@@ -13,5 +13,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: matt-ball/newman-action@master
         with:
-          collection: LERT/backend/postman_collection.json
-          environment: LERT/backend/postman_environment.json
+          collection: LERT/backend/LERT Integration Tests.postman_collection.json
+          environment: LERT/backend/LERT.postman_environment.json
