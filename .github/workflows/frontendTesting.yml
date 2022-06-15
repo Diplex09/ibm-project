@@ -6,9 +6,9 @@ name: CI - Frontend Testing
 on:
   # Triggers the workflow on push or pull request events but only for the "testing" branch
   push:
-    branches: [ "frontend-testing" ]
+    branches: [ "front-testing" ]
   pull_request:
-    branches: [ "frontend-testing" ]
+    branches: [ "front-testing" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -24,7 +24,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Frontend test
-        run: npm run test
+      
+      # Go to frontend path, Install dependencies, and run tests
+      - name: Front test
+        run: |
+          cd LERT/frontend
+          npm install
+          npm run test
