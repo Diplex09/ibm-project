@@ -8,6 +8,7 @@ import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
+from sqlalchemy import exc
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import Session
 
@@ -77,43 +78,70 @@ def postType():
     _date_start = _json['date_to_start']
     _date_finish = _json['date_to_finish']
 
+    try:
+        if request.method == 'POST':
+            if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:
+                return "Values fields are incomplete"
+            else:
+                type = Types(_name, _band,  _country,  _rate,  _date_start,  _date_finish)
+                
+                db.session.add(type)
+                db.session.commit()
+                
+                return "Type done"
+    except exc.SQLAlchemyError as e:
 
-    if request.method == 'POST':
-        if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:
-            return "Values fields are incomplete"
-        else:
-            type = Types(_name, _band,  _country,  _rate,  _date_start,  _date_finish)
-            
-            db.session.add(type)
-            db.session.commit()
-            
-            return "Type done"
+            db.session.rollback()
+            resp = jsonify({'message' : 'Error in post types', 'error': str(e.orig)})
+            resp.status_code = 500
+            return resp
+
+    finally:
+        db.session.close()
 
 def deleteType(id):
-    
-    if request.method == 'DELETE':
-        autoIncrement = "alter sequence type_id_type_seq restart "+ str(id)
-        db.session.execute(autoIncrement)
-        delete = "delete from type where id_type="+ str(id)
-        db.session.execute(delete)
-        db.session.commit()
+    try:
+        if request.method == 'DELETE':
+            autoIncrement = "alter sequence type_id_type_seq restart "+ str(id)
+            db.session.execute(autoIncrement)
+            delete = "delete from type where id_type="+ str(id)
+            db.session.execute(delete)
+            db.session.commit()
 
-        return "Type delete done"
+            return "Type delete done"
+    except exc.SQLAlchemyError as e:
+
+            db.session.rollback()
+            resp = jsonify({'message' : 'Error in delete Type', 'error': str(e.orig)})
+            resp.status_code = 500
+            return resp
+
+    finally:
+        db.session.close()
 
 def updateType(id):
 
     _json = request.json
     typeNew = Types(_json["name"],_json['band'], _json['country'],_json['rate'], _json['date_to_start'], _json['date_to_finish'] )
-    
-    editType = db.session.query(Types).filter(Types.id_type == id).one()
-    print(editType.type_name)
-    editType.type_name = typeNew.type_name
-    editType.band = typeNew.band
-    editType.country = typeNew.country
-    editType.rate = typeNew.rate
-    editType.date_to_start = typeNew.date_to_start
-    editType.date_to_finish = typeNew.date_to_finish
+    try:
+        editType = db.session.query(Types).filter(Types.id_type == id).one()
+        print(editType.type_name)
+        editType.type_name = typeNew.type_name
+        editType.band = typeNew.band
+        editType.country = typeNew.country
+        editType.rate = typeNew.rate
+        editType.date_to_start = typeNew.date_to_start
+        editType.date_to_finish = typeNew.date_to_finish
 
-    db.session.commit()
+        db.session.commit()
 
-    return "DONE"
+        return "DONE"
+    except exc.SQLAlchemyError as e:
+
+            db.session.rollback()
+            resp = jsonify({'message' : 'Error in update types', 'error': str(e.orig)})
+            resp.status_code = 500
+            return resp
+
+    finally:
+        db.session.close()

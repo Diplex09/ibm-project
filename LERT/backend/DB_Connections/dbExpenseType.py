@@ -7,6 +7,7 @@ import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
+from sqlalchemy import exc
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import Session
 
@@ -58,37 +59,58 @@ def postExpenseType():
     global db
     _json = request.json
     _name = _json['name']
-    
-    if request.method == 'POST':
-        if not _name:
-            return "Necessary value name not received"
-        else:
-            queryCheck = select(ExpenseType).where(ExpenseType.type_name == _name)
-            expType=db.session.scalar(queryCheck)
-            if(expType != None): #check if record already exists
-                return "Expense type record already exists"
+    try:
+        if request.method == 'POST':
+            if not _name:
+                return "Necessary value name not received"
             else:
-                expense = ExpenseType(_name)
-                
-                db.session.add(expense)
-                db.session.commit()
-                
-                return "New Expense Type Uploaded Succesfully"
+                queryCheck = select(ExpenseType).where(ExpenseType.type_name == _name)
+                expType=db.session.scalar(queryCheck)
+                if(expType != None): #check if record already exists
+                    return "Expense type record already exists"
+                else:
+                    expense = ExpenseType(_name)
+                    
+                    db.session.add(expense)
+                    db.session.commit()
+                    
+                    return "New Expense Type Uploaded Succesfully"
+    except exc.SQLAlchemyError as e:
+
+            db.session.rollback()
+            resp = jsonify({'message' : 'Error in postExpenseType', 'error': str(e.orig)})
+            resp.status_code = 500
+            return resp
+
+    finally:
+        db.session.close()
+
 
 def deleteExpenseType(name):
     global db
-    if request.method == 'DELETE':
-        # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
-        # db.session.execute(autoIncrement)
-        queryCheck = select(ExpenseType).where(ExpenseType.type_name == name)
-        expType=db.session.scalar(queryCheck)
-        if(expType == None): #check if record does exist
-            return "Expense type record not found"
-        else:
-            stmt = delete(ExpenseType).where(ExpenseType.type_name == name)
-            print(stmt)
-            db.session.execute(stmt)
-            db.session.commit()
+    try:
+        if request.method == 'DELETE':
+            # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
+            # db.session.execute(autoIncrement)
+            queryCheck = select(ExpenseType).where(ExpenseType.type_name == name)
+            expType=db.session.scalar(queryCheck)
+            if(expType == None): #check if record does exist
+                return "Expense type record not found"
+            else:
+                stmt = delete(ExpenseType).where(ExpenseType.type_name == name)
+                print(stmt)
+                db.session.execute(stmt)
+                db.session.commit()
 
-            return "Expense type delete done"
+                return "Expense type delete done"
+    except exc.SQLAlchemyError as e:
+
+        db.session.rollback()
+        resp = jsonify({'message' : 'Error in deleteExpenseType', 'error': str(e.orig)})
+        resp.status_code = 500
+        return resp
+
+    finally:
+        db.session.close()
+
 
