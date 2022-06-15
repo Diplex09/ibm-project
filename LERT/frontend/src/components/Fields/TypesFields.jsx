@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Box, InputAdornment, TextField, Button, Paper } from "@mui/material";
-import {es} from 'date-fns/locale';
+import { es } from "date-fns/locale";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -15,15 +15,16 @@ import {
 import { postNewType } from "../../actions/OP Manager/types";
 
 export const TypesFields = ({ fetchTypeData }) => {
-    const locale = 'es-MX';
-    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const locale = "es-MX";
+    let options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
 
-    const [dateStart, setDateStart] = useState(
-        new Date()
-    );
-    const [dateFinish, setDateFinish] = useState(
-        new Date()
-    );
+    const [dateStart, setDateStart] = useState(new Date());
+    const [dateFinish, setDateFinish] = useState(new Date());
 
     //Variables para textfields
     const [record, setRecord] = useState({
@@ -55,8 +56,7 @@ export const TypesFields = ({ fetchTypeData }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        postNewType(record)
-            .then(fetchData());
+        postNewType(record).then(fetchData());
     };
 
     return (
@@ -151,7 +151,9 @@ export const TypesFields = ({ fetchTypeData }) => {
                         alignItems: "center",
                     }}
                 >
-                    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}
+                    <LocalizationProvider
+                        dateAdapter={AdapterDateFns}
+                        adapterLocale={es}
                     >
                         <DatePicker
                             label="Begin"
@@ -168,7 +170,10 @@ export const TypesFields = ({ fetchTypeData }) => {
                             value={dateStart}
                             onChange={(newDate) => {
                                 setDateStart(newDate);
-                                setRecord({ ...record, dateStart: newDate });
+                                setRecord({
+                                    ...record,
+                                    date_to_start: newDate,
+                                });
                             }}
                         />
 
@@ -187,7 +192,10 @@ export const TypesFields = ({ fetchTypeData }) => {
                             value={dateFinish}
                             onChange={(newDate) => {
                                 setDateFinish(newDate);
-                                setRecord({ ...record, dateFinish: newDate });
+                                setRecord({
+                                    ...record,
+                                    date_to_finish: newDate,
+                                });
                             }}
                         />
                     </LocalizationProvider>
