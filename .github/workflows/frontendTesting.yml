@@ -29,5 +29,4 @@ jobs:
       - name: Front test
         run: |
           cd LERT/frontend
-          npm install
           npm run test
