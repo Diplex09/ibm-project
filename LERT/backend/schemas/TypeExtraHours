@@ -1,0 +1,10 @@
+CREATE TABLE Type_Extra_Hours
+(
+	Id_Type SERIAL PRIMARY KEY,
+	Type_Name Varchar (200),
+	Band Integer,
+	Country Varchar (120),
+	Rate Integer,
+	Date_To_Start DATE,
+	Date_To_Finish DATE
+);

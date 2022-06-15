@@ -87,7 +87,7 @@ def postType():
             db.session.add(type)
             db.session.commit()
             
-            return "Type done"
+            return jsonify(type.serialize())
 
 def deleteType(id):
     
