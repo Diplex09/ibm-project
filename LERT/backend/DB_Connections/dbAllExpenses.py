@@ -5,6 +5,7 @@ import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
+from sqlalchemy import exc
 
 from flask import Flask, jsonify, request, session, send_from_directory
 
@@ -61,9 +62,7 @@ class AllExpenses(Base):
         }
 
 def getAllExpenses():
-    global db
-    if db==None:
-        db=DBManager.getInstance
+    
     expensesList = []
 
     stmt = select(AllExpenses)
@@ -84,36 +83,55 @@ def newAllPostExpense():
     _ica_manager = "test@ibm.com"
     _administrator = "test@ibm.com"
     
-    
+    try:
 
+        if request.method == 'POST':
+            if not _mail or not _date_limit or not _cost or not _comment or not _ica or not _type or not _ica_manager or not _administrator:
+                return "Values fields are incomplete"
+            else:
+                expense = AllExpenses(  _mail ,_date_limit, _cost , _comment ,_ica , _type ,_ica_manager, _administrator)
+                
+                db.session.add(expense)
+                db.session.commit()
+                
+                return "New All Expense Uploaded Succesfully"
 
-    if request.method == 'POST':
-        if not _mail or not _date_limit or not _cost or not _comment or not _ica or not _type or not _ica_manager or not _administrator:
-            return "Values fields are incomplete"
-        else:
-            expense = AllExpenses(  _mail ,_date_limit, _cost , _comment ,_ica , _type ,_ica_manager, _administrator)
-            
-            db.session.add(expense)
-            db.session.commit()
-            
-            return "New All Expense Uploaded Succesfully"
+    except exc.SQLAlchemyError as e:
+
+                db.session.rollback()
+                resp = jsonify({'message' : 'Error in post all expenses', 'error': str(e.orig)})
+                resp.status_code = 500
+                return resp
+
+    finally:
+        db.session.close()
 
 def deleteAllExpense(id):
-    global db
-    if request.method == 'DELETE':
-        # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
-        # db.session.execute(autoIncrement)
-        queryCheck = select(AllExpenses).where(AllExpenses.id == id)
-        expType=db.session.scalar(queryCheck)
-        if(expType == None): #check if record does exist
-            return "Expense record not found"
-        else:
-            stmt = delete(AllExpenses).where(AllExpenses.id == id)
-            print(stmt)
-            db.session.execute(stmt)
-            db.session.commit()
+    try:
+        if request.method == 'DELETE':
+            # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
+            # db.session.execute(autoIncrement)
+            queryCheck = select(AllExpenses).where(AllExpenses.id == id)
+            expType=db.session.scalar(queryCheck)
+            if(expType == None): #check if record does exist
+                return "Expense record not found"
+            else:
+                stmt = delete(AllExpenses).where(AllExpenses.id == id)
+                print(stmt)
+                db.session.execute(stmt)
+                db.session.commit()
 
-            return "Expense delete done"
+                return "Expense delete done"
+
+    except exc.SQLAlchemyError as e:
+
+                db.session.rollback()
+                resp = jsonify({'message' : 'Error in delete all expenses', 'error': str(e.orig)})
+                resp.status_code = 500
+                return resp
+
+    finally:
+        db.session.close()
 
 
 def updateExpense(id):
@@ -121,16 +139,27 @@ def updateExpense(id):
     _json = request.json
     newAllExpense = AllExpenses(_json['mail'],_json['date'], _json['cost'],_json['comment'], _json['ica'], _json['type'], _json['ica_manager'], _json['administrator'] )
     
-    editExpense = db.session.query(AllExpenses).filter(AllExpenses.id == id).one()
-    editExpense.employee_mail = newAllExpense.employee_mail
-    editExpense.date_limit = newAllExpense.date_limit
-    editExpense.cost = newAllExpense.cost
-    editExpense.comment = newAllExpense.comment
-    editExpense.id_ica = newAllExpense.id_ica
-    editExpense.id_type = newAllExpense.id_type
-    editExpense.ica_manager = newAllExpense.ica_manager
-    editExpense.administrator = newAllExpense.administrator
+    try:
+        editExpense = db.session.query(AllExpenses).filter(AllExpenses.id == id).one()
+        editExpense.employee_mail = newAllExpense.employee_mail
+        editExpense.date_limit = newAllExpense.date_limit
+        editExpense.cost = newAllExpense.cost
+        editExpense.comment = newAllExpense.comment
+        editExpense.id_ica = newAllExpense.id_ica
+        editExpense.id_type = newAllExpense.id_type
+        editExpense.ica_manager = newAllExpense.ica_manager
+        editExpense.administrator = newAllExpense.administrator
 
-    db.session.commit()
+        db.session.commit()
 
-    return "Expense updated done"
+        return "Expense updated done"
+
+    except exc.SQLAlchemyError as e:
+
+                db.session.rollback()
+                resp = jsonify({'message' : 'Error in edit all expenses', 'error': str(e.orig)})
+                resp.status_code = 500
+                return resp
+
+    finally:
+        db.session.close()

@@ -4,6 +4,7 @@ import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
+from sqlalchemy import exc
 
 from flask import Flask, jsonify, request, session, send_from_directory
 
@@ -99,36 +100,55 @@ def newPostEmployee():
     _dateStart = _json['dateStart']
     _dateFinish = _json['dateFinish']
     
+    try:
 
+        if request.method == 'POST':
+            if not _firstName or not _lastName or not _email or not _originCountry or not _ICA or not _currentCountry or not _type or not _squad or not _dateStart or not _dateFinish:
+                return "Values fields are incomplete"
+            else:
+                employee = Employee( _firstName, _lastName,  _email,  _originCountry, _ICA,  _currentCountry,  _type, _band, _squad,  _dateStart, _dateFinish)
+                
+                db.session.add(employee)
+                db.session.commit()
+                
+                return "New Employee Uploaded Succesfully"
 
-    if request.method == 'POST':
-        if not _firstName or not _lastName or not _email or not _originCountry or not _ICA or not _currentCountry or not _type or not _squad or not _dateStart or not _dateFinish:
-            return "Values fields are incomplete"
-        else:
-            employee = Employee( _firstName, _lastName,  _email,  _originCountry, _ICA,  _currentCountry,  _type, _band, _squad,  _dateStart, _dateFinish)
-            
-            db.session.add(employee)
-            db.session.commit()
-            
-            return "New Employee Uploaded Succesfully"
+    except exc.SQLAlchemyError as e:
+
+                db.session.rollback()
+                resp = jsonify({'message' : 'Error in post employees', 'error': str(e.orig)})
+                resp.status_code = 500
+                return resp
+
+    finally:
+        db.session.close()
 
 
 def deleteEmployee(id):
-    global db
-    if request.method == 'DELETE':
-        # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
-        # db.session.execute(autoIncrement)
-        queryCheck = select(Employee).where(Employee.id_employee == id)
-        expType=db.session.scalar(queryCheck)
-        if(expType == None): #check if record does exist
-            return "Employee record not found"
-        else:
-            stmt = delete(Employee).where(Employee.id_employee == id)
-            print(stmt)
-            db.session.execute(stmt)
-            db.session.commit()
+    try:
+        if request.method == 'DELETE':
+            # autoIncrement = "alter sequence id_type_of_expense_type_seq restart "+ str(id)
+            # db.session.execute(autoIncrement)
+            queryCheck = select(Employee).where(Employee.id_employee == id)
+            expType=db.session.scalar(queryCheck)
+            if(expType == None): #check if record does exist
+                return "Employee record not found"
+            else:
+                stmt = delete(Employee).where(Employee.id_employee == id)
+                print(stmt)
+                db.session.execute(stmt)
+                db.session.commit()
 
-            return "Employee delete done"
+                return "Employee delete done"
+    except exc.SQLAlchemyError as e:
+
+                db.session.rollback()
+                resp = jsonify({'message' : 'Error in delete employees', 'error': str(e.orig)})
+                resp.status_code = 500
+                return resp
+
+    finally:
+        db.session.close()
 
 
 def updateEmployee(id):
@@ -148,22 +168,32 @@ def updateEmployee(id):
         _json['dateFinish'] 
 
         )
-    
-    editEmployee = db.session.query(Employee).filter(Employee.id_employee == id).one()
-    print(editEmployee.employee_name)
+    try:
+        editEmployee = db.session.query(Employee).filter(Employee.id_employee == id).one()
+        print(editEmployee.employee_name)
 
-    editEmployee.employee_name = newEmployee.employee_name 
-    editEmployee.employee_lastname = newEmployee.employee_lastname 
-    editEmployee.mail = newEmployee.mail 
-    editEmployee.country_origin = newEmployee.country_origin 
-    editEmployee.id_ica = newEmployee.id_ica 
-    editEmployee.country_residence = newEmployee.country_residence 
-    editEmployee.id_type = newEmployee.id_type  
-    editEmployee.band = newEmployee.band  
-    editEmployee.squad = newEmployee.squad  
-    editEmployee.start_date = newEmployee.start_date  
-    editEmployee.end_date = newEmployee.end_date 
+        editEmployee.employee_name = newEmployee.employee_name 
+        editEmployee.employee_lastname = newEmployee.employee_lastname 
+        editEmployee.mail = newEmployee.mail 
+        editEmployee.country_origin = newEmployee.country_origin 
+        editEmployee.id_ica = newEmployee.id_ica 
+        editEmployee.country_residence = newEmployee.country_residence 
+        editEmployee.id_type = newEmployee.id_type  
+        editEmployee.band = newEmployee.band  
+        editEmployee.squad = newEmployee.squad  
+        editEmployee.start_date = newEmployee.start_date  
+        editEmployee.end_date = newEmployee.end_date 
 
-    db.session.commit()
+        db.session.commit()
 
-    return "DONE"
+        return "DONE"
+
+    except exc.SQLAlchemyError as e:
+
+            db.session.rollback()
+            resp = jsonify({'message' : 'Error in update employees', 'error': str(e.orig)})
+            resp.status_code = 500
+            return resp
+
+    finally:
+        db.session.close()

@@ -8,6 +8,7 @@ import psycopg2.extras
 
 import sqlalchemy
 from sqlalchemy import *
+from sqlalchemy import exc
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import Session
 
@@ -77,43 +78,70 @@ def postHours():
     _date_start = _json['date_to_start']
     _date_finish = _json['date_to_finish']
 
+    try:
+        if request.method == 'POST':
+            if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:
+                return "Values fields are incomplete"
+            else:
+                type = ExtraHourType(_name, _band,  _country,  _rate,  _date_start,  _date_finish)
+                
+                db.session.add(type)
+                db.session.commit()
+                
+                return "New Hour Type Uploaded Succesfully"
+    except exc.SQLAlchemyError as e:
 
-    if request.method == 'POST':
-        if not _name or not _band or not _country or not _rate or not _date_finish or not _date_finish:
-            return "Values fields are incomplete"
-        else:
-            type = ExtraHourType(_name, _band,  _country,  _rate,  _date_start,  _date_finish)
-            
-            db.session.add(type)
-            db.session.commit()
-            
-            return "New Hour Type Uploaded Succesfully"
+            db.session.rollback()
+            resp = jsonify({'message' : 'Error in post hours', 'error': str(e.orig)})
+            resp.status_code = 500
+            return resp
+
+    finally:
+        db.session.close()
 
 def deleteHour(id):
-    db = DBManager.getInstance() 
+    try:    
+        if request.method == 'DELETE':
+            delete = "delete from type_extra_hours where id_type="+ str(id)
+            db.session.execute(delete)
+            db.session.commit()
 
-    
-    if request.method == 'DELETE':
-        delete = "delete from type_extra_hours where id_type="+ str(id)
-        db.session.execute(delete)
-        db.session.commit()
+            return "Hour delete done"
+    except exc.SQLAlchemyError as e:
 
-        return "Hour delete done"
+                db.session.rollback()
+                resp = jsonify({'message' : 'Error in delete hours', 'error': str(e.orig)})
+                resp.status_code = 500
+                return resp
+
+    finally:
+        db.session.close()
 
 def updateHour(id):
 
     _json = request.json
     newHour = ExtraHourType(_json["name"],_json['band'], _json['country'],_json['rate'], _json['date_to_start'], _json['date_to_finish'] )
     
-    editType = db.session.query(ExtraHourType).filter(ExtraHourType.id_type == id).one()
-    print(editType.type_name)
-    editType.type_name = newHour.type_name
-    editType.band = newHour.band
-    editType.country = newHour.country
-    editType.rate = newHour.rate
-    editType.date_to_start = newHour.date_to_start
-    editType.date_to_finish = newHour.date_to_finish
+    try:
+        editType = db.session.query(ExtraHourType).filter(ExtraHourType.id_type == id).one()
+        print(editType.type_name)
+        editType.type_name = newHour.type_name
+        editType.band = newHour.band
+        editType.country = newHour.country
+        editType.rate = newHour.rate
+        editType.date_to_start = newHour.date_to_start
+        editType.date_to_finish = newHour.date_to_finish
 
-    db.session.commit()
+        db.session.commit()
 
-    return "DONE"
+        return "DONE"
+
+    except exc.SQLAlchemyError as e:
+
+                db.session.rollback()
+                resp = jsonify({'message' : 'Error in update hours', 'error': str(e.orig)})
+                resp.status_code = 500
+                return resp
+
+    finally:
+        db.session.close()
