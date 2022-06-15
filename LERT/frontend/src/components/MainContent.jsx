@@ -4,9 +4,11 @@ import { Box } from "@mui/material";
 import { AdminRouter } from "../router/Roles Routers/AdminRouter";
 import { ManagerRouter } from "../router/Roles Routers/ManagerRouter";
 import { OPManagerRouter } from "../router/Roles Routers/OPManagerRouter";
+import { useAuthStore } from "../hooks/useAuthStore";
 
 export const MainContent = () => {
-    const { rol } = useSelector((state) => state.auth);
+    const { rol } = useAuthStore();
+    // const { rol } = useSelector((state) => state.auth);
 
     return (
         <Box

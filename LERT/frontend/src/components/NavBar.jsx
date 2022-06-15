@@ -31,8 +31,9 @@ import {
     PeopleAltOutlined,
     EditOutlined,
 } from "@mui/icons-material";
+import { useAuthStore } from "../hooks/useAuthStore";
 
-import { startLogout } from "../actions/auth";
+// import { startLogout } from "../actions/auth";
 
 const drawerWidth = 300;
 
@@ -84,8 +85,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export const NavBar = () => {
-    const dispatch = useDispatch();
-    const { name, rol, rolName } = useSelector((state) => state.auth);
+    const { name, rol, rolName, startLogout } = useAuthStore();
+    // const dispatch = useDispatch();
+    // const { name, rol, rolName } = useSelector((state) => state.auth);
 
     const [open, setOpen] = useState(false);
 
@@ -106,7 +108,7 @@ export const NavBar = () => {
     };
 
     const handleLogout = () => {
-        dispatch(startLogout());
+        startLogout();
     };
 
     useEffect(() => {

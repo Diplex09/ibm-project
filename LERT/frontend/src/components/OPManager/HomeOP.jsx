@@ -1,11 +1,13 @@
 import { List, Typography, Button } from "@mui/material";
 import { ArrowForwardOutlined } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import { getFirstName } from "../../utils/getFirstName";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const HomeOP = () => {
-    const { name } = useSelector((state) => state.auth);
+    // const { name } = useSelector((state) => state.auth);
+    const { name } = useAuthStore();
     const firstName = getFirstName(name);
 
     return (
