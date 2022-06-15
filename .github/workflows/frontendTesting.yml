@@ -25,10 +25,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      # Install modules
-      - name: Start
-        run: npm install
-
-      # Runs a single command using the runners shell
-      - name: Frontend test
-        run: npm run test
+      # Go to frontend path, Install dependencies, and run tests
+      - name: Front test
+        run: |
+          cd frontend
+          npm install
