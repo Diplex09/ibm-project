@@ -14,17 +14,16 @@ import { DeleteOutlined } from "@mui/icons-material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { postNewEmployee } from "../../actions/Manager/employee";
 
-export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
+export const FormEmployee = ({
+    closeModal,
+    editRecord,
+    handleEditRecord,
+    handleEditSave,
+    row,
+}) => {
     const [dateStart, setDateStart] = useState(new Date());
     const [dateFinish, setDateFinish] = useState(new Date());
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        postNewEmployee(record);
-        closeModal(false);
-    };
 
     return (
         <>
@@ -47,12 +46,11 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                 paddingLeft: 5,
                                 paddingTop: 3,
                                 paddingBottom: 2,
-                                fontWeight: 700,
                             }}
-                            variant="h6"
+                            variant="h5"
                             component="h2"
                         >
-                            NEW EMPLOYEE INFORMATION
+                            Employee Information
                         </Typography>
                         <List sx={{ paddingLeft: 10, display: "inline-block" }}>
                             <ListItem>
@@ -61,25 +59,18 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                     required
                                     size="small"
                                     label="First Name"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            firstName: e.target.value,
-                                        });
-                                        console.log(record);
-                                    }}
+                                    name="firstName"
+                                    defaultValue={editRecord.firstName}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
                                     label="Last Name"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            lastName: e.target.value,
-                                        });
-                                    }}
+                                    name="lastName"
+                                    defaultValue={editRecord.lastName}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -88,24 +79,18 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                     required
                                     size="small"
                                     label="Email"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            email: e.target.value,
-                                        });
-                                    }}
+                                    name="email"
+                                    defaultValue={editRecord.email}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
                                     label="Country from"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            originCountry: e.target.value,
-                                        });
-                                    }}
+                                    name="origiCountry"
+                                    defaultValue={editRecord.originCountry}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -114,24 +99,18 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                     required
                                     size="small"
                                     label="ICA "
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            ICA: e.target.value,
-                                        });
-                                    }}
+                                    name="ICA"
+                                    defaultValue={editRecord.ICA}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
                                     label="Country Working"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            currentCountry: e.target.value,
-                                        });
-                                    }}
+                                    name="currentCountry"
+                                    defaultValue={editRecord.currentCountry}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -140,24 +119,18 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                     required
                                     size="small"
                                     label="Type"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            type: e.target.value,
-                                        });
-                                    }}
+                                    name="type"
+                                    defaultValue={editRecord.type}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <TextField
                                     required
                                     size="small"
                                     label="Band"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            band: e.target.value,
-                                        });
-                                    }}
+                                    name="band"
+                                    defaultValue={editRecord.band}
+                                    onChange={handleEditRecord}
                                 />
                             </ListItem>
                             <ListItem>
@@ -166,12 +139,9 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                     required
                                     size="small"
                                     label="Squad"
-                                    onChange={(e) => {
-                                        setRecord({
-                                            ...record,
-                                            squad: e.target.value,
-                                        });
-                                    }}
+                                    name="squad"
+                                    defaultValue={editRecord.squad}
+                                    onChange={handleEditRecord}
                                 />
 
                                 <LocalizationProvider
@@ -185,15 +155,9 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                                 {...params}
                                             />
                                         )}
-                                        value={dateStart}
-                                        onChange={(date) => {
-                                            const d = new Date(date);
-                                            console.log(d);
-                                            setRecord({
-                                                ...record,
-                                                dateStart: d,
-                                            });
-                                        }}
+                                        name="dateStart"
+                                        value={editRecord.dateStart}
+                                        onChange={handleEditRecord}
                                     />
                                 </LocalizationProvider>
                             </ListItem>
@@ -209,15 +173,9 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                                 {...params}
                                             />
                                         )}
-                                        value={dateFinish}
-                                        onChange={(date) => {
-                                            const dF = new Date(date);
-                                            console.log(dF);
-                                            setRecord({
-                                                ...record,
-                                                dateFinish: dF,
-                                            });
-                                        }}
+                                        name="dateFinish"
+                                        value={editRecord.dateFinish}
+                                        onChange={handleEditRecord}
                                     />
                                 </LocalizationProvider>
                             </ListItem>
@@ -257,7 +215,9 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                             bgcolor: "#0255DA",
                                         },
                                     }}
-                                    onClick={handleSubmit}
+                                    onClick={(e) =>
+                                        handleEditSave(e, editRecord, row)
+                                    }
                                 >
                                     Modify
                                 </Button>
@@ -270,4 +230,4 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
     );
 };
 
-export default AddFormEmployee;
+export default FormEmployee;
