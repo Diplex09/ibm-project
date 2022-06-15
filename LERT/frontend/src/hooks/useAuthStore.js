@@ -14,7 +14,7 @@ export const useAuthStore = () => {
 
     const startLogin = async (email, password) => {
         await axios
-            .post("http://localhost:3000/login", {
+            .post("http://localhost:5000/login", {
                 email,
                 password,
             })
@@ -39,7 +39,7 @@ export const useAuthStore = () => {
 
     const startLogout = async () => {
         await axios
-            .get("http://localhost:3000/logout")
+            .get("http://localhost:5000/logout")
             .then((resp) => {
                 dispatch(authLogout());
             })
@@ -50,7 +50,7 @@ export const useAuthStore = () => {
 
     const startChecking = async () => {
         await axios
-            .get("http://localhost:3000/check")
+            .get("http://localhost:5000/check")
             .then((resp) => {
                 console.log(resp);
                 const { user } = resp.data;
