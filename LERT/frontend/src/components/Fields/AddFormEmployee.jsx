@@ -179,6 +179,7 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                     dateAdapter={AdapterDateFns}
                                 >
                                     <DatePicker
+                                        inputFormat="dd/MM/yyyy"
                                         renderInput={(params) => (
                                             <TextField
                                                 sx={{ width: "14rem" }}
@@ -186,12 +187,11 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                             />
                                         )}
                                         value={dateStart}
-                                        onChange={(date) => {
-                                            const d = new Date(date);
-                                            console.log(d);
+                                        onChange={(newDate) => {
+                                            setDateStart(newDate);
                                             setRecord({
                                                 ...record,
-                                                dateStart: d,
+                                                dateStart: newDate,
                                             });
                                         }}
                                     />
@@ -203,6 +203,7 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                     dateAdapter={AdapterDateFns}
                                 >
                                     <DatePicker
+                                        inputFormat="dd/MM/yyyy"
                                         renderInput={(params) => (
                                             <TextField
                                                 sx={{ width: "14rem" }}
@@ -210,12 +211,11 @@ export const AddFormEmployee = ({ closeModal, record, setRecord }) => {
                                             />
                                         )}
                                         value={dateFinish}
-                                        onChange={(date) => {
-                                            const dF = new Date(date);
-                                            console.log(dF);
+                                        onChange={(newDate) => {
+                                            setDateFinish(newDate);
                                             setRecord({
                                                 ...record,
-                                                dateFinish: dF,
+                                                dateFinish: newDate,
                                             });
                                         }}
                                     />

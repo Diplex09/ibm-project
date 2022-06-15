@@ -22,6 +22,7 @@ export const TableInfo = ({
     const [rowId, setRowId] = useState(null);
 
     const [editRecord, setEditRecord] = useState(initialRecord);
+    console.log(editRecord);
 
     const handleEditRecord = (e) => {
         e.preventDefault();

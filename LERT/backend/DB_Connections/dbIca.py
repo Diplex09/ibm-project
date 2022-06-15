@@ -81,7 +81,7 @@ class ICA(Base):
 
     def serialize(self):
         return {
-            'id_ica': self.id_ica, 
+            'id': self.id_ica, 
             'ica_code': self.ica_code,
             'ica_core': self.ica_core,
             'year': self.year,
@@ -183,7 +183,7 @@ def postIca():
 def deleteICA(id):
     db = DBManager.getInstance() 
     
-    delete = "delete from ICA where id_ica="+ str(id)
+    delete = "delete from ica where id_ica="+ str(id)
     
     try:
         db.session.execute(delete)
@@ -224,10 +224,10 @@ def updateICA(id):
     _id_type = json['id_type']
     _nec = json['nec']
     _total_plus_taxes = json['total_plus_taxes']
-    _start_Date = json['start_date']
+    _start_Date = json['start_Date']
     _end_date = json['end_date']
     _cty_name_perf= json['cty_name_perf']
-    _R_Cty_Perf = json['r_cty_perf']
+    _R_Cty_Perf = json['R_Cty_Perf']
     _total_billing = json['total_billing']
     
     newICA = ICA(_ica_code, _ica_core, _year, 
