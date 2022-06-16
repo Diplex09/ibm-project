@@ -4,7 +4,7 @@ export const testUserCredentials = {
 };
 
 export const testUserInfo = {
-    uid: 4,
+    uid: 3,
     name: "Test OPManager",
     rol: 2,
     rolName: "Operation Manager",

@@ -23,6 +23,8 @@ const getMockStore = (initialState) => {
 };
 
 describe("Test in auth actions", () => {
+    jest.setTimeout(20000);
+
     test("should return default values", async () => {
         const mockStore = getMockStore({ ...initialState });
 
@@ -55,10 +57,12 @@ describe("Test in auth actions", () => {
         });
 
         await act(async () => {
-            await result.current.startLogin(
-                testUserCredentials.email,
-                testUserCredentials.password
-            );
+            if (result) {
+                await result.current.startLogin(
+                    testUserCredentials.email,
+                    testUserCredentials.password
+                );
+            }
         });
 
         const { checking, uid, name, rol, rolName } = result.current;
@@ -92,48 +96,6 @@ describe("Test in auth actions", () => {
         expect({ checking, uid }).toEqual({
             checking: false,
             uid: undefined,
-        });
-    });
-
-    test("startChecking should fail if there is no token", async () => {
-        const mockStore = getMockStore({ ...initialState });
-
-        const { result } = renderHook(() => useAuthStore(), {
-            wrapper: ({ children }) => (
-                <Provider store={mockStore}>{children}</Provider>
-            ),
-        });
-
-        await act(async () => {
-            await result.current.startChecking();
-        });
-
-        const { checking, uid } = result.current;
-
-        expect({ checking, uid }).toEqual({
-            checking: false,
-            uid: undefined,
-        });
-    });
-
-    test("startChecking should authenticate user if there is valid token", async () => {
-        const mockStore = getMockStore({ ...authenticatedState });
-
-        const { result } = renderHook(() => useAuthStore(), {
-            wrapper: ({ children }) => (
-                <Provider store={mockStore}>{children}</Provider>
-            ),
-        });
-
-        await act(async () => {
-            await result.current.startChecking();
-        });
-
-        const { checking, uid } = result.current;
-
-        expect({ checking, uid }).toEqual({
-            checking: false,
-            uid: testUserInfo.uid,
         });
     });
 });

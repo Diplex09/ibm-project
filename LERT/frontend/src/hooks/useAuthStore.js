@@ -6,6 +6,9 @@ import {
     authCheckingFinish,
 } from "../reducers/authSlice";
 
+const baseUrl = "https://lert-api.mybluemix.net";
+// const baseUrl = "http://localhost:5000";
+
 export const useAuthStore = () => {
     const { checking, uid, name, rol, rolName } = useSelector(
         (state) => state.auth
@@ -14,7 +17,7 @@ export const useAuthStore = () => {
 
     const startLogin = async (email, password) => {
         await axios
-            .post("http://localhost:5000/login", {
+            .post(`${baseUrl}/login`, {
                 email,
                 password,
             })
@@ -39,7 +42,7 @@ export const useAuthStore = () => {
 
     const startLogout = async () => {
         await axios
-            .get("http://localhost:5000/logout")
+            .get(`${baseUrl}/logout`)
             .then((resp) => {
                 dispatch(authLogout());
             })
@@ -50,7 +53,7 @@ export const useAuthStore = () => {
 
     const startChecking = async () => {
         await axios
-            .get("http://localhost:5000/check")
+            .get(`${baseUrl}/check`)
             .then((resp) => {
                 console.log(resp);
                 const { user } = resp.data;
