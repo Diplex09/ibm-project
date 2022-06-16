@@ -34,6 +34,7 @@ from flask_jwt_extended import get_jwt, set_access_cookies, unset_jwt_cookies
 # from sqlalchemy import create_engine
 # from sqlalchemy import select
 
+import os
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 api = Api(app)
@@ -221,3 +222,8 @@ app.add_url_rule("/getExpenses", view_func=getAllExpenses, methods=['GET'])
 app.add_url_rule("/newPostExpenses", view_func=newAllPostExpense, methods=['POST'])
 app.add_url_rule("/deleteExpense/<int:id>", view_func=deleteAllExpense, methods=['DELETE'])
 app.add_url_rule("/updateExpenses/<int:id>", view_func=updateExpense, methods=['PUT'])
+
+PORT = os.environ.get('PORT', 5000)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=PORT)
