@@ -5,7 +5,7 @@ Repository for the TC3004B subject of the ITC study plan at the Tecnológico de 
 - SRS(Not finish yet): https://docs.google.com/document/d/1Dak5tR24d-bKAaL2WK6W49BhV5p4mHnd/edit?usp=sharing&ouid=107428553557968197115&rtpof=true&sd=true
 - Project Site: https://thelertproject.wordpress.com/
 
-Roles:
+## Roles:
 
 - Manuel Ignacio Cota Casas: `Squad Leader`
 - Aldo Alejandro Degollado Padilla: `Frontend` / `Backend`
@@ -14,3 +14,9 @@ Roles:
 - Diego Velazquez Moreno: `Tester` / `Backend`
 - Sebastian Andrés Rojas Salazar: `Scrum Master`/ `Frontend`/`Backend`
 - Gerardo Novelo De Anda:  `Frontend`
+
+## Technologies:
+
+- ReactJS
+- Flask
+- Postgres
