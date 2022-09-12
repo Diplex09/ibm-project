@@ -1,12 +1,13 @@
-# TC3004B
-Repository for the TC3004B subject of the ITC study plan at the Tecnológico de Monterrey Campus Guadalajara. This repository contains all the the documentation related to the IBM's project we are currently working on. The next links provides acess to the information we have  gather until now:
+# LERT (Labor Expenses Recovery Tool)
+Repository for the TC3004B subject of the ITC study plan at the Tecnológico de Monterrey Campus Guadalajara. This repository contains all the the documentation related to the IBM's project done during the course. The projecta was an application that allows IBM staff managers to recover the expenses of their teams and overall development expenses in one place and be able to share said information efficiently among the organization.
 
-- Trello: https://trello.com/invite/b/t6Dpu0DF/e5cacdd7999d274d5cd1388fd209cd73/planeaci%C3%B3n-ibm
-- SRS(Not finish yet): https://docs.google.com/document/d/1Dak5tR24d-bKAaL2WK6W49BhV5p4mHnd/edit?usp=sharing&ouid=107428553557968197115&rtpof=true&sd=true
 - Project Site: https://thelertproject.wordpress.com/
+- Trello: https://trello.com/invite/b/t6Dpu0DF/e5cacdd7999d274d5cd1388fd209cd73/planeaci%C3%B3n-ibm
 
-## Roles:
+### My contribution - Front-end dev: Aldo Alejandro Degollado Padilla
+I worked on front end views and was involved in the backend's API development and DB management. 
 
+## Team:
 - Manuel Ignacio Cota Casas: `Squad Leader`
 - Aldo Alejandro Degollado Padilla: `Frontend` / `Backend`
 - Abraham Mendoza Pérez: `Project Manager` / `Frontend` / `Backend`
@@ -15,8 +16,18 @@ Repository for the TC3004B subject of the ITC study plan at the Tecnológico de 
 - Sebastian Andrés Rojas Salazar: `Scrum Master`/ `Frontend`/`Backend`
 - Gerardo Novelo De Anda:  `Frontend`
 
-## Technologies:
-
-- ReactJS
+Technologies Used
+---------------
+### Programming Languages
+- Typescript
+- Python
+### Database management system
+- PostgresSQL
+### Frameworks
 - Flask
-- Postgres
+### Libraries and tools
+- React
+- SQLAlchemy
+- Material UI
+
+*Project present in the development branch
