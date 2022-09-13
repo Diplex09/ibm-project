@@ -8,13 +8,13 @@ Repository for the TC3004B subject of the ITC study plan at the Tecnológico de 
 I worked on front end views and was involved in the backend's API development and DB management. 
 
 ## Team:
-- Manuel Ignacio Cota Casas: `Squad Leader`
-- Aldo Alejandro Degollado Padilla: `Frontend` / `Backend`
-- Abraham Mendoza Pérez: `Project Manager` / `Frontend` / `Backend`
-- Luis Alonso Martínez García: `Frontend` / `Backend`
-- Diego Velazquez Moreno: `Tester` / `Backend`
-- Sebastian Andrés Rojas Salazar: `Scrum Master`/ `Frontend`/`Backend`
-- Gerardo Novelo De Anda:  `Frontend`
+- [Manuel Cota](https://github.com/nihonboi): `Squad Leader` / `Full-stack`
+- [Aldo Degollado](https://github.com/Diplex09): `Full-stack`
+- [Abraham Mendoza](https://github.com/Abraham935): `Project Manager` / `Full-stack`
+- [Alonso Martínez](https://github.com/AlonsoMtzG): `Full-stack`
+- [Diego Velázquez](https://github.com/DiegoVelazqz): `Tester` / `Backend`
+- [Sebastián Rojas](https://github.com/Sreddx): `Scrum Master`/ `Full-stack`
+- Gerardo Novelo:  `Frontend`
 
 Technologies Used
 ---------------
