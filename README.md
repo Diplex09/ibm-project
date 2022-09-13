@@ -4,7 +4,7 @@ Repository for the TC3004B subject of the ITC study plan at the Tecnológico de 
 - Project Site: https://thelertproject.wordpress.com/
 - Trello: https://trello.com/invite/b/t6Dpu0DF/e5cacdd7999d274d5cd1388fd209cd73/planeaci%C3%B3n-ibm
 
-### My contribution - Front-end dev: Aldo Alejandro Degollado Padilla
+### My contribution - Full-stack dev: Aldo Alejandro Degollado Padilla
 I worked on front end views and was involved in the backend's API development and DB management. 
 
 ## Team:
